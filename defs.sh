@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# This file is included by download.sh & build.sh
+
+set -e
+
+KERNEL_VERSION=5.4.20
+MUSL_VERSION=1.2.0
+TCC_VERSION=7e901299bf55e14bd1482f3a96b2ff5b790665de
+FASM_VERSION=1.73.22
+BUSYBOX_VERSION=1.31.1
+DROPBEAR_VERSION=2019.78
+SYSLINUX_VERSION=6.03
+RNGTOOLS_VERSION=5
+
+NUM_JOBS="$(grep -c ^processor /proc/cpuinfo)"
+
+export KERNEL_VERSION
+export MUSL_VERSION
+export TCC_VERSION
+export FASM_VERSION
+export BUSYBOX_VERSION
+export DROPBEAR_VERSION
+export SYSLINUX_VERSION
+export RNGTOOLS_VERSION
+
+export NUM_JOBS

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if [ $# -ne 1 ]; then
+  printf "Usage: %s <rootfs>\n" "$(basename "${0}")"
+  exit 1
+fi
+
+rootfs="${1}"
+shift
+
+cleanup() {
+  umount -f "${rootfs}"/dev
+  umount -f "${rootfs}"/tmp
+  umount -f "${rootfs}"/proc
+  umount -f "${rootfs}"/sys
+  umount -f "${rootfs}"
+}
+
+trap cleanup EXIT
+
+mount --bind /dev "${rootfs}/dev"
+mount --bind /tmp "${rootfs}/tmp"
+mount -t proc proc "${rootfs}/proc"
+mount -t sysfs none "${rootfs}/sys"
+
+chroot "${rootfs}" /bin/sh

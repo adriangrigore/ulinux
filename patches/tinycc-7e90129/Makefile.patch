@@ -1,0 +1,85 @@
+--- tinycc-7e90129.orig/Makefile.orig	2020-01-23 06:57:19.000000000 +1000
++++ tinycc-7e90129/Makefile	2020-03-15 11:46:52.000000000 +1000
+@@ -87,7 +87,7 @@
+ 
+ PROGS = tcc$(EXESUF)
+ TCCLIBS = $(LIBTCC1) $(LIBTCC) $(LIBTCCDEF)
+-TCCDOCS = tcc.1 tcc-doc.html tcc-doc.info
++TCCDOCS = tcc.1
+ 
+ all: $(PROGS) $(TCCLIBS) $(TCCDOCS)
+ 
+@@ -249,17 +249,11 @@
+ 
+ # --------------------------------------------------------------------------
+ # documentation and man page
+-tcc-doc.html: tcc-doc.texi
+-	makeinfo --no-split --html --number-sections -o $@ $< || true
+-
+ tcc.1: tcc-doc.texi
+ 	$(TOPSRC)/texi2pod.pl $< tcc.pod \
+ 	&& pod2man --section=1 --center="Tiny C Compiler" --release="$(VERSION)" tcc.pod >tmp.1 \
+ 	&& mv tmp.1 $@ || rm -f tmp.1
+ 
+-tcc-doc.info: tcc-doc.texi
+-	makeinfo $< || true
+-
+ # --------------------------------------------------------------------------
+ # install
+ 
+@@ -284,8 +278,6 @@
+ 	$(call $(if $(findstring .so,$(LIBTCC)),IBw,IFw),$(LIBTCC),"$(libdir)")
+ 	$(call IF,$(TOPSRC)/libtcc.h,"$(includedir)")
+ 	$(call IFw,tcc.1,"$(mandir)/man1")
+-	$(call IFw,tcc-doc.info,"$(infodir)")
+-	$(call IFw,tcc-doc.html,"$(docdir)")
+ ifneq "$(wildcard $(LIBTCC1_W))" ""
+ 	$(call IFw,$(TOPSRC)/win32/lib/*.def $(LIBTCC1_W),"$(tccdir)/win32/lib")
+ 	$(call IR,$(TOPSRC)/win32/include,"$(tccdir)/win32/include")
+@@ -296,8 +288,7 @@
+ uninstall-unx:
+ 	@rm -fv $(foreach P,$(PROGS) $(PROGS_CROSS),"$(bindir)/$P")
+ 	@rm -fv "$(libdir)/libtcc.a" "$(libdir)/libtcc.so" "$(includedir)/libtcc.h"
+-	@rm -fv "$(mandir)/man1/tcc.1" "$(infodir)/tcc-doc.info"
+-	@rm -fv "$(docdir)/tcc-doc.html"
++	@rm -fv "$(mandir)/man1/tcc.1"
+ 	rm -r "$(tccdir)"
+ 
+ # install progs & libs on windows
+@@ -310,7 +301,6 @@
+ 	$(call IR,$(TOPSRC)/win32/examples,"$(tccdir)/examples")
+ 	$(call IF,$(TOPSRC)/tests/libtcc_test.c,"$(tccdir)/examples")
+ 	$(call IFw,$(TOPSRC)/libtcc.h $(subst .dll,.def,$(LIBTCC)),"$(libdir)")
+-	$(call IFw,$(TOPSRC)/win32/tcc-win32.txt tcc-doc.html,"$(docdir)")
+ ifneq "$(wildcard $(LIBTCC1_U))" ""
+ 	$(call IFw,$(LIBTCC1_U),"$(tccdir)/lib")
+ 	$(call IF,$(TOPSRC)/include/*.h $(TOPSRC)/tcclib.h,"$(tccdir)/lib/include")
+@@ -325,7 +315,6 @@
+ # uninstall on windows
+ uninstall-win:
+ 	@rm -fv $(foreach P,$(PROGS) $(PROGS_CROSS) libtcc.dll,"$(bindir)/$P")
+-	@rm -fv $(foreach F,tcc-doc.html tcc-win32.txt,"$(docdir)/$F")
+ 	@rm -fv $(foreach F,libtcc.h libtcc.def libtcc.a,"$(libdir)/$F")
+ 	rm -r "$(tccdir)"
+ 
+@@ -340,10 +329,9 @@
+ # create release tarball from *current* git branch (including tcc-doc.html
+ # and converting two files to CRLF)
+ TCC-VERSION = tcc-$(VERSION)
+-tar:    tcc-doc.html
++tar:
+ 	mkdir $(TCC-VERSION)
+ 	( cd $(TCC-VERSION) && git --git-dir ../.git checkout -f )
+-	cp tcc-doc.html $(TCC-VERSION)
+ 	for f in tcc-win32.txt build-tcc.bat ; do \
+ 	    cat win32/$$f | sed 's,\(.*\),\1\r,g' > $(TCC-VERSION)/win32/$$f ; \
+ 	done
+@@ -371,7 +359,7 @@
+ 	@$(MAKE) -C tests $@
+ 
+ distclean: clean
+-	rm -f config.h config.mak config.texi tcc.1 tcc-doc.info tcc-doc.html
++	rm -f config.h config.mak config.texi tcc.1
+ 
+ .PHONY: all clean test tar tags ETAGS distclean install uninstall FORCE
+ 

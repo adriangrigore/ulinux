@@ -1,0 +1,65 @@
+#!/bin/sh
+
+set -e
+
+if [ $# -ne 1 ]; then
+  printf >&2 "Usage: %s <disk>\n" "$(basename "${0}")"
+  exit 1
+fi
+
+disk="${1}"
+part="${disk}1"
+
+rootfs="/tmp/rootfs"
+sources="/mnt"
+
+mkdir -p "${sources}" "${rootfs}"
+
+cleanup() {
+  umount -f "${sources}"
+  umount -f "${rootfs}"
+  rm -rf "${rootfs}"
+}
+
+trap cleanup EXIT
+
+(
+  echo n # Add a new partition
+  echo p # Primary partition
+  echo 1 # Partition number
+  echo   # First sector (Accept default: 1)
+  echo   # Last sector (Accept default: varies)
+  echo a # Toggle bootable flag
+  echo 1 # Partition number
+  echo w # Write changes
+) | fdisk "${disk}"
+
+mkfs.ext2 "${part}"
+
+mount /dev/sr0 "${sources}"
+
+mount "${part}" "${rootfs}"
+
+(
+  cd "${rootfs}" || exit 1
+  zcat < "${sources}"/rootfs.gz | cpio -ivd
+)
+
+mkdir -p "${rootfs}"/boot/syslinux
+cp "${sources}"/kernel.gz "${rootfs}"/boot/vmlinuz
+
+cat > "${rootfs}"/boot/syslinux/syslinux.cfg << EOF
+DEFAULT default
+
+LABEL default
+	KERNEL /boot/vmlinuz
+	APPEND quiet root=${part} rw
+EOF
+
+extlinux -i "${rootfs}"/boot/syslinux
+
+dd bs=440 count=1 conv=notrunc if=/usr/share/syslinux/mbr.bin of="${disk}"
+
+sync
+
+echo "ALl Done!"
