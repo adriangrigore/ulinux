@@ -45,6 +45,32 @@ all platforms consistently.
 Also make sure you have [QEMU](https://www.qemu.org/) installed as this is
 used for testing and booting the OS into a Guest VM.
 
+## Prebuilt
+
+This repo contains prebuilt assets to get you started quickly without having
+to build anything yourself. The following are currently available and stored
+with [Git LFS](https://help.github.com/en/github/managing-large-files) and
+can by fetched with `git lfs fetch` or downloaded directly from Github:
+
+- [ulinux.iso](https://github.com/prologic/ulinux/blob/master/ulinux.iso) -- Hybrid Live ISO
+- [kernel.gz](https://github.com/prologic/ulinux/blob/master/ulinux.iso) -- Linux Kernel
+- [rootfs.gz](https://github.com/prologic/ulinux/blob/master/ulinux.iso) -- RootFS (_initrd_)
+
+## Installing
+
+Once booted with either the Hybrid Live ISO or Kernel + RootFS you can install
+uLinux to disk by typing in a shell:
+
+```sh
+# setup /dev/sda
+```
+
+Assuming `/dev/sda` is the device path to the disk you want to install to.
+
+**WARNING:** This will _automatically_ partition, format and install uLinux
+             with no questions asked without hestigation. Please be sure you
+             understand what you are doing.
+
 ## Building
 
 Just run:
