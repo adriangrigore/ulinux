@@ -13,7 +13,6 @@ cleanup() {
   umount -f "${rootfs}"/tmp
   umount -f "${rootfs}"/proc
   umount -f "${rootfs}"/sys
-  umount -f "${rootfs}"
 }
 
 trap cleanup EXIT
@@ -23,4 +22,4 @@ mount --bind /tmp "${rootfs}/tmp"
 mount -t proc proc "${rootfs}/proc"
 mount -t sysfs none "${rootfs}/sys"
 
-chroot "${rootfs}" /bin/sh
+chroot "${rootfs}" /bin/sh -c "$@"
