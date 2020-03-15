@@ -180,6 +180,8 @@ build_rootfs() {
 
     # Cleanup rootfs
     find . -type f -name '.empty' -size 0c -delete
+    rm -rf "$rootfs"/usr/man
+    rm -rf "$rootfs"/usr/share/man
 
     # install static-get
     wget -q -O - https://raw.githubusercontent.com/minos-org/minos-static/master/static-get > "${rootfs}"/sbin/static-get
