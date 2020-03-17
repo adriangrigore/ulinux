@@ -38,6 +38,16 @@ download_fasm() {
   tar -xf fasm.tgz
 }
 
+download_v() {
+  if [ "$V_VERSION" = "master" ]; then
+    git clone https://github.com/vlang/v v-$V_VERSION
+  else
+    wget -q -O v.tar.gz \
+      https://github.com/vlang/v/archive/$V_VERSION.tar.gz
+    tar xf v.tar.gz
+  fi
+}
+
 download_busybox() {
   wget -q -O busybox.tar.bz2 \
     http://busybox.net/downloads/busybox-$BUSYBOX_VERSION.tar.bz2
@@ -60,6 +70,7 @@ download_all() {
   download_musl
   download_tcc
   download_fasm
+  download_v
   download_busybox
   download_dropbear
   download_syslinux
