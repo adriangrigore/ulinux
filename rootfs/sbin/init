@@ -3,6 +3,8 @@
 # shellcheck disable=SC1091
 . /etc/rc.conf
 
+printf "The system is coming up ...\n"
+
 export PATH="/bin:/usr/bin:/sbin:/usr/sbin"
 
 # Mount dev,proc,sys
@@ -14,7 +16,6 @@ mount -t devpts none /dev/pts
 
 # Configure host name
 HOSTNAME="${HOSTNAME:-localhost}"
-echo "hostname: $HOSTNAME"
 hostname "$HOSTNAME"
 
 # Configure networking

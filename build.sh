@@ -225,6 +225,7 @@ build_kernel() {
     config y IKCONFIG_PROC
     config y DEVTMPFS
     config n DEBUG_KERNEL
+    config n X86_VERBOSE_BOOTUP
     config ulinux DEFAULT_HOSTNAME
 
     config y IP_PNP
@@ -259,7 +260,7 @@ build_iso() {
   cp kernel.gz "$isoimage"
   cp syslinux-$SYSLINUX_VERSION/bios/core/isolinux.bin "$isoimage"
   cp syslinux-$SYSLINUX_VERSION/bios/com32/elflink/ldlinux/ldlinux.c32 "$isoimage"
-  echo 'default kernel.gz initrd=rootfs.gz append quiet init=/sbin/init' > "$isoimage/isolinux.cfg"
+  echo 'default kernel.gz initrd=rootfs.gz append quiet' > "$isoimage/isolinux.cfg"
 
   (
     cd "$isoimage"
