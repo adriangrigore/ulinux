@@ -272,6 +272,8 @@ build_kernel() {
     config y VIRTIO_PCI
     config y VIRTIO_MMIO
     config y VIRTIO_CONSOLE
+    config y VIRTIO_IDE
+    config y VIRTIO_SCSI
     config y VIRTIO_BLK
     config y VIRTIO_NET
 
