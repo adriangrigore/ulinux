@@ -28,6 +28,8 @@ build_musl() {
 
     make
     make DESTDIR="$rootfs" install
+
+    ln -s /usr/lib/libc.so "$rootfs/usr/bin/ldd"
   )
 }
 
