@@ -9,8 +9,8 @@ set -e
 . defs.sh
 
 build=/build
-rootfs=$build/rootfs/
-isoimage=$build/isoimage/
+rootfs=$build/rootfs
+isoimage=$build/isoimage
 
 if [ -f customize.sh ]; then
   # shellcheck source=customize.sh
