@@ -18,23 +18,15 @@
 - Dropbear SSH
 - Tiny C Compiler
 - Flat Assembler
+- [V](https://vlang.io)
 - Hybrid Live ISO
 - Installer
 - Crude (_to be replaced_) package  manager
 
 ### Screenshots
 
-![screenshot-1](/screenshot-1.png?raw=true "screenshot-1")
-> Botting from the Hybrid Live ISO in QEMU
-
-![screenshot-2](/screenshot-2.png?raw=true "screenshot-2")
-> After running `setup /dev/sda` to install to disk and booting from disk in QEMU
-
-![screenshot-3](/screenshot-3.png?raw=true "screenshot-3")
-> Resources used on boot
-
-![screenshot-4](/screenshot-4.png?raw=true "screenshot-4")
-> Also works in VirtualBox
+![screenshot-1](/screenshot-1.png?raw=true "Botting from the Hybrid Live ISO")
+![screenshot-2](/screenshot-2.png?raw=true "After running `setup /dev/sda` to install to disk and booting from disk")
 
 ## Getting Started
 
