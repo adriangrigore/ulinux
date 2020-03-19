@@ -38,6 +38,12 @@ download_fasm() {
   tar -xf fasm.tgz
 }
 
+download_make() {
+  wget -q -O make.tar.lz \
+    http://ftpmirror.gnu.org/gnu/make/make-$MAKE_VERSION.tar.lz
+  tar -xf make.tar.lz
+}
+
 download_v() {
   if [ "$V_VERSION" = "master" ]; then
     git clone https://github.com/vlang/v v-$V_VERSION
@@ -70,6 +76,7 @@ download_all() {
   download_musl
   download_tcc
   download_fasm
+  download_make
   download_v
   download_busybox
   download_dropbear

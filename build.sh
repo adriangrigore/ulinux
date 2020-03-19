@@ -75,6 +75,19 @@ build_fasm() {
   )
 }
 
+build_make() {
+  (
+    cd make-$MAKE_VERSION
+
+    ./configure --prefix=/usr --disable-nls
+
+    make
+    make DESTDIR="$rootfs" install
+    rm -r "$rootfs"/usr/share/info
+    rm -r "$rootfs"/usr/share/man
+  )
+}
+
 build_v() {
   (
     cd v-$V_VERSION
@@ -315,6 +328,7 @@ build_all() {
   build_musl
   build_tcc
   build_fasm
+  build_make
   build_v
   build_busybox
   build_dropbear

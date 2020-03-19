@@ -6,7 +6,7 @@ RUN apk -U add wget \
 	build-base autoconf automake coreutils pkgconfig \
 	bc elfutils-dev build-base gawk xorriso  bison flex \
 	linux-headers perl rsync git argp-standalone diffutils \
-	openssl-dev tar xz bash util-linux-dev
+	openssl-dev tar xz bash util-linux-dev lzip
 
 WORKDIR /build
 
