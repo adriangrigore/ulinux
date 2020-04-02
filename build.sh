@@ -84,9 +84,6 @@ build_make() {
     make
     make DESTDIR="$rootfs" install
 
-    # symlink for /usr/bin/env
-    ln -snf /bin/env /usr/bin/env
-
     # remove man/info pages
     rm -r "$rootfs"/usr/share/info
     rm -r "$rootfs"/usr/share/man
@@ -128,6 +125,10 @@ build_busybox() {
     make \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       busybox install -j "$NUM_JOBS"
+
+    # symlink for /usr/bin/env
+    ln -snf /bin/env /usr/bin/env
+
   )
 }
 

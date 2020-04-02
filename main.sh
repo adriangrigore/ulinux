@@ -8,6 +8,14 @@ set -e
 # shellcheck source=build.sh
 . build.sh
 
+fail() {
+  printf "FAIL: %s\n" "$1"
+  if [ -t 1 ]; then
+    printf "Dropping into a shell ..."
+    exec /bin/sh
+  fi
+}
+
 _main() {
   case "${1}" in
     build)
@@ -26,4 +34,4 @@ _main() {
   esac
 }
 
-_main "${@}"
+_main "${@}" || fail "Build failed ..."
