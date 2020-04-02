@@ -88,39 +88,6 @@ build_make() {
   )
 }
 
-build_v() {
-  (
-    cd v-$V_VERSION
-
-    make
-
-    # build tools
-    for tool in cmd/tools/vrepl.v cmd/tools/vtest.v cmd/tools/vfmt.v cmd/tools/vcreate.v cmd/tools/vup.v; do
-      echo "build $tool"
-      ./v build $tool
-    done
-
-    # manually install binaries
-    install -D -m 0755 v "$rootfs"/usr/lib/v/v
-
-    for instdir in cmd vlib; do
-      cp -r $instdir "$rootfs"/usr/lib/v
-    done
-
-    # install wrapper
-    mkdir -p "$rootfs"/usr/bin
-    cat > "$rootfs"/usr/bin/v << EOF
-#!/bin/sh
-
-export CC=tcc
-export VFLAGS='-cc tcc'
-
-exec /usr/lib/v/v "\$@"
-EOF
-    chmod 0755 "$rootfs"/usr/bin/v
-  )
-}
-
 build_busybox() {
   (
     cd busybox-$BUSYBOX_VERSION
@@ -329,7 +296,6 @@ build_all() {
   build_tcc
   build_fasm
   build_make
-  build_v
   build_busybox
   build_dropbear
   build_syslinux
