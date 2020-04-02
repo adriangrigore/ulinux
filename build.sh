@@ -83,6 +83,11 @@ build_make() {
 
     make
     make DESTDIR="$rootfs" install
+
+    # symlink for /usr/bin/env
+    ln -snf /bin/env /usr/bin/env
+
+    # remove man/info pages
     rm -r "$rootfs"/usr/share/info
     rm -r "$rootfs"/usr/share/man
   )
