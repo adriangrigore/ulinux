@@ -118,6 +118,7 @@ build_busybox() {
     config n RUN_PARTS
     config n START_STOP_DAEMON
     config n MAN
+    config n DEB
     yes "" | make oldconfig
     make \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
