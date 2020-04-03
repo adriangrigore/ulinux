@@ -16,12 +16,20 @@
 - Recent Linux Kernel
 - Busybox userland
 - Dropbear SSH
-- Tiny C Compiler
-- Flat Assembler
-- [V](https://vlang.io)
 - Hybrid Live ISO
 - Installer
 - Crude (_to be replaced_) package  manager
+
+### Toolchain
+
+uLinux currently supports building C and Assembly and ships with the following compilers and tools:
+
+- Tiny C Compiler
+- Flat Assembler
+- Musl LibC
+- Make
+
+There is no support for GCC/GLIBC.
 
 ### Screenshots
 
