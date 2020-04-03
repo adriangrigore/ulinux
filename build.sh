@@ -248,13 +248,18 @@ build_kernel() {
     config n X86_VERBOSE_BOOTUP
     config ulinux DEFAULT_HOSTNAME
 
+    # Compression
+    config y KERNEL_GZIP
+    config y RD_GZIP
+
+    # DHCP
     config y IP_PNP
     config y IP_PNP_DHCP
 
     # RNG
     config y HW_RANDOM_VIRTIO
 
-    # Network Driers
+    # Driers
     config y VIRTIO
     config y VIRTIO_PCI
     config y VIRTIO_MMIO
