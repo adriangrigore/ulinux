@@ -274,6 +274,9 @@ build_kernel() {
     fi
 
     yes "" | make oldconfig
+
+    cp .config ../KConfig
+
     make \
       CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       bzImage -j "$NUM_JOBS"
