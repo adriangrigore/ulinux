@@ -13,8 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Peepare
+        env:
+          DEBIAN_FRONTEND: "noninteractive"
         run: |
-          sudo apt-get install qemu
+          sudo apt-get -y update
+          sudo apt-get -y install qemu
       - name: Build
         run: |
           make
