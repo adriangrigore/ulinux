@@ -33,6 +33,9 @@ fi
 # Start dropbear (SSHD)
 dropbear -B -R > /var/log/dropbear.log 2>&1
 
+# Start crond
+crond -b > /dev/null 2>&1
+
 printf "\nBoot took %s seconds\n" "$(cut -d' ' -f1 /proc/uptime)"
 
 # shell
