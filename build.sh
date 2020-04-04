@@ -215,7 +215,7 @@ build_rootfs() {
     fi
 
     # Archive rootfs
-    find . | cpio -R root:root -H newc -o | gzip -9 > ../rootfs.gz
+    find . | cpio -R root:root -H newc -o | gzip -3 > ../rootfs.gz
   )
 }
 
@@ -223,7 +223,7 @@ sync_rootfs() {
   (
     mkdir rootfs.old
     cd rootfs.old
-    zcat $build/rootfs.gz | cpio -idm
+    zcat < $build/rootfs.gz | cpio -idm
     rsync -aru . "$rootfs"
   )
 }
@@ -231,7 +231,7 @@ sync_rootfs() {
 build_kernel() {
   (
     cd linux-$KERNEL_VERSION
-    make mrproper defconfig kvmconfig -j "$NUM_JOBS"
+    make mrproper tinyconfig kvmconfig -j "$NUM_JOBS"
 
     # Disable debug symbols in kernel => smaller kernel binary.
     sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
@@ -240,46 +240,100 @@ build_kernel() {
     sed -i "s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/" .config
 
     # Basic Config
+    config y 64BIT
+    config y X86_64
     config y BLK_DEV_INITRD
     config y IKCONFIG
     config y IKCONFIG_PROC
-    config y DEVTMPFS
+    config y POSIX_TIMERS
+    config y MODULES
+    config y PRINTK
+    config y RETPOLINE
     config n DEBUG_KERNEL
     config n X86_VERBOSE_BOOTUP
     config ulinux DEFAULT_HOSTNAME
 
     # Compression
-    config y KERNEL_GZIP
-    config y RD_GZIP
+    config y KERNEL_GZ
+    config y RD_GZ
 
     # DHCP
     config y IP_PNP
     config y IP_PNP_DHCP
 
-    # RNG
-    config y HW_RANDOM_VIRTIO
+    # Executables
+    config y BINFMT_ELF
+    config y BINFMT_MISC
+    config y BINFMT_SCRIPT
+
+    # File systems
+    config y EXT4_FS
+    config y EXT4_USE_FOR_EXT2
+    config y DNOTIFY
+    config y INOTIFY_USER
+    config y FUSE_FS
+    config y CUSE
+    config y VIRTIO_FS
+    config y ISO9660_FS
+    config y VFAT_FS
+    config y SYSFS
+    config y PROC_FS
+    config y DEVTMPFS
+    config y TMPFS
+
+    # Networking
+    config y PACKET
+    config y UNIX
+    config y TLS
+    config y IP_MULTICAST
+    config y SYN_COOKIES
+    config y INET_UDP_DIAG
+    config y TUN
 
     # Driers
+    config y E1000
+    config y SCSI
+    config y SCSI_VIRTIO
+    config y BLK_DEV_SD
+    config y CHR_DEV_ST
+    config y BLK_DEV_SR
+    config y IDE
+    config y ATA
+    config y ATA_PIIX
+    config y USB
     config y VIRTIO
+    config y CRYPTO_DEV_VIRTIO
     config y VIRTIO_PCI
     config y VIRTIO_MMIO
     config y VIRTIO_CONSOLE
-    config y VIRTIO_IDE
-    config y VIRTIO_SCSI
+    config y VIRTIO_BALLOON
+    config y VIRTIO_INPUT
     config y VIRTIO_BLK
+    config y VIRTIO_BLK_SCSI
     config y VIRTIO_NET
+    config y HW_RANDOM_VIRTIO
+    config y NET_TULIP
+
+    # Trimming
+    config y TRIM_UNUSED_KSYMS
+    config y LTO_MENU
+    config n SYSFS_SYSCALL
+    config n ADVISE_SYSCALLS
 
     if ! customize_kernel; then
       error "customize_kernel() returned non-zero"
     fi
 
-    yes "" | make oldconfig
+    make olddefconfig
 
     cp .config ../KConfig
+
+    make menuconfig
 
     make \
       CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       bzImage -j "$NUM_JOBS"
+
     cp arch/x86/boot/bzImage ../kernel.gz
   )
 }

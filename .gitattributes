@@ -1,3 +1,4 @@
 ulinux.iso filter=lfs diff=lfs merge=lfs -text
 rootfs.gz filter=lfs diff=lfs merge=lfs -text
 kernel.gz filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
