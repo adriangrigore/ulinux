@@ -138,11 +138,11 @@ for f in "$CS"*; do
     cloud_config="$(mktemp "cloud_config-XXXXXX")"
     authorized_keys="$(mktemp "authorized_keys-XXXXXX")"
     parse_yaml "$f" > "$cloud_config"
-    while IFS= read -r opt; do 
+    while IFS= read -r opt; do
       key="$(echo "$opt" | cut -f 1 -d '=')"
       raw="$(echo "$opt" | cut -f 2- -d '=')"
-      val=
-      eval "val=$raw"
+      val="${raw#\"}"
+      val="${val%\"}"
       case "$key" in
         _hostname)
           hostname "$val"
@@ -180,13 +180,13 @@ for f in "$CS"*; do
     fi
 
     if [ -n "$user" ] && [ -n "$password" ]; then
-      printf "%s:%s" "$user" "$password" | chpasswd -e
+      echo "${user}:${password}" | chpasswd -e
     fi
 
     if [ -n "$home" ] && [ -s "$authorized_keys" ]; then
       mkdir -p "$home"/.ssh
       cat "$authorized_keys" >> "$home"/.ssh/authorized_keys
-       rm "$authorized_keys"
+      rm "$authorized_keys"
     fi
   else
     # Other formats are unsupported

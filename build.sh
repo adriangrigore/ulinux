@@ -253,6 +253,7 @@ build_kernel() {
 
     # Security
     config y MULTIUSER
+    config y FILE_LOCKING
     config y SECURITY
     config y SECURITY_CAPABILITIES
 
