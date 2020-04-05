@@ -11,6 +11,19 @@
 > Right now you can expect things to change rapidly, but in a stable way
 > with the following features:
 
+As of the 6th Apr 2020:
+
+> µLinux (uLinux) is now a micro Linux Cloud Native OS designed for high performance, minimal overheads and decreased security footprint attack surface.
+
+## Supported Platforms
+
+- [X] VirtualBox
+- [X] QEMU/KVM
+- [X] [Proxmox VE](https://www.proxmox.com/en/proxmox-ve)
+- [X] [Vultr](https://vultr.com)
+- [X] [DigitalOcean](https://digitalocean.com)
+- _need more? file an issue or submit a PR!_
+
 ## Features
 
 - Recent Linux Kernel
@@ -18,6 +31,7 @@
 - Dropbear SSH
 - Hybrid Live ISO
 - Installer
+- CloudInit
 - Crude (_to be replaced_) package  manager
 
 ### Toolchain
