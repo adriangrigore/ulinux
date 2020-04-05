@@ -22,6 +22,9 @@ hostname "$HOSTNAME"
 ip link set lo up
 ip link set eth0 up
 
+# Run cloudinit (if available)
+cloudinit >> /var/log/cloudinit.log
+
 # Start syslogd (Logging)
 syslogd
 

@@ -363,6 +363,10 @@ build_iso() {
   )
 }
 
+build_clouddrive() {
+  xorrisofs -J -r -V cidata -o ./clouddrive.iso clouddrive/
+}
+
 build_all() {
   build_musl
   build_tcc
@@ -376,6 +380,7 @@ build_all() {
   write_metadata
   build_rootfs
   build_iso
+  build_clouddrive
 }
 
 repack() {
@@ -383,4 +388,5 @@ repack() {
   write_metadata
   build_rootfs
   build_iso
+  build_clouddrive
 }

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+printf "Executed user-data from cloudinit..."
