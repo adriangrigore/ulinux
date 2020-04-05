@@ -41,8 +41,7 @@ crond -b > /dev/null 2>&1
 
 printf "\nBoot took %s seconds\n" "$(cut -d' ' -f1 /proc/uptime)"
 
-# shell
+# Start a getty (TTY)
 while true; do
-  setsid cttyhack /bin/sh &
-  wait
+  getty -L /dev/tty0 115200 vt100
 done
