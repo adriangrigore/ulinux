@@ -96,7 +96,6 @@ build_busybox() {
     make distclean defconfig -j "$NUM_JOBS"
     config y STATIC
     config n INCLUDE_SUSv2
-    config y INSTALL_NO_USR
     config "\"$rootfs\"" PREFIX
     config y FEATURE_EDITING_VI
     config y TUNE2FS
@@ -125,30 +124,29 @@ build_busybox() {
     make \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       busybox install -j "$NUM_JOBS"
-
-    # symlink for /usr/bin/env
-    ln -snf /bin/env /usr/bin/env
-
   )
 }
 
 build_dropbear() {
   (
     cd dropbear-$DROPBEAR_VERSION
+
     ./configure \
       --prefix=/usr \
       --mandir=/usr/man \
       --enable-static \
       --disable-zlib \
-      --disable-wtmp \
-      --disable-syslog
+      --disable-wtmp
 
     make \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       DESTDIR="$rootfs" \
       PROGRAMS="dropbear dbclient dropbearkey scp" \
       strip install -j "$NUM_JOBS"
+
     ln -sf /usr/bin/dbclient "$rootfs"/usr/bin/ssh
+
+    chmod u+s "$rootfs"/usr/sbin/dropbear
   )
 }
 

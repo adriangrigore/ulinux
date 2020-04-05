@@ -22,6 +22,9 @@ hostname "$HOSTNAME"
 ip link set lo up
 ip link set eth0 up
 
+# Start syslogd (Logging)
+syslogd
+
 # Start udhcpc (DHCP)
 udhcpc -f -p /var/run/udhcpc.pid > /var/log/udhcpc.log 2>&1 &
 
