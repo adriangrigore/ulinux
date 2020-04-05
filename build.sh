@@ -251,6 +251,11 @@ build_kernel() {
     config n X86_VERBOSE_BOOTUP
     config ulinux DEFAULT_HOSTNAME
 
+    # Security
+    config y MULTIUSER
+    config y SECURITY
+    config y SECURITY_CAPABILITIES
+
     # Compression
     config y KERNEL_GZ
     config y RD_GZ
