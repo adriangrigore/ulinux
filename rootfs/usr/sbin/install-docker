@@ -1,0 +1,9 @@
+#!/bin/sh
+
+VERSION=19.03.5
+
+wget -q -O docker.tar.gz \
+  https://download.docker.com/linux/static/stable/x86_64/docker-$VERSION.tgz
+tar -xf docker.tar.gz
+
+mv docker/* /usr/sbin/

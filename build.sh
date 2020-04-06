@@ -104,6 +104,7 @@ build_busybox() {
     config n LINUXRC
     config y FEATURE_GPT_LABEL
     config n FEATURE_SKIP_ROOTFS
+    config y FEATURE_WGET_HTTPS
     config n LPD
     config n LPR
     config n LPQ
@@ -180,6 +181,22 @@ build_rngtools() {
   )
 }
 
+build_iptables() {
+  (
+    cd iptables-$IPTABLES_VERSION
+    ./configure \
+      --prefix=/usr \
+      --enable-libipq \
+      --disable-nftables \
+      --enable-static
+
+    make \
+      EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
+      -j "$NUM_JOBS"
+    make DESTDIR="$rootfs" install
+  )
+}
+
 write_metadata() {
   # Setup /etc/os-release with some nice contents
   latestTag="$(git describe --abbrev=0 --tags || echo "v0.0.0")"
@@ -251,6 +268,8 @@ build_kernel() {
     config y POSIX_TIMERS
     config y MODULES
     config y PRINTK
+    config y FUTEX
+    config y EPOLL
     config y RETPOLINE
     config n DEBUG_KERNEL
     config n X86_VERBOSE_BOOTUP
@@ -291,6 +310,8 @@ build_kernel() {
     config y TMPFS
 
     # Networking
+    config y NETFILTER
+    config y IP_NF_IPTABLES
     config y PACKET
     config y UNIX
     config y TLS
@@ -322,6 +343,42 @@ build_kernel() {
     config y VIRTIO_NET
     config y HW_RANDOM_VIRTIO
     config y NET_TULIP
+
+    # Docker / Container Basics (cgroups)
+    config y NAMESPACES
+    config y NET_NS
+    config y PID_NS
+    config y IPC_NS
+    config y UTS_NS
+    config y CGROUPS
+    config y CGROUP_CPUACCT
+    config y CGROUP_DEVICE
+    config y CGROUP_FREEZER
+    config y CGROUP_SCHED
+    config y CPUSETS
+    config y MEMCG
+    config y KEYS
+    config y VETH
+    config y BRIDGE
+    config y BRIDGE_NETFILTER
+    config y IP_NF_FILTER
+    config y IP_NF_TARGET_MASQUERADE
+    config y NETFILTER_XT_MATCH_ADDRTYPE
+    config y NETFILTER_XT_MATCH_CONNTRACK
+    config y NETFILTER_XT_MATCH_IPVS
+    config y NETFILTER_XT_NAT
+    config y IP_NF_NAT
+    config y NF_NAT
+    config y NF_NAT_IPV4
+    config y NF_CONNTRACK
+    config y NF_NAT_NEEDED
+    config y POSIX_MQUEUE
+    config y DEVPTS_MULTIPLE_INSTANCES
+
+    # Docker / Container Storage (cgroups, overlayfs, devmapper)
+    config y BLK_DEV_DM
+    config y DM_THIN_PROVISIONING
+    config y OVERLAY_FS
 
     # Trimming
     config y TRIM_UNUSED_KSYMS
@@ -382,6 +439,7 @@ build_all() {
   build_dropbear
   build_syslinux
   build_rngtools
+  build_iptables
   build_kernel
   write_metadata
   build_rootfs

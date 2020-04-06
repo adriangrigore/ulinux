@@ -62,6 +62,12 @@ download_rngtools() {
   tar -xf rngtools.tar.gz
 }
 
+download_iptables() {
+  wget -q -O iptables.tar.bz2 \
+    https://netfilter.org/projects/iptables/files/iptables-$IPTABLES_VERSION.tar.bz2
+  tar -xf iptables.tar.bz2
+}
+
 download_all() {
   download_musl
   download_tcc
@@ -71,5 +77,6 @@ download_all() {
   download_dropbear
   download_syslinux
   download_rngtools
+  download_iptables
   download_kernel
 }

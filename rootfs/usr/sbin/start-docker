@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Mount CGroupsFS (if not mounted)
+if ! mount | grep -q cgroup; then
+  mount-cgroups
+fi
+
+# Start dockerd (Containers)
+DOCKER_DATA="$(blkid | grep 'LABEL="DOCKER_DATA"' | awk -F ':' '{ print $1 }')"
+if [ "$DOCKER_DATA" ]; then
+  mkdir -p /var/lib/docker
+  mount "$DOCKER_DATA" /var/lib/docker
+fi
+DOCKER_RAMDISK=true dockerd -p /var/run/docker.pid > /var/log/docker.log 2>&1 &
