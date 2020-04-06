@@ -6,7 +6,7 @@
 > in the past with [Minimal Container Linux](https://github.com/prologic/minimcal-container-linux)
 > in an effort to create yet another Linux OS / Distro with a different set of goals.
 >
-> I'm not sure what those goals are yet, this is still very eraly stages.
+> I'm not sure what those goals are yet, this is still very early stages.
 >
 > Right now you can expect things to change rapidly, but in a stable way
 > with the following features:
