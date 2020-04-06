@@ -103,6 +103,7 @@ build_busybox() {
     config n INIT
     config n LINUXRC
     config y FEATURE_GPT_LABEL
+    config n FEATURE_SKIP_ROOTFS
     config n LPD
     config n LPR
     config n LPQ
@@ -118,8 +119,12 @@ build_busybox() {
     config n PIPE_PROGRESS
     config n RUN_PARTS
     config n START_STOP_DAEMON
+    config n WHICH
     config n MAN
+    config n RPM
     config n DEB
+    config n DPKG
+    config n DPKG_DEB
     yes "" | make oldconfig
     make \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \

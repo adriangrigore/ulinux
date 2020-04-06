@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case "$1" in
+  6)
+    sync -f && reboot -f
+    ;;
+  *)
+    printf "ERROR: Invalid runlevel %s\n" "$1"
+    exit 1
+    ;;
+esac
