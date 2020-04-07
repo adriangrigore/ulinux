@@ -7,16 +7,16 @@ options:
   commits:
     filters:
       Type:
-        - Added
-        - Fixed
-        - Updated
-        - Documented
+        - Add
+        - Fix
+        - Update
+        - Document
   commit_groups:
     title_maps:
-      Added: Features
-      Updated: Updates
-      Fixed: Bug Fixes
-      Documented: Documentation
+      Add: Features
+      Update: Updates
+      Fix: Bug Fixes
+      Document: Documentation
   header:
     pattern: "^((\\w+)\\s.*)$"
     pattern_maps:
