@@ -2,18 +2,18 @@
 
 ![Build](https://github.com/prologic/ulinux/workflows/Build/badge.svg)
 
-> _so far..._ uLinux is an improved, refactored version of prior work I've done
-> in the past with [Minimal Container Linux](https://github.com/prologic/minimcal-container-linux)
-> in an effort to create yet another Linux OS / Distro with a different set of goals.
->
-> I'm not sure what those goals are yet, this is still very early stages.
->
-> Right now you can expect things to change rapidly, but in a stable way
-> with the following features:
+> µLinux (uLinux) is a micro (µ)Linux Cloud Native OS designed for high
+> performance, minimal overheads and decreased security footprint attack surface.
+> µLinux is container-ready and is small enough with a lot of fat removed and
+> stripped down you could _almost_ consider it a "Unikernel" of sorts.
+> If you care about performance, footprint, security and minimalism like I do
+> you'll want to use µLinux for your workloads.
 
-As of the 6th Apr 2020:
-
-> µLinux (uLinux) is now a micro Linux Cloud Native OS designed for high performance, minimal overheads and decreased security footprint attack surface.
+> __NOTE:__: µLinux is _NOT_ a full blown Desktop OS nor will it ever likely be.
+>            It is also not ever likely to build your favourite GCC/GLIBC/Clang
+>            software as it only ships with a very small C compiler and libc (musl).
+>            Consider using [Alpine](https://alpinelinux.org/) for a more feature
+>            rich system or any other "heavier" / "full featured" distro.
 
 ## Supported Platforms
 
@@ -63,13 +63,14 @@ used for testing and booting the OS into a Guest VM.
 ## Prebuilt
 
 This repo contains prebuilt assets to get you started quickly without having
-to build anything yourself. The following are currently available and stored
-with [Git LFS](https://help.github.com/en/github/managing-large-files) and
-can by fetched with `git lfs fetch` or downloaded directly from Github:
+to build anything yourself.
 
-- [ulinux.iso](https://github.com/prologic/ulinux/blob/master/ulinux.iso) -- Hybrid Live ISO
-- [kernel.gz](https://github.com/prologic/ulinux/blob/master/ulinux.iso) -- Linux Kernel
-- [rootfs.gz](https://github.com/prologic/ulinux/blob/master/ulinux.iso) -- RootFS (_initrd_)
+Please see the [Release](https://github.com/prologic/ulinux/releases) for the
+latest published versions of:
+
+- `ulinux.iso` -- Hybrid Live ISO with Installer.
+- `kernel.gz`  -- The Kernel Image (Linux)
+- `rootfs.gz`  -- The RootFS Image (INITRD)
 
 ## Installing
 
