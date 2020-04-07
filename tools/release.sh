@@ -30,7 +30,7 @@ github-release release \
   -n "${TAG}" \
   -d "$(git-chglog --next-tag "${TAG}" "${TAG}" | tail -n+5)" \
   --draft
-for asset in *.gz *.iso; do
+for asset in *.gz *.iso *.txt; do
   github-release upload \
     -u prologic \
     -r ulinux \
