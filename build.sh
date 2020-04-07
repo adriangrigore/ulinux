@@ -396,6 +396,10 @@ build_kernel() {
     config y DM_THIN_PROVISIONING
     config y OVERLAY_FS
 
+    # Power Management
+    config y ACPI
+    config y PM
+
     # Trimming
     config y TRIM_UNUSED_KSYMS
     config y LTO_MENU
