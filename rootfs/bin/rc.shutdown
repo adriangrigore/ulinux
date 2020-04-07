@@ -21,44 +21,59 @@ echo
 
 log "Shutting down ..."
 
-progress "Storing random seed"
-if /bin/dd if=/dev/urandom of=/etc/random-seed count=1 bs=512 2> /dev/null; then
-  log "OK"
-else
-  log "ERR"
+store_random_seed() {
+  progress "Storing random seed"
+  /bin/dd if=/dev/urandom of=/etc/random-seed count=1 bs=512
+}
+
+stop_services() {
+  progress "Stopping services"
+  /bin/svc -k
+}
+
+kill_processes() {
+  progress "Killing all processes"
+  /usr/sbin/killall5 -s TERM
+  /bin/sleep 3
+  /usr/sbin/killall5 -s KILL
+}
+
+unmount_filesystems() {
+  progress "Unmounting filesystems"
+  /bin/umount -a -r
+}
+
+sync_disks() {
+  progress "Syncing disks"
+  /bin/sync -f
+  /bin/sleep 3
+  wait
+}
+
+reboot_or_poweroff() {
+  case "$shutdown_method" in
+    reboot)
+      /sbin/reboot -f
+      ;;
+    poweroff)
+      /sbin/poweroff -f
+      ;;
+  esac
+}
+
+steps="store_random_seed  stop_services kill_processes unmount_filesystems"
+steps="$steps sync_disks"
+steps="$steps reboot_or_poweroff"
+
+shutdown_method="$1"
+shift
+
+_main() {
+  for step in $steps; do
+    run "$step"
+  done
+}
+
+if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
+  _main "$@"
 fi
-
-progress "Stopping services"
-if /bin/svc -k; then
-  log "OK"
-else
-  log "ERR"
-fi
-
-progress "Killing all processes"
-/usr/sbin/killall5 -s TERM
-/bin/sleep 3
-/usr/sbin/killall5 -s KILL
-log "OK"
-
-progress "Unmounting filesystems"
-if /bin/umount -a -r; then
-  log "OK"
-else
-  log "ERR"
-fi
-
-progress "Syncing disks"
-/bin/sync -f
-/bin/sleep 3
-wait
-log "OK"
-
-case "$1" in
-  reboot)
-    /sbin/reboot -f
-    ;;
-  poweroff)
-    /sbin/poweroff -f
-    ;;
-esac

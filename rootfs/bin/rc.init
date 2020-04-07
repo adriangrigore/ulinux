@@ -114,11 +114,7 @@ _main() {
   log "The system is coming up ..."
 
   for step in $steps; do
-    if $step; then
-      log "OK"
-    else
-      log "ERR"
-    fi
+    run "$step"
   done
 
   log "Boot took $(cut -d' ' -f1 /proc/uptime) seconds"

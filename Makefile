@@ -4,7 +4,7 @@ all: build
 
 build:
 	@echo "Building builder ..."
-	@docker build -t ulinux/builder .
+	@docker build -f Dockerfile.builder -t ulinux/builder .
 	@echo "Building image ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
 	@docker run --name ulinux_build ulinux/builder
@@ -20,10 +20,12 @@ build:
 	@sha256sum *.gz *.iso > sha256sums.txt
 	@echo "Creating Disk Image ..."
 	@qemu-img create -f qcow2 ulinux.img 1G
+	@echo "Building Docker Image ..."
+	@docker build -f Dockerfile -t prologic/ulinux .
 
 repack:
 	@echo "Building builder ..."
-	@docker build -t ulinux/builder .
+	@docker build -f Dockerfile.builder -t ulinux/builder .
 	@echo "Building image ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
 	@docker run --name ulinux_build ulinux/builder repack
@@ -36,6 +38,8 @@ repack:
 	@sha256sum *.gz *.iso > sha256sums.txt
 	@echo "Re-creating Disk Image ..."
 	@qemu-img create -f qcow2 ulinux.img 1G
+	@echo "Re-building Docker Image ..."
+	@docker build -f Dockerfile -t prologic/ulinux .
 
 test:
 	@./test.sh
