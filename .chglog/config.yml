@@ -1,8 +1,8 @@
-style: github
+style: Github
 template: CHANGELOG.tpl.md
 info:
   title: CHANGELOG
-  repository_url: https://github.com/prologic/minimal-container-linux
+  repository_url: https://github.com/prologic/ulinux
 options:
   commits:
     filters:
