@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SC2154
 
 # run-time script called by the DHCP client (udhcpd) when it handled an event
 
@@ -11,7 +12,7 @@ error_exit() {
 
 handle_bound() {
     IPADDR=$(echo "$ip" | awk '{print $1 }')
-    case `echo $subnet | awk '{ print $1 }'` in
+    case "$(echo "$subnet" | awk '{ print $1 }')" in
         255.255.0.0)     NETMASKBITS="16" ;;
         255.255.128.0)   NETMASKBITS="17" ;;
         255.255.192.0)   NETMASKBITS="18" ;;
@@ -28,47 +29,48 @@ handle_bound() {
         255.255.255.248) NETMASKBITS="29" ;;
 	*) NETMASKBITS= ;;
     esac
-    [ -n "$broadcast" ] && BROADCAST="broadcast $broadcast"
+    # XXX: THis appears unused?!
+    #[ -n "$broadcast" ] && BROADCAST="broadcast $broadcast"
 	
-    if ! arping -q -c 2 -w 3 -D -I $interface $IPADDR ; then
+    if ! arping -q -c 2 -w 3 -D -I "$interface" "$IPADDR" ; then
 	error_exit "another host already uses address $IPADDR on $interface."
     fi
 
-    if ! ip address add $IPADDR/$NETMASKBITS brd + dev $interface; then
+    if ! ip address add "$IPADDR"/"$NETMASKBITS" brd + dev "$interface"; then
 	error_exit "failed to configure $IPADDR/$NETMASKBITS on $interface."
     fi
 
     if [ -n "$router" ] ; then
-	while ip route del dev $interface 2>/dev/null ; do
+	while ip route del dev "$interface" 2>/dev/null ; do
 	    :
 	done
 	
 	for ii in $router ; do
-	    ip route add default via $ii dev $interface
+	    ip route add default via "$ii" dev "$interface"
 	done
     fi
     
     rm $RESOLV_CONF
-    [ -n "$domain" ] && echo domain $domain >> $RESOLV_CONF
+    [ -n "$domain" ] && echo domain "$domain" >> $RESOLV_CONF
     for ii in $dns ; do
-	echo nameserver $ii >> $RESOLV_CONF
+	echo nameserver "$ii" >> $RESOLV_CONF
     done
 
     rm $NTP_CONF
     for ii in $ntpsrv ; do
-	echo NTPSERVER=$ii >> $NTP_CONF
+	echo "NTPSERVER=$ii" >> $NTP_CONF
     done
 }
 
 handle_deconfig() {
-    ADDR=`ip -oneline -family inet addr show dev eth0 | awk '{ print $4 }'`
-    if [ ! -z "$ADDR" ] ; then
-	if ! ip address delete $ADDR brd + dev $interface ; then 
+  ADDR="$(ip -oneline -family inet addr show dev eth0 | awk '{ print $4 }')"
+    if [ -n "$ADDR" ] ; then
+	if ! ip address delete "$ADDR" brd + dev "$interface" ; then 
 	    error_exit "failed to remove $ADDR on $interface."
 	fi 
     fi
-    echo -n > $RESOLV_CONF
-    echo -n > $NTP_CONF
+    echo > $RESOLV_CONF
+    echo > $NTP_CONF
 }
 
 case "$1" in
@@ -77,5 +79,5 @@ case "$1" in
   deconfig)
     handle_deconfig ;;
   nak)
-    error_exit $message ;;
+    error_exit "$message" ;;
 esac
