@@ -1,4 +1,14 @@
 
+<a name="0.0.2"></a>
+## [0.0.2](https://github.com/prologic/ulinux/compare/0.0.1...0.0.2) (2020-04-08)
+
+### Updates
+
+* Update repo and remove old Git LFS assets
+* Update README with latest information on releases and project status
+* Update release script to remove final git pull
+
+
 <a name="0.0.1"></a>
 ## 0.0.1 (2020-04-08)
 
