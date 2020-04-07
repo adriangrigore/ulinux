@@ -39,4 +39,3 @@ for asset in *.gz *.iso *.txt; do
     -n "${asset}" \
     -l "${asset}"
 done
-git pull --tags
