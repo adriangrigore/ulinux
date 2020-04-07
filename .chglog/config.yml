@@ -1,0 +1,27 @@
+style: github
+template: CHANGELOG.tpl.md
+info:
+  title: CHANGELOG
+  repository_url: https://github.com/prologic/minimal-container-linux
+options:
+  commits:
+    filters:
+      Type:
+        - Added
+        - Fixed
+        - Updated
+        - Documented
+  commit_groups:
+    title_maps:
+      Added: Features
+      Updated: Updates
+      Fixed: Bug Fixes
+      Documented: Documentation
+  header:
+    pattern: "^((\\w+)\\s.*)$"
+    pattern_maps:
+      - Subject
+      - Type
+  notes:
+    keywords:
+      - BREAKING CHANGE

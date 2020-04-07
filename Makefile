@@ -36,5 +36,8 @@ repack:
 test:
 	@./test.sh
 
+release: build
+	@./tools/release.sh
+
 clean:
 	@git clean -f -d -x
