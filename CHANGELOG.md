@@ -17,6 +17,7 @@
 
 ### Features
 
+* Add sha255sums.txt as part of the release process
 * Add tools to create Github Releases
 * Add power management (ACPI) to the kernel
 * Add sinit as the init process (suckless init) [REFACTOR] ([#12](https://github.com/prologic/ulinux/issues/12))
