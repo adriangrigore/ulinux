@@ -1,4 +1,7 @@
 *~*
+*.gz
 *.bak
 *.img
+*.iso
+*.txt
 *.log
