@@ -35,6 +35,7 @@ for asset in *.gz *.iso; do
     -u prologic \
     -r ulinux \
     -t "${TAG}"  \
+    -f "${asset}" \
     -n "${asset}" \
     -l "${asset}"
 done
