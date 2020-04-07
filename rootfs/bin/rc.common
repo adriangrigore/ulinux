@@ -1,0 +1,45 @@
+#!/bin/sh
+
+progress() {
+  printf "  %s ... " "$1"
+}
+
+log() {
+  printf "%s\n" "$1"
+}
+
+error() {
+  log "ERROR: ${1}"
+}
+
+fail() {
+  log "FATAL: ${1}"
+  exit 1
+}
+
+debug() {
+  log "Dropping into a shell for debugging ..."
+  exec /bin/sh
+}
+
+save_argv() {
+  for i; do
+    printf %s\\n "$i" | sed "s/'/'\\\\''/g;1s/^/'/;\$s/\$/' \\\\/"
+  done
+  echo " "
+}
+
+restore_argv() {
+  eval "set -- $*"
+}
+
+fnmatch() {
+  case "$2" in
+    $1)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}

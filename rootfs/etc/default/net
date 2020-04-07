@@ -1,0 +1,13 @@
+# Connection type: "DHCP" or "static"
+TYPE="dhcp"
+
+# For "static" connections, specify your settings here:
+# To see your available devices run "ip link".
+DEV=eth0
+ADDR=10.0.0.2
+MASK=24
+GW=10.0.0.1
+
+# Optional settings:
+hostname="$(hostname)"
+DHCPOPTS="-b -S -t 10 -x hostname:$hostname -f $hostname"

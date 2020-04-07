@@ -44,6 +44,16 @@ download_make() {
   tar -xf make.tar.lz
 }
 
+download_sinit() {
+  if [ "$SINIT_VERSION" = "master" ]; then
+    git clone git://git.suckless.org/sinit sinit-$SINIT_VERSION
+  else
+    wget -q -O sinit.tar.gz \
+      https://dl.suckless.org/sinit/sinit-$SINIT_VERSION.tar.gz
+    tar -xf sinit.tar.gz
+  fi
+}
+
 download_busybox() {
   wget -q -O busybox.tar.bz2 \
     http://busybox.net/downloads/busybox-$BUSYBOX_VERSION.tar.bz2
@@ -73,6 +83,7 @@ download_all() {
   download_tcc
   download_fasm
   download_make
+  download_sinit
   download_busybox
   download_dropbear
   download_syslinux

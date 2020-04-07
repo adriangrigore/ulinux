@@ -1,0 +1,19 @@
+#!/bin/sh
+# shellcheck disable=SC1090,SC2086
+
+SERVICE="hwclock"
+
+[ -e "/etc/default/$SERVICE" ] && . "/etc/default/$SERVICE"
+
+case $1 in
+  -s)
+    /sbin/hwclock -u $PARAMS
+    ;;
+  -k)
+    /sbin/hwclock -w $PARAMS
+    ;;
+  *)
+    echo "usage: $0 -s|-k"
+    exit 1
+    ;;
+esac

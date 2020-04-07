@@ -1,0 +1,37 @@
+#!/bin/sh
+# shellcheck disable=SC1090,SC2086
+
+SERVICE="net"
+
+[ -e "/etc/default/$SERVICE" ] && . "/etc/default/$SERVICE"
+
+case $1 in
+  -s)
+    /sbin/ip addr add 127.0.0.1/8 dev lo broadcast + scope host
+    /sbin/ip link set lo up
+    /sbin/ip link set ${DEV} up
+
+    if [ "${TYPE}" = "dhcp" ]; then
+      /sbin/udhcpc ${DHCPOPTS}
+    else
+      /sbin/ip addr add ${ADDR}/${MASK} dev ${DEV} broadcast +
+      /sbin/ip route add default via ${GW}
+    fi
+    ;;
+  -k)
+    if [ "${TYPE}" = "dhcp" ]; then
+      /bin/kill "$(pidof udhcpc)"
+    else
+      /sbin/ip route del default
+      /sbin/ip link set ${DEV} down
+    fi
+
+    /sbin/ip addr del ${ADDR}/${MASK} dev ${DEV}
+    /sbin/ip link set lo down
+    /sbin/ip addr del 127.0.0.1/8 dev lo
+    ;;
+  *)
+    echo "usage: $0 -s|-k"
+    exit 1
+    ;;
+esac

@@ -30,6 +30,8 @@ repack:
 	@docker cp ulinux_build:/build/ulinux.iso .
 	@docker cp ulinux_build:/build/rootfs.gz .
 	@docker rm -f ulinux_build
+	@echo "Re-creating Disk Image ..."
+	@qemu-img create -f qcow2 ulinux.img 1G
 
 test:
 	@./test.sh

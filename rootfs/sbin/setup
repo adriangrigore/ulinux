@@ -16,7 +16,6 @@ sources="/mnt"
 mkdir -p "${sources}" "${rootfs}"
 
 cleanup() {
-  sync -f
   umount -f "${sources}"
   umount -f "${rootfs}"
   rm -rf "${rootfs}"
@@ -59,8 +58,6 @@ EOF
 
 extlinux -i "${rootfs}"/boot/syslinux
 
-dd bs=440 count=1 conv=notrunc if=/usr/share/syslinux/mbr.bin of="${disk}"
-
-sync -f
+dd bs=440 count=1 conv=notrunc,fsync if=/usr/share/syslinux/mbr.bin of="${disk}"
 
 echo "ALl Done!"

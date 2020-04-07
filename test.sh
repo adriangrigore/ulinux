@@ -3,6 +3,7 @@
 exec qemu-system-x86_64 \
   -m 1024 \
   -cpu qemu64 \
+  -rtc base=utc,clock=host \
   -boot order=cd,menu=off \
   -drive file=ulinux.iso,index=0,media=cdrom \
   -drive file=clouddrive.iso,index=1,media=cdrom \

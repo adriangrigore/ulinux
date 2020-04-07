@@ -1,0 +1,135 @@
+#!/bin/sh
+# shellcheck disable=SC1091
+
+umask 022
+
+. /etc/rc.conf
+. /bin/rc.common
+
+create_mounts() {
+  progress "Mounting /dev /proc"
+  /bin/mkdir -p /dev /proc /sys /tmp
+  /bin/mount -n -t proc -o nosuid,noexec,nodev proc /proc
+  /bin/mount -n -t sysfs -o nosuid,noexec,nodev sysfs /sys
+  /bin/mount -n -t tmpfs -o nosuid,mode=0755 dev /dev
+  /bin/mkdir /dev/pts /dev/shm
+  /bin/mount -n -t devpts -o gid=5,mode=0620 devpts /dev/pts
+  /bin/mount -n -t tmpfs shm /dev/shm
+  /bin/mount -o remount,ro /
+}
+
+start_mdev() {
+  progress "Starting mdev"
+  /sbin/mdev -s
+
+  #log Setting mdev as the kernel hotplug
+  #echo /sbin/mdev > /proc/sys/kernel/hotplug
+}
+
+create_stdfds() {
+  progress "Populating /dev std* fds"
+  # HACK!
+  cd /dev || return 1
+  /bin/ln -sf /proc/self/fd/0 stdin
+  /bin/ln -sf /proc/self/fd/1 stdout
+  /bin/ln -sf /proc/self/fd/2 stderr
+  /bin/ln -sf /proc/self/fd fd
+  cd - 1> /dev/null || return 1
+}
+
+check_filesystems() {
+  progress "Checking filesystems"
+  # XXX: We dno't have any fsck.<fs> yet
+  #/sbin/fsck -ATa
+  #if [ $? -eq 1 ]; then
+  #  error Filesystem errors exist, fix manually.
+  #  /bin/sh
+  #  /sbin/halt -r
+  #fi
+  return 0
+}
+
+remount_root() {
+  progress "Mounting / read-write"
+  /bin/mount -o remount,rw /
+}
+
+mount_filesystems() {
+  progress "Mounting filesystems"
+  /bin/mount -a
+
+  ln -sf /proc/mounts /etc/mtab
+}
+
+set_hostname() {
+  progress "Setting hostname"
+  HOSTNAME="${HOSTNAME:-localhost}"
+  /bin/hostname "$HOSTNAME"
+}
+
+seed_random() {
+  progress "Setting random seed"
+  [ -f /etc/random-seed ] && /bin/cat /etc/random-seed > /dev/urandom
+  /bin/dd if=/dev/urandom of=/etc/random-seed count=1 bs=512 2> /dev/null
+}
+
+write_dmesg() {
+  progress "Storing dmesg log"
+  /bin/dmesg > /var/log/dmesg.log
+  if [ -e /proc/sys/kernel/dmesg_restrict ] && [ "$(/bin/cat /proc/sys/kernel/dmesg_restrict)" = "1" ]; then
+    /bin/chmod 0600 /var/log/dmesg.log
+  else
+    /bin/chmod 0644 /var/log/dmesg.log
+  fi
+}
+
+load_modules() {
+  progress "Loading modules"
+  if [ -x /bin/rc.modules ]; then
+    /bin/rc.modules
+  fi
+}
+
+start_services() {
+  progress "Starting services"
+  if [ -x /bin/rc.svc ]; then
+    /bin/rc.svc
+  fi
+}
+
+run_local() {
+  progress "Running rc.local"
+  if [ -x /bin/rc.local ]; then
+    /bin/rc.local
+  fi
+}
+
+steps="create_mounts start_mdev create_stdfds check_filesystems remount_root"
+steps="$steps mount_filesystems set_hostname seed_random write_dmesg"
+steps="$steps load_modules start_services run_local"
+
+_main() {
+  : > /var/run/utmp
+
+  log "The system is coming up ..."
+
+  for step in $steps; do
+    if $step; then
+      log "OK"
+    else
+      log "ERR"
+    fi
+  done
+
+  log "Boot took $(cut -d' ' -f1 /proc/uptime) seconds"
+
+  # Start a TTY (getty)jjj
+  while true; do
+    /sbin/getty /dev/tty0 115200 linux
+    wait
+  done
+}
+
+if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
+  _main "$@"
+fi

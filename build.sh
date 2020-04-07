@@ -90,6 +90,14 @@ build_make() {
   )
 }
 
+build_sinit() {
+  (
+    cd sinit-$SINIT_VERSION
+    make
+    cp sinit "$rootfs"/sbin/init
+  )
+}
+
 build_busybox() {
   (
     cd busybox-$BUSYBOX_VERSION
@@ -101,6 +109,10 @@ build_busybox() {
     config y TUNE2FS
     config n BOOTCHARTD
     config n INIT
+    config y HALT
+    config y REBOOT
+    config y POWEROFF
+    config y FEATURE_CALL_TELINIT
     config n LINUXRC
     config y FEATURE_GPT_LABEL
     config n FEATURE_SKIP_ROOTFS
@@ -271,6 +283,7 @@ build_kernel() {
     config y FUTEX
     config y EPOLL
     config y RETPOLINE
+    config y RTC_CLASS
     config n DEBUG_KERNEL
     config n X86_VERBOSE_BOOTUP
     config ulinux DEFAULT_HOSTNAME
@@ -331,6 +344,8 @@ build_kernel() {
     config y ATA
     config y ATA_PIIX
     config y USB
+    config y USB_OHCI_HCD
+    config y USB_UHCI_HCD
     config y VIRTIO
     config y CRYPTO_DEV_VIRTIO
     config y VIRTIO_PCI
@@ -435,6 +450,7 @@ build_all() {
   build_tcc
   build_fasm
   build_make
+  build_sinit
   build_busybox
   build_dropbear
   build_syslinux

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# shellcheck disable=SC1091
+. /etc/rc.conf
+
+/bin/svc -c
+/bin/svc -s

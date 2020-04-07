@@ -1,0 +1,64 @@
+#!/bin/sh
+# shellcheck disable=SC1091
+
+umask 022
+
+. /etc/rc.conf
+. /bin/rc.common
+
+case "$1" in
+  reboot | poweroff) ;;
+
+  *)
+    echo "Invalid action '$1' for rc.shutdown" 1>&2
+    exit 1
+    ;;
+esac
+
+# Set linefeed mode to avoid staircase effect
+echo
+/bin/stty onlcr
+
+log "Shutting down ..."
+
+progress "Storing random seed"
+if /bin/dd if=/dev/urandom of=/etc/random-seed count=1 bs=512 2> /dev/null; then
+  log "OK"
+else
+  log "ERR"
+fi
+
+progress "Stopping services"
+if /bin/svc -k; then
+  log "OK"
+else
+  log "ERR"
+fi
+
+progress "Killing all processes"
+/usr/sbin/killall5 -s TERM
+/bin/sleep 3
+/usr/sbin/killall5 -s KILL
+log "OK"
+
+progress "Unmounting filesystems"
+if /bin/umount -a -r; then
+  log "OK"
+else
+  log "ERR"
+fi
+
+progress "Syncing disks"
+/bin/sync -f
+/bin/sleep 3
+wait
+log "OK"
+
+case "$1" in
+  reboot)
+    /sbin/reboot -f
+    ;;
+  poweroff)
+    /sbin/poweroff -f
+    ;;
+esac
