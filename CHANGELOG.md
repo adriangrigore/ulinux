@@ -1,4 +1,13 @@
 
+<a name="0.0.4"></a>
+## [0.0.4](https://github.com/prologic/ulinux/compare/0.0.3...0.0.4) (2020-04-08)
+
+### Updates
+
+* Update release process to include a GPG signed sha256sums.txt for authenticty of buidls
+* Update release Makefile target to ensure we are clean anad up-to-date
+
+
 <a name="0.0.3"></a>
 ## [0.0.3](https://github.com/prologic/ulinux/compare/0.0.2...0.0.3) (2020-04-08)
 
