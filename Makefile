@@ -16,10 +16,6 @@ build:
 	@docker cp ulinux_build:/build/kernel.gz .
 	@docker cp ulinux_build:/build/rootfs.gz .
 	@docker rm -f ulinux_build
-	@echo "Calculating SHA256SUMS ..."
-	@sha256sum *.gz *.iso > sha256sums.txt
-	@echo "Signing SHA256SUMS ..."
-	@gpg --detach-sign sha256sums.txt
 	@echo "Creating Disk Image ..."
 	@qemu-img create -f qcow2 ulinux.img 1G
 	@echo "Building Docker Image ..."
@@ -36,12 +32,6 @@ repack:
 	@docker cp ulinux_build:/build/ulinux.iso .
 	@docker cp ulinux_build:/build/rootfs.gz .
 	@docker rm -f ulinux_build
-	@echo "Re-calculating SHA256SUMS ..."
-	@rm -f sha256sums.txt
-	@sha256sum *.gz *.iso > sha256sums.txt
-	@echo "Re-signing SHA256SUMS ..."
-	@rm -f sha256sums.txt.sig
-	@gpg --detach-sign sha256sums.txt
 	@echo "Re-creating Disk Image ..."
 	@qemu-img create -f qcow2 ulinux.img 1G
 	@echo "Re-building Docker Image ..."
@@ -51,6 +41,11 @@ test:
 	@./test.sh
 
 release: clean up-to-date build
+	@echo "Calculating SHA256SUMS ..."
+	@sha256sum *.gz *.iso > sha256sums.txt
+	@echo "Signing SHA256SUMS ..."
+	@gpg --detach-sign sha256sums.txt
+	@echo "Creating release ..."
 	@./tools/release.sh
 
 up-to-date:
