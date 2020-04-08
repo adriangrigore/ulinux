@@ -1,4 +1,13 @@
 
+<a name="0.0.6"></a>
+## [0.0.6](https://github.com/prologic/ulinux/compare/0.0.5...0.0.6) (2020-04-08)
+
+### Bug Fixes
+
+* Fix /etc/os-release version ids
+* Fix screenshot links to be relative
+
+
 <a name="0.0.5"></a>
 ## [0.0.5](https://github.com/prologic/ulinux/compare/0.0.4...0.0.5) (2020-04-08)
 
