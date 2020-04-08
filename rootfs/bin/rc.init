@@ -15,7 +15,6 @@ create_mounts() {
   /bin/mkdir /dev/pts /dev/shm
   /bin/mount -n -t devpts -o gid=5,mode=0620 devpts /dev/pts
   /bin/mount -n -t tmpfs shm /dev/shm
-  /bin/mount -o remount,ro /
 }
 
 start_mdev() {
