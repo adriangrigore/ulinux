@@ -1,4 +1,12 @@
 
+<a name="0.0.5"></a>
+## [0.0.5](https://github.com/prologic/ulinux/compare/0.0.4...0.0.5) (2020-04-08)
+
+### Updates
+
+* Update Makefile release target to move sha256/gpg steps to release to fix CI
+
+
 <a name="0.0.4"></a>
 ## [0.0.4](https://github.com/prologic/ulinux/compare/0.0.3...0.0.4) (2020-04-08)
 
