@@ -1,6 +1,16 @@
+FROM alpine:3.11 AS build
+
+RUN apk add --no-cache -U jq curl ca-certificates
+
+WORKDIR /src
+
+COPY . .
+
+RUN .dockerfiles/build_rootfs.sh
+
 FROM scratch
 
-ADD rootfs.gz /
+COPY --from=build /rootfs /
 
 ENTRYPOINT ["/bin/sh"]
-CMD [""]
+CMD []
