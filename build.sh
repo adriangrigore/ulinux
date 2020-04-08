@@ -113,7 +113,7 @@ build_busybox() {
     config y REBOOT
     config y POWEROFF
     config y FEATURE_CALL_TELINIT
-    config "/sbin/telinit" CONFIG_TELINIT_PATH
+    config "/sbin/telinit" TELINIT_PATH
     config n LINUXRC
     config y FEATURE_GPT_LABEL
     config n FEATURE_SKIP_ROOTFS
