@@ -214,15 +214,15 @@ write_metadata() {
   # Setup /etc/os-release with some nice contents
   latestTag="$(git describe --abbrev=0 --tags || echo "v0.0.0")"
   latestRev="$(git rev-parse --short HEAD)"
-  fullVersion="$(echo "${latestTag}" | cut -c2-)"
-  majorVersion="$(echo "${latestTag}" | cut -c2- | cut -d '.' -f 1,2)"
+  fullVersion="$(echo "${latestTag}" | cut -c1-)"
+  majorVersion="$(echo "${latestTag}" | cut -c1- | cut -d '.' -f 1,2)"
   cat > "$rootfs"/etc/os-release << EOF
-NAME=micro Linux
+NAME=µLinux
 VERSION=$fullVersion
 ID=ulinux
 ID_LIKE=tcl
 VERSION_ID=$fullVersion
-PRETTY_NAME="micro Linux $fullVersion (TCL $majorVersion); $latestRev"
+PRETTY_NAME="µLinux (micro Linux) $fullVersion (TCL $majorVersion); $latestRev"
 ANSI_COLOR="1;34"
 HOME_URL="https://github.com/prologic/ulinux"
 SUPPORT_URL="https://github.com/prologic/ulinux"
