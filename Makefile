@@ -1,4 +1,4 @@
-.PHONY: clean build test
+.PHONY: build repack test release up-to-date clean
 
 all: build
 
@@ -44,8 +44,13 @@ repack:
 test:
 	@./test.sh
 
-release: build
+release: clean up-to-date build
 	@./tools/release.sh
+
+up-to-date:
+	@git checkout master
+	@git fetch --all
+	@git pull
 
 clean:
 	@git clean -f -d -x
