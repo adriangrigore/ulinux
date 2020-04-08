@@ -1,4 +1,23 @@
 
+<a name="0.0.3"></a>
+## [0.0.3](https://github.com/prologic/ulinux/compare/0.0.2...0.0.3) (2020-04-08)
+
+### Bug Fixes
+
+* Fix telinit path
+* Fix Docker Image building
+* Fix boot error mounting / as read-only which is pointless
+
+### Features
+
+* Add some color to uLinux 😀
+
+### Updates
+
+* Update release to not commit a useless commit
+* Update screenshots
+
+
 <a name="0.0.2"></a>
 ## [0.0.2](https://github.com/prologic/ulinux/compare/0.0.1...0.0.2) (2020-04-08)
 
