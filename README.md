@@ -47,9 +47,9 @@ There is no support for GCC/GLIBC.
 
 ### Screenshots
 
-![screenshot-1](/screenshot-1.png?raw=true "Botting from the Hybrid Live ISO")
-![screenshot-2](/screenshot-2.png?raw=true "After running `setup /dev/sda` to install to disk and booting from disk")
-![screenshot-3](/screenshot-3.png?raw=true "Fully booted showing process list and resources used after boot")
+![screenshot-1](screenshot-1.png?raw=true "Botting from the Hybrid Live ISO")
+![screenshot-2](screenshot-2.png?raw=true "After running `setup /dev/sda` to install to disk and booting from disk")
+![screenshot-3](screenshot-3.png?raw=true "Fully booted showing process list and resources used after boot")
 
 ## Getting Started
 
