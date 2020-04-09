@@ -3,6 +3,8 @@
 tmpc=
 
 cleanup() {
+  umount "$tmpc"/root/tmp
+  umount "$tmpc"/root/dev
   umount "$tmpc"/root
   rm -rf "$tmpc"
 }
@@ -14,20 +16,15 @@ setup_rootfs() {
   mount --bind /tmp "$tmpc"/root/tmp
 }
 
-setup_hostname() {
-  hostname "${1:-container}"
-}
-
 create_tmpc() {
   tmpc="$(mktemp -d)"
   trap cleanup EXIT
 }
 
-create_tmpc
-setup_rootfs
-setup_hostname "container"
-
 _main() {
+  create_tmpc
+  setup_rootfs
+
   unshare \
     --ipc \
     --uts \
