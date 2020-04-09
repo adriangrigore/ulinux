@@ -6,3 +6,5 @@
 *.txt
 *.sig
 *.log
+
+/.DS_Store
