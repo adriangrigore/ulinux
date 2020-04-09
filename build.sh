@@ -366,6 +366,7 @@ build_kernel() {
     config y PID_NS
     config y IPC_NS
     config y UTS_NS
+    config y USER_NS
     config y CGROUPS
     config y CGROUP_CPUACCT
     config y CGROUP_DEVICE
