@@ -1,0 +1,43 @@
+#!/bin/sh
+
+tmpc=
+
+cleanup() {
+  umount "$tmpc"/root
+  rm -rf "$tmpc"
+}
+
+setup_rootfs() {
+  mkdir -p "$tmpc"/root "$tmpc"/storage "$tmpc"/work
+  mount -t overlay -o upperdir="$tmpc/storage,lowerdir=/,workdir=$tmpc/work" overlayfs "$tmpc/root"
+}
+
+setup_hostname() {
+  hostname "${1:-container}"
+}
+
+create_tmpc() {
+  tmpc="$(mktemp -d)"
+  trap cleanup EXIT
+}
+
+create_tmpc
+setup_rootfs
+setup_hostname "container"
+
+_main() {
+  unshare \
+    --ipc \
+    --uts \
+    --pid \
+    --user \
+    --fork \
+    --mount \
+    --mount-proc \
+    --map-root-user \
+    sh -c "mount -t proc proc $tmpc/root/proc; chroot $tmpc/root $*"
+}
+
+if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
+  _main "$@"
+fi
