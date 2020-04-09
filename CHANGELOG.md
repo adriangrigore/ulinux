@@ -1,4 +1,22 @@
 
+<a name="0.0.9"></a>
+## [0.0.9](https://github.com/prologic/ulinux/compare/0.0.8...0.0.9) (2020-04-10)
+
+### Bug Fixes
+
+* Fix /dev/ptmx symlink and /tmp mount
+
+### Features
+
+* Add SYSCALL and SYSCTL to Kernel conig
+
+### Updates
+
+* Update cached copy of Kernel Config for refernece
+* Update the build and trim some unneeded Kernel options and remove --enable-static and -static flags
+* Update Kernel config and remove unused RD compression options
+
+
 <a name="0.0.8"></a>
 ## [0.0.8](https://github.com/prologic/ulinux/compare/0.0.7...0.0.8) (2020-04-09)
 
