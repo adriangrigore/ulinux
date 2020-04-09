@@ -1,4 +1,18 @@
 
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/prologic/ulinux/compare/0.0.6...0.0.7) (2020-04-09)
+
+### Bug Fixes
+
+* Fix hostname bug with tw for containers and properly umount dev and tmp as part of cleanup
+* Fix host networking in containers using the tw tool by bind-mounting /dev into the container
+
+### Features
+
+* Add a very lightweight container/sandbox tool tw written in pure POSIX Shell
+* Add USER_NS support to the Kernel
+
+
 <a name="0.0.6"></a>
 ## [0.0.6](https://github.com/prologic/ulinux/compare/0.0.5...0.0.6) (2020-04-08)
 
