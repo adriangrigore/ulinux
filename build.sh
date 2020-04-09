@@ -279,6 +279,8 @@ build_kernel() {
     config y PRINTK
     config y FUTEX
     config y EPOLL
+    config y SYSFS_SYSCALL
+    config y SYSCTL_SYSCALL
     config y RETPOLINE
     config y RTC_CLASS
     config n DEBUG_KERNEL
