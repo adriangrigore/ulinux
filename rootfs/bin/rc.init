@@ -7,14 +7,18 @@ umask 022
 . /bin/rc.common
 
 create_mounts() {
-  progress "Mounting /dev /proc"
-  /bin/mkdir -p /dev /proc /sys /tmp
+  progress "Mounting /dev /proc /sys"
+  /bin/mkdir -p /dev /proc /sys
   /bin/mount -n -t proc -o nosuid,noexec,nodev proc /proc
   /bin/mount -n -t sysfs -o nosuid,noexec,nodev sysfs /sys
   /bin/mount -n -t tmpfs -o nosuid,mode=0755 dev /dev
   /bin/mkdir /dev/pts /dev/shm
-  /bin/mount -n -t devpts -o gid=5,mode=0620 devpts /dev/pts
+  /bin/mount -n -t devpts -o gid=5,mode=0620,newinstance devpts /dev/pts
   /bin/mount -n -t tmpfs shm /dev/shm
+  (
+    cd /dev || exit 1
+    ln -s pts/ptmx .
+  )
 }
 
 start_mdev() {

@@ -5,6 +5,6 @@
 
 /dev/root              /         rootfs     defaults                         0      1
 /dev/sr0               /mnt      iso9660    ro,user,noauto,unhide            0      0
-tmp                    /tmp      tmpfs      defaults                         0      0
+tmp                    /tmp      tmpfs      rw,relative,mode=1777            0      0
 
 # End of file
