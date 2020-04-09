@@ -296,6 +296,11 @@ build_kernel() {
     # Compression
     config y KERNEL_GZ
     config y RD_GZ
+    config n RD_BZIP2
+    config n RD_LZMA
+    config n RD_XZ
+    config n RD_LZO
+    config n RD_LZ4
 
     # DHCP
     config y IP_PNP
