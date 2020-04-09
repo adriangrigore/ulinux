@@ -1,4 +1,13 @@
 
+<a name="0.0.8"></a>
+## [0.0.8](https://github.com/prologic/ulinux/compare/0.0.7...0.0.8) (2020-04-09)
+
+### Updates
+
+* Update location of cloudinit from bin to sbin
+* Update name of container/sandbox tool from tw to box
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/prologic/ulinux/compare/0.0.6...0.0.7) (2020-04-09)
 
