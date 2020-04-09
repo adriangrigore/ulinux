@@ -12,5 +12,4 @@ FROM scratch
 
 COPY --from=build /rootfs /
 
-ENTRYPOINT ["/bin/sh"]
-CMD []
+CMD ["/bin/sh"]
