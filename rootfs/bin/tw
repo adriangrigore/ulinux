@@ -10,6 +10,8 @@ cleanup() {
 setup_rootfs() {
   mkdir -p "$tmpc"/root "$tmpc"/storage "$tmpc"/work
   mount -t overlay -o upperdir="$tmpc/storage,lowerdir=/,workdir=$tmpc/work" overlayfs "$tmpc/root"
+  mount --bind /dev "$tmpc"/root/dev
+  mount --bind /tmp "$tmpc"/root/tmp
 }
 
 setup_hostname() {
