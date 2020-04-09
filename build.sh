@@ -94,7 +94,7 @@ build_sinit() {
   (
     cd sinit-$SINIT_VERSION
     make
-    cp sinit "$rootfs"/sbin/init
+    install -D -m 755 sinit "$rootfs"/sbin/init
   )
 }
 
@@ -153,7 +153,6 @@ build_dropbear() {
     ./configure \
       --prefix=/usr \
       --mandir=/usr/man \
-      --enable-static \
       --disable-zlib \
       --disable-wtmp
 
@@ -188,7 +187,7 @@ build_rngtools() {
     ./configure \
       --prefix=/usr \
       --sbindir=/usr/sbin \
-      CFLAGS="-static" LIBS="-l argp"
+      LIBS="-l argp"
     make
     make DESTDIR="$rootfs" install
   )
@@ -200,8 +199,7 @@ build_iptables() {
     ./configure \
       --prefix=/usr \
       --enable-libipq \
-      --disable-nftables \
-      --enable-static
+      --disable-nftables
 
     make \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
@@ -238,6 +236,7 @@ build_rootfs() {
     find . -type f -name '.empty' -size 0c -delete
     rm -rf "$rootfs"/usr/man
     rm -rf "$rootfs"/usr/share/man
+    rm -rf "$rootfs"/usr/lib/pkgconfig
 
     if ! customize_rootfs "${rootfs}"; then
       error "customize_rootfs() returned non-zero"
@@ -279,7 +278,6 @@ build_kernel() {
     config y PRINTK
     config y FUTEX
     config y EPOLL
-    config y SYSFS_SYSCALL
     config y SYSCTL_SYSCALL
     config y RETPOLINE
     config y RTC_CLASS
@@ -290,8 +288,6 @@ build_kernel() {
     # Security
     config y MULTIUSER
     config y FILE_LOCKING
-    config y SECURITY
-    config y SECURITY_CAPABILITIES
 
     # Compression
     config y KERNEL_GZ
@@ -308,7 +304,6 @@ build_kernel() {
 
     # Executables
     config y BINFMT_ELF
-    config y BINFMT_MISC
     config y BINFMT_SCRIPT
 
     # File systems
