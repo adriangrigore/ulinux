@@ -239,10 +239,6 @@ build_rootfs() {
     rm -rf "$rootfs"/usr/man
     rm -rf "$rootfs"/usr/share/man
 
-    # install static-get
-    wget -q -O - https://raw.githubusercontent.com/minos-org/minos-static/master/static-get > "${rootfs}"/sbin/static-get
-    chmod 755 "${rootfs}"/sbin/static-get
-
     if ! customize_rootfs "${rootfs}"; then
       error "customize_rootfs() returned non-zero"
     fi
