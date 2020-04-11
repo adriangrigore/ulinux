@@ -228,6 +228,23 @@ BUG_REPORT_URL="https://github.com/prologic/ulinux/issues"
 EOF
 }
 
+build_ports() {
+  (
+    # Bootstrap pkg
+    install -D -m 755 ./ports/pkg/pkg /usr/local/bin/pkg
+
+    for port in ls -d ports/*; do
+      if [ ! -d "$port" ]; then continue; fi
+      (
+        cd "$port" || exit 1
+        pkg checksum
+        pkg build
+        PKG_ROOT="$rootfs" pkg add ./*#*
+      )
+    done
+  )
+}
+
 build_rootfs() {
   (
     cd rootfs
@@ -462,6 +479,7 @@ build_all() {
   build_iptables
   build_kernel
   write_metadata
+  build_ports
   build_rootfs
   build_iso
   build_clouddrive

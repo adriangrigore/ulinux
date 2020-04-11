@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# shellcheck disable=SC1091
+. /bin/pkg.common
+
+index=
+
+cleanup() {
+  rm -rf "$index"
+}
+
+get_index() {
+  index="$(mktemp -p /tmp -t ports-index-XXXXXX)"
+  wget -q -O "$index" "$URL"/index
+}
+
+sync_ports() {
+  (
+    cd "$PKG_PORTSDIR" || fatal "could not change directory to PKG_PORTSDIR $PKG_PORTSDIR"
+
+    while read -r file; do
+      mkdir -p "$(dirname "$file")"
+      wget -q -O "$file" "$URL/$file"
+    done < "$index"
+  )
+}
+
+_main() {
+  trap cleanup EXIT
+
+  get_index || fatal "error retriving index"
+  sync_ports || fatal "error syncing ports"
+}
+
+if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
+  _main "$@"
+fi

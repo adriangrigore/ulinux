@@ -1,0 +1,14 @@
+/etc/pkg.conf
+/bin/prtcreate
+/bin/repogen
+/bin/ports
+/bin/pkg.common
+/bin/pkg
+/var/db/pkg/pkg/version
+/var/db/pkg/pkg/manifest
+/var/db/pkg/pkg
+/var/db/pkg
+/var/db
+/var
+/etc
+/bin

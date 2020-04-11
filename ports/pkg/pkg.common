@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# shellcheck disable=SC1091
+. /etc/pkg.conf
+
+log() {
+  printf "%s\n" "$1"
+}
+
+error() {
+  printf "ERROR: %s\n" "$1"
+}
+
+fatal() {
+  printf "FATAL: %s\n" "$1"
+  exit 1
+}

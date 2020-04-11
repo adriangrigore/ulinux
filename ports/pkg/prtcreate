@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# shellcheck disable=SC1091
+. /bin/pkg.common
+
+_main() {
+  if [ $# -ne 1 ]; then
+    printf "usage: %s <port>\n" "$(basename "$0")"
+    exit 1
+  fi
+
+  port="$1"
+  shift
+
+  (
+    cd "$PKG_PORTSDIR" || fatal "could not change directory to PKG_PORTSDIR $PKG_PORTSDIR"
+
+    mkdir -p "$port"
+    cat > "$port"/Pkgfile << EOF
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: ...
+# URL:         ...
+# Maintainer:  ...
+
+name=
+version=
+release=
+source=""
+
+build() {
+}
+EOF
+  )
+}
+
+if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
+  _main "$@"
+fi

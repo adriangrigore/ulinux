@@ -6,5 +6,11 @@
 *.txt
 *.sig
 *.log
+*.swp
 
 /.DS_Store
+/ports/*/*#*
+/ports/*/build
+/ports/*/*.zip
+/ports/*/*.tar*
+/ports/*/*.tgz

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+find . -type f ! -name 'index' ! -name '*.swp' -print | sed -e 's/^\.\///' > index
