@@ -216,11 +216,9 @@ build_ports() {
     # Bootstrap pkg
     install -D -m 755 ./ports/pkg/pkg /usr/local/bin/pkg
 
-    for port in ls -d ports/*; do
-      if [ ! -d "$port" ]; then continue; fi
+    for port in pkg tcc; do
       (
         cd "$port" || exit 1
-        pkg checksum
         pkg build
         PKG_ROOT="$rootfs" pkg add ./*#*
       )

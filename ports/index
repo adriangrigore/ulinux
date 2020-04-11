@@ -1,3 +1,8 @@
+docker/Pkgfile
+docker/dockerd.svc
+docker/.checksum
+docker/dockerd.conf
+docker/.manifest
 tcc/Makefile.patch
 tcc/Pkgfile
 tcc/.checksum
@@ -6,3 +11,12 @@ tcc/.manifest
 strace-static/Pkgfile
 strace-static/.checksum
 strace-static/.manifest
+pkg/Pkgfile
+pkg/.checksum
+pkg/pkg.conf
+pkg/prtcreate
+pkg/repogen
+pkg/ports
+pkg/.manifest
+pkg/pkg
+pkg/pkg.common

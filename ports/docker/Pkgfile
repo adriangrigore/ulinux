@@ -1,0 +1,22 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: An open platform for distributed applications for developers and sysadmins
+# URL:         https://www.docker.com/community-edition
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=docker
+version=19.03.5
+release=1
+source="https://download.docker.com/linux/static/stable/x86_64/$name-$version.tgz
+dockerd.conf dockerd.svc"
+
+build() {
+  install -D -m 755 docker/docker "$PKG/usr/bin/docker"
+  for f in docker-init dockerd runc ctr docker-proxy containerd containerd-shim; do
+    install -D -m 755 "docker/$f" "$PKG/usr/sbin/$f"
+  done
+
+  install -D -m 755 "$SRC/dockerd.svc" "$PKG/bin/svc.d/avail/dockerd"
+  install -D -m 644 "$SRC/dockerd.conf" "$PKG/etc/default/dockerd"
+}
