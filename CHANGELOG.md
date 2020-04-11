@@ -1,4 +1,26 @@
 
+<a name="0.0.10"></a>
+## [0.0.10](https://github.com/prologic/ulinux/compare/0.0.9...0.0.10) (2020-04-12)
+
+### Bug Fixes
+
+* Fix entrypoint/cmd of the Docker image
+
+### Features
+
+* Add docker port
+* Add basic support for network-config (tested with Proxmox VE 6.1)
+* Add documentation for uLinux ([#21](https://github.com/prologic/ulinux/issues/21))
+* Add set of core ports ([#19](https://github.com/prologic/ulinux/issues/19))
+* Add pkg a set of package management tools ([#17](https://github.com/prologic/ulinux/issues/17))
+* Add support for env, workdir and volumes to box
+
+### Updates
+
+* Update default ports url
+* Update busybox to latest snapshot
+
+
 <a name="0.0.9"></a>
 ## [0.0.9](https://github.com/prologic/ulinux/compare/0.0.8...0.0.9) (2020-04-10)
 
