@@ -1,4 +1,4 @@
-.PHONY: build repack test release up-to-date clean
+.PHONY: build repack test toc release up-to-date clean
 
 all: build
 
@@ -39,6 +39,9 @@ repack:
 
 test:
 	@./test.sh
+
+toc:
+	@gh-md-toc README.md
 
 release: clean up-to-date build
 	@echo "Calculating SHA256SUMS ..."
