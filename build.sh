@@ -218,7 +218,7 @@ build_ports() {
 
     for port in pkg tcc; do
       (
-        cd "$port" || exit 1
+        cd "ports/$port" || exit 1
         pkg build
         PKG_ROOT="$rootfs" pkg add ./*#*
       )
