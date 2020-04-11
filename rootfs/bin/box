@@ -1,30 +1,170 @@
 #!/bin/sh
 
-tmpc=
+: "${VERSION:=__VERSION__}"
 
-cleanup() {
-  umount "$tmpc"/root/tmp
-  umount "$tmpc"/root/dev
-  umount "$tmpc"/root
-  rm -rf "$tmpc"
+tmpc=
+cid=
+
+BOX_VOLUMES=""
+BOX_WORKDIR="/"
+
+warn() {
+  printf "WARN: %s\n" "$1" >&2
 }
 
-setup_rootfs() {
-  mkdir -p "$tmpc"/root "$tmpc"/storage "$tmpc"/work
-  mount -t overlay -o upperdir="$tmpc/storage,lowerdir=/,workdir=$tmpc/work" overlayfs "$tmpc/root"
-  mount --bind /dev "$tmpc"/root/dev
-  mount --bind /tmp "$tmpc"/root/tmp
+error() {
+  printf "ERROR: %s\n" "$1" >&2
+}
+
+log() {
+  printf "%s\n" "$1" >&2
 }
 
 create_tmpc() {
-  tmpc="$(mktemp -d)"
-  trap cleanup EXIT
+  tmpc="$(mktemp -d -t box-XXXXXX)"
+  cid="$(basename "$tmpc")"
+  cid="${cid#box-}"
+}
+
+setup_tmpc() {
+  mkdir -p "$tmpc/root" "$tmpc/storage" "$tmpc/work"
+  mount -t overlay -o upperdir="$tmpc/storage,lowerdir=/,workdir=$tmpc/work" overlayfs "$tmpc/root"
+
+  mount -n -t tmpfs dev "$tmpc/root/dev"
+  mknod -m 666 "$tmpc/root/dev/null" c 1 3
+  mknod -m 666 "$tmpc/root/dev/zero" c 1 5
+  mknod -m 666 "$tmpc/root/dev/random" c 1 8
+  mknod -m 666 "$tmpc/root/dev/urandom" c 1 9
+
+  for volume in $BOX_VOLUMES; do
+    host="$(echo "$volume" | cut -f 1 -d ':')"
+    cont="$(echo "$volume" | cut -f 2 -d ':')"
+    mount --bind "$host" "$tmpc/root/$cont"
+  done
+}
+
+cleanup() {
+  for volume in $BOX_VOLUMES; do
+    host="$(echo "$volume" | cut -f 1 -d ':')"
+    cont="$(echo "$volume" | cut -f 2 -d ':')"
+    umount "$tmpc/root/$cont"
+  done
+
+  umount "$tmpc/root/dev"
+  umount "$tmpc/root"
+  rm -rf "$tmpc"
+}
+
+print_usage() {
+  cat << EOF
+Usage: $(basename "$0") [OPTS] [PROG [ARGS]]
+
+Options:
+  -w/--workdir DIR  -- Set working directory
+  -h/--help         -- Display this help and exit
+  -V/--version      -- Display version and exit
+EOF
+}
+
+print_version() {
+  printf "%s v%s\n" "$(basename "$0")" "$VERSION"
 }
 
 _main() {
-  create_tmpc
-  setup_rootfs
+  while :; do
+    case $1 in
+      -e | --env)
+        if [ -n "$2" ]; then
+          var="$2"
+          shift
+        else
+          error "-e/--env requires a non-empty option argument"
+          exit 1
+        fi
+        key="${var%=*}"
+        val="${var#*=}"
+        if [ -z "$val" ]; then
+          val="$(eval echo \$"$key")"
+        fi
+        BOX_ENV="$BOX_ENV $key=$val"
+        ;;
 
+      -v | --volume)
+        if [ -n "$2" ]; then
+          BOX_VOLUMES="$BOX_VOLUMES $2"
+          shift
+        else
+          error "-v/--volume requires a non-empty option argument"
+          exit 1
+        fi
+        ;;
+      --volume=?*)
+        BOX_VOLUMES="$BOX_VOLUMES ${1#*=}"
+        ;;
+      --volume=)
+        error "--volume requires a non-empty option argument"
+        exit 1
+        ;;
+      -w | --workdir)
+        if [ -n "$2" ]; then
+          BOX_WORKDIR="$2"
+          shift
+        else
+          error "-w/--workdir requires a non-empty option argument"
+          exit 1
+        fi
+        ;;
+      --workdir=?*)
+        BOX_WORKDIR="${1#*=}"
+        ;;
+      --workdir=)
+        error "--workdir requires a non-empty option argument"
+        exit 1
+        ;;
+
+      -V | --version)
+        print_version
+        exit 0
+        ;;
+      -h | --help)
+        print_usage
+        exit 0
+        ;;
+      --)
+        shift
+        break
+        ;;
+      -?*)
+        warn "invalid option $1"
+        ;;
+      *)
+        break
+        ;;
+    esac
+    shift
+  done
+
+  if [ $# -eq 0 ]; then
+    set -- /bin/sh
+  fi
+
+  create_tmpc
+  setup_tmpc
+
+  trap cleanup EXIT
+
+  cat > "$tmpc/root/init" << EOF
+/bin/mount -n -t proc proc /proc
+/bin/ln -s /proc/self/fd/0 /dev/stdin
+/bin/ln -s /proc/self/fd/1 /dev/stdout
+/bin/ln -s /proc/self/fd/2 /dev/stderr
+
+export PS1="\x1b[1m${cid} \w\x1b[0m # "
+
+chdir "$BOX_WORKDIR"
+EOF
+
+  # shellcheck disable=SC2086
   unshare \
     --ipc \
     --uts \
@@ -34,7 +174,7 @@ _main() {
     --mount \
     --mount-proc \
     --map-root-user \
-    sh -c "mount -t proc proc $tmpc/root/proc; chroot $tmpc/root $*"
+    chroot "$tmpc/root" /usr/bin/env -i $BOX_ENV /bin/sh -c "source /init; $*"
 }
 
 if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
