@@ -1,0 +1,28 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Tiny C Compiler - C Scripting Everywhere
+# URL:         https://repo.or.cz/tinycc.git/
+# Maintainer:  Steffen Nurpmeso, steffen at sdaoden dot eu
+
+name=tcc
+version=20200408
+release=1
+source="https://github.com/mirror/tinycc/archive/mob.zip
+Makefile.patch bt-log-stdarg.patch"
+
+build() {
+  cd tinycc-* || exit 1
+
+  patch -p1 -i "$SRC"/Makefile.patch
+  patch -p1 -i "$SRC"/bt-log-stdarg.patch
+
+  ./configure \
+    --cc="${CC:-gcc}" \
+    --config-musl \
+    --prefix=/usr \
+    --disable-static
+
+  make
+  make DESTDIR="$PKG" install
+}

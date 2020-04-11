@@ -33,23 +33,6 @@ build_musl() {
   )
 }
 
-build_tcc() {
-  (
-    gitver="$(echo "$TCC_VERSION" | cut -c1-7)"
-    cd tinycc-"${gitver}"
-
-    patch -p1 -i ../patches/tinycc-"${gitver}"/Makefile.patch
-    patch -p1 -i ../patches/tinycc-"${gitver}"/bt-log-stdarg.patch
-
-    ./configure \
-      --prefix=/usr \
-      --config-musl
-
-    make
-    make DESTDIR="$rootfs" install
-  )
-}
-
 build_fasm() {
   (
     cd fasm
@@ -468,7 +451,6 @@ build_clouddrive() {
 
 build_all() {
   build_musl
-  build_tcc
   build_fasm
   build_make
   build_sinit

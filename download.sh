@@ -26,12 +26,6 @@ download_musl() {
   tar -xf musl.tar.gz
 }
 
-download_tcc() {
-  wget -q -O tcc.tar.gz \
-    https://repo.or.cz/tinycc.git/snapshot/$TCC_VERSION.tar.gz
-  tar -xf tcc.tar.gz
-}
-
 download_fasm() {
   wget -q -O fasm.tgz \
     https://flatassembler.net/fasm-$FASM_VERSION.tgz
@@ -88,7 +82,6 @@ download_iptables() {
 
 download_all() {
   download_musl
-  download_tcc
   download_fasm
   download_make
   download_sinit

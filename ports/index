@@ -1,0 +1,8 @@
+tcc/Makefile.patch
+tcc/Pkgfile
+tcc/.checksum
+tcc/bt-log-stdarg.patch
+tcc/.manifest
+strace-static/Pkgfile
+strace-static/.checksum
+strace-static/.manifest

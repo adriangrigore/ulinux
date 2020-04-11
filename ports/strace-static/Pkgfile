@@ -1,0 +1,15 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: strace Static Binary
+# URL:         https://github.com/yunchih/static-binaries
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=strace-static
+version=4.26
+release=1
+source="https://github.com/yunchih/static-binaries/blob/master/strace"
+
+build() {
+  install -D -m 755 "$SRC"/strace /usr/bin/strace
+}
