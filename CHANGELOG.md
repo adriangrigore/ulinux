@@ -1,4 +1,22 @@
 
+<a name="0.0.11"></a>
+## [0.0.11](https://github.com/prologic/ulinux/compare/0.0.10...0.0.11) (2020-04-12)
+
+### Bug Fixes
+
+* Fix bug with pkg add with computing package naems
+* Fix Kernel config for Docker Swarm Mode with Overlay IPVS/VXLAN networking
+
+### Features
+
+* Add tool to publish prebuitl packages to bintray
+
+### Updates
+
+* Update Kernel build to only run make menuconfig if on a terminal
+* Update docker port to depend on cgroupfs-mount and remove obsolte *-docker tools and mount-cgroups
+
+
 <a name="0.0.10"></a>
 ## [0.0.10](https://github.com/prologic/ulinux/compare/0.0.9...0.0.10) (2020-04-12)
 
