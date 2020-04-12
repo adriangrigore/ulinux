@@ -181,6 +181,14 @@ pkg_list() {
   cd - > /dev/null
 }
 
+pkg_clean() {
+  rm -f ./*#*
+  rm -rf ./"build"
+  for src in $source; do
+    rm -rf ./"${src##*/}"
+  done
+}
+
 pkg_checksum() {
   mkdir -p build/src build/pkg || die "couldn't create required directories."
 
@@ -231,6 +239,11 @@ args() {
       pkg_build
       ;;
 
+    cl*)
+      pkgfile_read
+      pkg_clean
+      ;;
+
     c*)
       pkgfile_read
       pkg_get
@@ -244,6 +257,7 @@ args() {
     *)
       log 'pkg [a]dd pkg.tar.gz' \
         'pkg [b]uild' \
+        'pkg [cl]ean' \
         'pkg [c]hecksum' \
         'pkg [d]el pkg' \
         'pkg [l]ist [pkg]'
