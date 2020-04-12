@@ -382,16 +382,6 @@ $ enter-chroot /path/to/rootfs
 __NOTE__: You must have already mounted the root file system at the desired path
           before running `enter-chroot /path/to/rootfs`.
 
-### install-docker / start-docker
-
-Installs and Starts docker. Use these to grab the latest statically built
-version of the Docker CE engine and client and start Docker.
-
-### mount-cgroups
-
-Mounts the cgroups file-system(s). Used automatically be `start-docker`.
-
-
 ## Testing
 
 Just run:

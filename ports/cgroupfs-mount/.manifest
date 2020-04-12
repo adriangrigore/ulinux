@@ -1,0 +1,10 @@
+/usr/bin/cgroupfs-mount
+/usr/bin/cgroupfs-umount
+/var/db/pkg/cgroupfs-mount/version
+/var/db/pkg/cgroupfs-mount/manifest
+/var/db/pkg/cgroupfs-mount
+/var/db/pkg
+/var/db
+/var
+/usr/bin
+/usr

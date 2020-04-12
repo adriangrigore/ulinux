@@ -1,9 +1,9 @@
-/etc/pkg.conf
 /bin/prtcreate
 /bin/repogen
 /bin/ports
-/bin/pkg.common
 /bin/pkg
+/bin/pkg.common
+/etc/pkg.conf
 /var/db/pkg/pkg/version
 /var/db/pkg/pkg/manifest
 /var/db/pkg/pkg

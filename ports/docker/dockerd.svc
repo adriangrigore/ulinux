@@ -18,13 +18,12 @@ PID="$(pidof -o %PPID "$BIN")"
 
 case $1 in
   -s)
-    if ! mount | grep -q cgroup; then
-      mount-cgroups
-    fi
-    $BIN $PARAMS
+    cgroupfs-mount
+    $BIN $PARAMS >> /var/log/docker.log 2>&1
     ;;
   -k)
     [ -n "$PID" ] && kill -9 "$PID" > /dev/null 2>&1
+    cgroupfs-umount
     ;;
   *)
     echo "usage: $0 -s|-k"
