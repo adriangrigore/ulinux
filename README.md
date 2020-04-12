@@ -73,6 +73,20 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 uLinux is designed for high performance and small footprint. uLinux is expected
 to boot within ~1s on a modern system. See [Screenshots](#screenshots).
 
+### Very Lightweight!
+
+uLinux will boot on as little as __64MB__ of RAM! Yes that's right!
+
+Other notable attributes:
+
+- ~3MB Kernel
+- ~8MB Root FS (_compressed_)
+- ~12MB Hybrid ISO
+- ~24MB On-Disk Install
+
+The goal is to stick to these attributes as far as we can! The only way to
+grow your uLinux system once installed is through ports and packages.
+
 ### Full Container Support
 
 uLinux supports full containerization and comes shipped with a very small
