@@ -113,7 +113,7 @@ pkg_build() {
 
 pkg_add() {
   name=${1%_*.tar.gz*}
-  name=${name##PKG-}
+  name=${name##-}
 
   [ -f "$1" ] || die "file not found"
   [ -z "${1##*.tar.??}" ] || die "add requires a tarball"
