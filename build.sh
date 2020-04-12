@@ -274,8 +274,10 @@ build_kernel() {
     config y POSIX_TIMERS
     config y MODULES
     config y PRINTK
+    config y TTY
     config y FUTEX
     config y EPOLL
+    config y SMP
     config y SYSCTL_SYSCALL
     config y RETPOLINE
     config y RTC_CLASS
@@ -320,6 +322,9 @@ build_kernel() {
     config y TMPFS
 
     # Networking
+    config y IPV6
+    config y BRIDGE
+    config y INET
     config y NETFILTER
     config y IP_NF_IPTABLES
     config y PACKET
@@ -364,12 +369,17 @@ build_kernel() {
     config y UTS_NS
     config y USER_NS
     config y CGROUPS
+    config y CGROUP_PIDS
     config y CGROUP_CPUACCT
     config y CGROUP_DEVICE
     config y CGROUP_FREEZER
     config y CGROUP_SCHED
     config y CPUSETS
+    config y CFS_BANDWIDTH
     config y MEMCG
+    config y MEMCG_SWAP
+    config y IOSCHED_CFQ
+    config y CFQ_GROUP_IOSCHED
     config y KEYS
     config y VETH
     config y BRIDGE
@@ -380,6 +390,8 @@ build_kernel() {
     config y NETFILTER_XT_MATCH_CONNTRACK
     config y NETFILTER_XT_MATCH_IPVS
     config y NETFILTER_XT_NAT
+    config y NF_NAT_NEEDED
+    config y NF_NAT_IPV4
     config y IP_NF_NAT
     config y NF_NAT
     config y NF_NAT_IPV4
@@ -387,6 +399,27 @@ build_kernel() {
     config y NF_NAT_NEEDED
     config y POSIX_MQUEUE
     config y DEVPTS_MULTIPLE_INSTANCES
+
+    # Docker / Networking (overlay)
+    config y IP_VS
+    config y IP_VS_RR
+    config y IP_VS_NFCT
+    config y IP_VS_PROTO_TCP
+    config y IP_VS_PROTO_UDP
+    config y VXLAN
+    config y IPVLAN
+    config y VLAN_8021Q
+    config y BRIDGE_VLAN_FILTERING
+    config y NF_CONNTRACK_MARK
+    config y NETFILTER_XT_MARK
+    config y NETFILTER_XT_CONNMARK
+    config y XT_MATCH_CONNMARK
+    config y NETFILTER_XT_MATCH_MARK
+    config y XFRM
+    config y XFRM_USER
+    config y XFRM_ALGO
+    config y INET_ESP
+    config y INET_XFRM_MODE_TRANSPORT
 
     # Docker / Container Storage (cgroups, overlayfs, devmapper)
     config y BLK_DEV_DM
