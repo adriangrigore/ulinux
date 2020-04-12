@@ -22,6 +22,7 @@ Table of Contents
   * [Supported Platforms](#supported-platforms)
   * [Features](#features)
     * [Fast Boot](#fast-boot)
+    * [Very Lightweight\!](#very-lightweight)
     * [Full Container Support](#full-container-support)
     * [Toolchain](#toolchain)
     * [CloudInit / CloudConfig](#cloudinit--cloudconfig)
@@ -42,8 +43,6 @@ Table of Contents
   * [Utilities](#utilities)
     * [box](#box)
     * [enter\-chroot](#enter-chroot)
-    * [install\-docker / start\-docker](#install-docker--start-docker)
-    * [mount\-cgroups](#mount-cgroups)
   * [Testing](#testing)
 * [License](#license)
 
@@ -61,6 +60,7 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
 ## Features
 
 - Recent [Linux Kernel](https://www.kernel.org/)
+- [Very Lightweight](#very-lightweight)
 - Full Container Support
 - [Busybox Userland](https://busybox.net/)
 - [Dropbear SSH Daemon](http://matt.ucc.asn.au/dropbear/dropbear.html)
