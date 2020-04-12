@@ -444,7 +444,9 @@ build_kernel() {
 
     cp .config ../KConfig
 
-    make menuconfig
+    if [ -t 1 ]; then
+      make menuconfig
+    fi
 
     make \
       CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
