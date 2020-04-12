@@ -1,6 +1,13 @@
 #!/bin/sh
 
+if [ "$(uname -s)" = "Darwin" ]; then
+  accel="hvf"
+else
+  accel="kvm"
+fi
+
 exec qemu-system-x86_64 \
+  -accel "$accel,thread=multi" \
   -m 1024 \
   -cpu qemu64 \
   -rtc base=utc,clock=host \
