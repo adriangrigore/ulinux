@@ -24,9 +24,10 @@ build_musl() {
     cd musl-$MUSL_VERSION
 
     ./configure \
-      --prefix=/usr
+      --prefix=/usr \
+      --disable-static
 
-    make
+    make -j "$(nproc)"
     make DESTDIR="$rootfs" install
 
     ln -s /usr/lib/libc.so "$rootfs/usr/bin/ldd"
