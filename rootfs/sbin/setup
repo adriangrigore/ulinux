@@ -23,6 +23,8 @@ cleanup() {
 
 trap cleanup EXIT
 
+dd bs=512 count=1 conv=notrunc,fsync if=/dev/zero of="${disk}"
+
 (
   echo n # Add a new partition
   echo p # Primary partition
@@ -56,8 +58,8 @@ LABEL default
 	APPEND quiet root=${part} rw
 EOF
 
-extlinux -i "${rootfs}"/boot/syslinux
+extlinux -s -i "${rootfs}"/boot/syslinux
 
 dd bs=440 count=1 conv=notrunc,fsync if=/usr/share/syslinux/mbr.bin of="${disk}"
 
-echo "ALl Done!"
+echo "All Done!"
