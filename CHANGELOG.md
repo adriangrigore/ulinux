@@ -1,4 +1,43 @@
 
+<a name="TAG=1.0"></a>
+## [TAG=1.0](https://github.com/prologic/ulinux/compare/0.0.11...TAG=1.0) (2020-04-14)
+
+### Bug Fixes
+
+* Fix the pkg build environment and tcc ar so more things  compile
+* Fix bug where we were toggling the active boot partition on and off causing [#20](https://github.com/prologic/ulinux/issues/20) (Fixes [#20](https://github.com/prologic/ulinux/issues/20))
+* Fix bug with pkg sourcing in configuration
+* Fix source for strace-static port
+* Fix pkg header
+
+### Features
+
+* Add ports zlib, ncurses, git and geomyidae. Also fix sacc to use the ncurses UI
+* Add sacc port
+* Add LD export to pkg build environment
+* Add msmtp port
+* Add duktape port (a small embedded Javascript interpreter)
+* Add ability to use . in pkg add
+* Add support for explicitly downlading a busybox snapshot
+* Add clean sub-command to pkg
+* Add feature section on lightweight(ness)
+
+### Updates
+
+* Update build_syslinux() and remove the syslinix binary (we only need exxtlinux)
+* Update build_syslinux() to trim down the size of what we install (we don't need many of the COM32 modules)
+* Update .dockerignore to be a symlink of .gitignore
+* Update tcc checksum
+* Update musl build and disable static libc
+* Update build_ports() to refactor port building and also include the core ports tree as part of the base rootfs
+* Update build system and refactor NUM_JOBS for nproc
+* Update pkg tool to source in /etc/pkg.conf so we can export sensible build environment to pkg build
+* Update Kernel to 5.6.3
+* Update test script to add -accel options for Linux and Darwin dev machines
+* Update pkg's prtcreate to just create an empty Pkgfile in the current directory
+* Update toc
+
+
 <a name="0.0.11"></a>
 ## [0.0.11](https://github.com/prologic/ulinux/compare/0.0.10...0.0.11) (2020-04-12)
 
