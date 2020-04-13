@@ -1,0 +1,30 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: A System V Release 4.0 curses emulation library
+# URL:         http://www.gnu.org/software/ncurses/ncurses.html
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=ncurses
+version=6.2
+release=1
+source="http://ftpmirror.gnu.org/gnu/$name/$name-$version.tar.gz"
+
+build() {
+  cd $name-$version
+
+  ./configure \
+    --prefix=/usr \
+    --with-normal \
+    --with-shared \
+    --without-debug \
+    --without-ada \
+    --without-tests \
+    --disable-stripping
+
+  grep -r '\-stats\,\-lc' * | cut -f 1 -d ':' | xargs -I{} sed -i'' -e 's/\,\-stats\,\-lc//g' {} ;
+
+  make -j "$(nproc)" \
+    DESTDIR="$PKG" install
+  rm -rf "$PKG"/usr/share/man
+}

@@ -1,19 +1,20 @@
 #!/bin/sh
 # shellcheck disable=SC2034
 
-# Description: ...
-# URL:         ...
-# Maintainer:  ...
+# Description: sacc(omys) is a terminal gopher client.
+# URL:         gopher://bitreich.org/1/scm/sacc
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=sacc
 version=1.01
-release=1
+release=2
 source="https://gopher.mills.io/bitreich.org/9/releases/sacc/sacc-1.01.tgz"
+depends="ncurses"
 
 build() {
   cd $name-$version || exit 1
 
   make -j "$(nproc)" \
-    UI=txt LIBS="" PREFIX=/usr DESTDIR="$PKG" install
+    PREFIX=/usr DESTDIR="$PKG" install
   rm -rf "$PKG/usr/share"
 }

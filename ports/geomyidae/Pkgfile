@@ -1,0 +1,21 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: A small C-based gopherd.
+# URL:         http://r-36.net/scm/geomyidae/files.html
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=geomyidae
+version=0.34
+release=1
+source="ftp://ftp@bitreich.org/releases/$name/$name-v$version.tgz"
+
+build() {
+  cd $name-v$version || exit 1
+
+  sed -i'' -e 's|GEOM_CFLAGS = \(.*\)|GEOM_CFLAGS = -I/usr/lib/tcc/include \1|' Makefile
+  make -j "$(nproc)" \
+    PREFIX=/usr DESTDIR="$PKG" \
+    install
+  rm -rf "$PKG/usr/share"
+}

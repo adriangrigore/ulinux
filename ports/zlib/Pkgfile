@@ -1,0 +1,23 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: A compression/decompression Library
+# URL:         http://www.zlib.net/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=zlib
+version=1.2.11
+release=1
+source="http://www.zlib.net/$name-$version.tar.gz"
+
+build() {
+  cd $name-$version || exit 1
+
+  ./configure --prefix=/usr
+  make -j "$(nproc)" \
+    DESTDIR="$PKG" install
+
+  ln -sf ../../lib/libz.so.$version $PKG/usr/lib/libz.so
+  rm -rf "$PKG"/usr/share
+  rm -rf "$PKG"/usr/lib/pkgconfig
+}
