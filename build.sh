@@ -212,18 +212,19 @@ EOF
 }
 
 build_ports() {
-  (
-    # Bootstrap pkg
-    install -D -m 755 ./ports/pkg/pkg /usr/local/bin/pkg
+  # Bootstrap pkg
+  install -D -m 755 ./ports/pkg/pkg /usr/local/bin/pkg
 
-    for port in pkg tcc; do
-      (
-        cd "ports/$port" || exit 1
-        pkg build
-        PKG_ROOT="$rootfs" pkg add ./*#*
-      )
-    done
-  )
+  # Copy ports tree into rootfs
+  cp -r ports/* "$rootfs/usr/ports"
+
+  for port in $CORE_PORTS; do
+    (
+      cd "ports/$port" || exit 1
+      pkg build
+      PKG_ROOT="$rootfs" pkg add .
+    )
+  done
 }
 
 build_rootfs() {
