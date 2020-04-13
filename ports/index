@@ -9,6 +9,7 @@ cgroupfs-mount/.manifest
 tcc/Makefile.patch
 tcc/Pkgfile
 tcc/.checksum
+tcc/ar
 tcc/bt-log-stdarg.patch
 tcc/.manifest
 strace-static/Pkgfile

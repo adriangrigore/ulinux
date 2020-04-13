@@ -7,9 +7,9 @@
 
 name=tcc
 version=20200408
-release=1
+release=2
 source="https://github.com/mirror/tinycc/archive/mob.zip
-Makefile.patch bt-log-stdarg.patch"
+Makefile.patch bt-log-stdarg.patch ar"
 
 build() {
   cd tinycc-* || exit 1
@@ -25,4 +25,7 @@ build() {
 
   make
   make DESTDIR="$PKG" install
+
+  # install ar wrapper
+  install -D -m 755 ar "$PKG"/usr/bin/ar
 }
