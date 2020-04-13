@@ -1,7 +1,1 @@
-*~*
-*.bak
-*.img
-*.log
-*.iso
-
-/.git/lfs
+.gitignore
