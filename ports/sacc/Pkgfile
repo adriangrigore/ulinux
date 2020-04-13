@@ -1,0 +1,19 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: ...
+# URL:         ...
+# Maintainer:  ...
+
+name=sacc
+version=1.01
+release=1
+source="https://gopher.mills.io/bitreich.org/9/releases/sacc/sacc-1.01.tgz"
+
+build() {
+  cd $name-$version || exit 1
+
+  make -j "$(nproc)" \
+    UI=txt LIBS="" PREFIX=/usr DESTDIR="$PKG" install
+  rm -rf "$PKG/usr/share"
+}
