@@ -15,7 +15,11 @@ VERSION="${VERSION#*.}"
 # Increase version
 PATCH=$((PATCH + 1))
 
-TAG="${1}"
+TAG="${TAG}"
+
+if [ -n "$1" ]; then
+  TAG="${1}"
+fi
 
 if [ "${TAG}" = "" ]; then
   TAG="${MAJOR}.${MINOR}.${PATCH}"
