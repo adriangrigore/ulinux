@@ -1,9 +1,12 @@
 
-<a name="TAG=1.0"></a>
-## [TAG=1.0](https://github.com/prologic/ulinux/compare/0.0.11...TAG=1.0) (2020-04-14)
+<a name="1.0"></a>
+## [1.0](https://github.com/prologic/ulinux/compare/0.0.11...1.0) (2020-04-14)
 
 ### Bug Fixes
 
+* Fix release tool to take TAG as an env var
+* Fix tcc port's build
+* Fix checksum(s) of pkg and tcc ports
 * Fix the pkg build environment and tcc ar so more things  compile
 * Fix bug where we were toggling the active boot partition on and off causing [#20](https://github.com/prologic/ulinux/issues/20) (Fixes [#20](https://github.com/prologic/ulinux/issues/20))
 * Fix bug with pkg sourcing in configuration
