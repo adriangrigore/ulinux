@@ -14,6 +14,9 @@ tcc/.manifest
 strace-static/Pkgfile
 strace-static/.checksum
 strace-static/.manifest
+msmtp/Pkgfile
+msmtp/.checksum
+msmtp/.manifest
 pkg/Pkgfile
 pkg/.checksum
 pkg/pkg.conf
