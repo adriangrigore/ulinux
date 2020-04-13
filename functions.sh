@@ -29,3 +29,14 @@ config() {
     echo "CONFIG_$2=$1" >> .config
   fi
 }
+
+fnmatch() {
+  case "$2" in
+    $1)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}

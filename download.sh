@@ -54,6 +54,11 @@ download_busybox() {
       https://busybox.net/downloads/snapshots/busybox-snapshot.tar.bz2
     tar -xf busybox.tar.bz2
     mv busybox busybox-$BUSYBOX_VERSION
+  elif fnmatch "2020[0-9]*" "$BUSYBOX_VERSION"; then
+    wget -q -O busybox.tar.bz2 \
+      https://busybox.net/downloads/snapshots/busybox-$BUSYBOX_VERSION.tar.bz2
+    tar -xf busybox.tar.bz2
+    mv busybox busybox-$BUSYBOX_VERSION
   else
     wget -q -O busybox.tar.bz2 \
       http://busybox.net/downloads/busybox-$BUSYBOX_VERSION.tar.bz2
