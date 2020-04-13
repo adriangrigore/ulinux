@@ -4,11 +4,7 @@
 # pkg - package manager for uLinux.
 
 # shellcheck disable=SC1091
-if [ -f /etc/pkg.conf ]; then
-  . /etc/pkg.conf
-else
-  . ./pkg.conf
-fi
+[ -f /etc/pkg.conf ] && . /etc/pkg.conf
 
 pkgfile_read() {
   [ -f Pkgfile ] || die "Pkgfile not found"
