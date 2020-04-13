@@ -15,7 +15,7 @@ SYSLINUX_VERSION=6.03
 RNGTOOLS_VERSION=5
 IPTABLES_VERSION=1.8.2
 
-NUM_JOBS="$(grep -c ^processor /proc/cpuinfo)"
+CORE_PORTS="pkg tcc"
 
 export KERNEL_VERSION
 export SINIT_VERSION
@@ -28,4 +28,3 @@ export SYSLINUX_VERSION
 export RNGTOOLS_VERSION
 export IPTABLES_VERSION
 
-export NUM_JOBS

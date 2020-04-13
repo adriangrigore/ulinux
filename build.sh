@@ -84,7 +84,8 @@ build_sinit() {
 build_busybox() {
   (
     cd busybox-$BUSYBOX_VERSION
-    make distclean defconfig -j "$NUM_JOBS"
+    make -j "$(nproc)" \
+      distclean defconfig
     config y STATIC
     config n INCLUDE_SUSv2
     config "\"$rootfs\"" PREFIX
@@ -123,9 +124,9 @@ build_busybox() {
     config n DPKG
     config n DPKG_DEB
     yes "" | make oldconfig
-    make \
+    make -j "$(nproc)" \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
-      busybox install -j "$NUM_JOBS"
+      busybox install
   )
 }
 
@@ -139,11 +140,11 @@ build_dropbear() {
       --disable-zlib \
       --disable-wtmp
 
-    make \
+    make -j "$(nproc)" \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       DESTDIR="$rootfs" \
       PROGRAMS="dropbear dbclient dropbearkey scp" \
-      strip install -j "$NUM_JOBS"
+      strip install
 
     ln -sf /usr/bin/dbclient "$rootfs"/usr/bin/ssh
 
@@ -184,9 +185,8 @@ build_iptables() {
       --enable-libipq \
       --disable-nftables
 
-    make \
-      EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
-      -j "$NUM_JOBS"
+    make -j "$(nproc)" \
+      EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
     make DESTDIR="$rootfs" install
   )
 }
@@ -257,7 +257,8 @@ sync_rootfs() {
 build_kernel() {
   (
     cd linux-$KERNEL_VERSION
-    make mrproper tinyconfig kvmconfig -j "$NUM_JOBS"
+    make -j "$(nproc)" \
+      mrproper tinyconfig kvmconfig
 
     # Disable debug symbols in kernel => smaller kernel binary.
     sed -i "s/^CONFIG_DEBUG_KERNEL.*/\\# CONFIG_DEBUG_KERNEL is not set/" .config
@@ -448,9 +449,9 @@ build_kernel() {
       make menuconfig
     fi
 
-    make \
+    make -j "$(nproc)" \
       CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
-      bzImage -j "$NUM_JOBS"
+      bzImage
 
     cp arch/x86/boot/bzImage ../kernel.gz
   )
