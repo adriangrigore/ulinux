@@ -161,8 +161,22 @@ build_syslinux() {
     patch -p1 -i ../patches/syslinux-$SYSLINUX_VERSION/syslinux-sysmacros.patch
     patch -p1 -i ../patches/syslinux-$SYSLINUX_VERSION/extlinux-Makefile.patch
 
-    make installer
+    make -j "$(nproc)" \
+      installer
     make INSTALLROOT="$rootfs" install
+
+    # Remove c32 modules and bin(s) we don't need/want.
+    rm -rf "$rootfs"/usr/share/syslinux/com32
+    rm -rf "$rootfs"/usr/share/syslinux/diag
+    rm -rf "$rootfs"/usr/share/syslinux/memdisk
+    find "$rootfs"/usr/share/syslinux \
+      -type f -name '*.c32' -delete
+    find "$rootfs"/usr/share/syslinux \
+      -type f -name '*.bin' ! -name 'mbr.bin' ! -name 'gptmbr.bin' -delete
+    find "$rootfs"/usr/share/syslinux \
+      -type f -name '*.0' -delete
+    find "$rootfs"/usr/share/syslinux \
+      -type d -exec rmdir {} + 2> /dev/null
   )
 }
 
