@@ -112,6 +112,10 @@ pkg_build() {
 }
 
 pkg_add() {
+  if [ -z "$1" ] || [ "$1" = "." ]; then
+    set -- "$(ls ./*#*.tar.gz)"
+  fi
+
   name=${1%_*.tar.gz*}
   name=${name##-}
 
