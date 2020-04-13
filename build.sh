@@ -165,6 +165,9 @@ build_syslinux() {
       installer
     make INSTALLROOT="$rootfs" install
 
+    # Remove syslinux binary (we only need extlinux)
+    rm -rf "${rootfs}"/usr/bin/syslinux
+
     # Remove c32 modules and bin(s) we don't need/want.
     rm -rf "$rootfs"/usr/share/syslinux/com32
     rm -rf "$rootfs"/usr/share/syslinux/diag
