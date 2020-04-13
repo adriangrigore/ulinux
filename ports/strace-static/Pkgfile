@@ -7,8 +7,9 @@
 
 name=strace-static
 version=4.26
-release=1
-source="https://github.com/yunchih/static-binaries/blob/master/strace"
+gitver=243e615f6326dfef570b1021af7b5da13539f242
+release=2
+source="https://github.com/yunchih/static-binaries/raw/$gitver/strace"
 
 build() {
   install -D -m 755 "$SRC"/strace /usr/bin/strace
