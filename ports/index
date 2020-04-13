@@ -23,3 +23,6 @@ pkg/ports
 pkg/.manifest
 pkg/pkg
 pkg/pkg.common
+duktape/Pkgfile
+duktape/.checksum
+duktape/Makefile-linenoise.patch

@@ -1,0 +1,22 @@
+--- Makefile.cmdline.orig
++++ Makefile.cmdline
+@@ -31,9 +31,8 @@
+
+ # If you want linenoise, you can enable these.  At the moment linenoise
+ # will cause some harmless compilation warnings.
+-#CCOPTS += -DDUK_CMDLINE_FANCY -I./linenoise
+-#CMDLINE_SOURCES += linenoise/linenoise.c
+-#duk: linenoise
++CCOPTS += -DDUK_CMDLINE_FANCY -I./linenoise
++CMDLINE_SOURCES += linenoise/linenoise.c
+
+ # Use the tools/configure.py utility to modify Duktape default configuration:
+ # http://duktape.org/guide.html#compiling
+@@ -41,7 +40,3 @@
+
+ duk: $(DUKTAPE_SOURCES) $(CMDLINE_SOURCES)
+ 	$(CC) -o $@ $(DEFINES) $(CCOPTS) $(DUKTAPE_SOURCES) $(CMDLINE_SOURCES) $(CCLIBS)
+-
+-linenoise/linenoise.c: linenoise
+-linenoise:
+-	git clone https://github.com/antirez/linenoise.git

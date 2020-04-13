@@ -1,0 +1,28 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: an embeddable Javascript engine, with a focus on portability and compact footprint.
+# URL:         https://duktape.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=duktape
+version=2.5.0
+release=1
+source="https://duktape.org/$name-$version.tar.xz
+https://github.com/antirez/linenoise/archive/master.zip
+Makefile-linenoise.patch
+"
+
+build() {
+  cd $name-$version || exit 1
+
+  cp -r "$SRC/linenoise-master" ./linenoise
+
+  patch -p1 -i "$SRC/Makefile-linenoise.patch"
+
+  make -j "$(nproc)" \
+    -f Makefile.cmdline \
+    CC=tcc
+
+  install -D -m 755 duk "$PKG/usr/bin/duk"
+}
