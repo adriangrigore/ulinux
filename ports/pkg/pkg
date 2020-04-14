@@ -101,6 +101,7 @@ pkg_build() {
 
   set -e errexit
   build
+  blderr=$?
   set +e errexit
 
   pkg_manifest
@@ -219,7 +220,7 @@ clean() {
   [ "$pkgfile" = 1 ] || return
   [ -f "$og_pwd/Pkgfile" ] || return
   # shellcheck disable=SC2181
-  [ $? -eq 0 ] || return
+  [ ${blderr:-1} -eq 0 ] || return
 
   rm -rf "$og_pwd/build"
 }

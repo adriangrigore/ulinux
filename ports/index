@@ -21,9 +21,14 @@ tcc/.checksum
 tcc/ar
 tcc/bt-log-stdarg.patch
 tcc/.manifest
+getconf/Pkgfile
+getconf/getconf.c
+getconf/.checksum
 sacc/Pkgfile
 sacc/.checksum
 sacc/.manifest
+mailx/Pkgfile
+mailx/.checksum
 strace-static/Pkgfile
 strace-static/.checksum
 strace-static/.manifest
