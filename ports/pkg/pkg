@@ -218,7 +218,8 @@ enter_fakeroot() {
 clean() {
   [ "$pkgfile" = 1 ] || return
   [ -f "$og_pwd/Pkgfile" ] || return
-  [ "$0" -ne 0 ] || return
+  # shellcheck disable=SC2181
+  [ $? -eq 0 ] || return
 
   rm -rf "$og_pwd/build"
 }
