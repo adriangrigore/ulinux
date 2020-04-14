@@ -1,0 +1,25 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Replacement for Berkeley Mail and System V mailx command
+# URL:         http://www.sdaoden.eu/code.html
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name="mailx"
+version=14.9.17
+release=1
+source="https://www.sdaoden.eu/downloads/s-nail-$version.tar.xz"
+depends="getconf"
+
+build() {
+  cd s-nail-$version || exit 1
+
+  make config \
+    VAL_SID= \
+    VAL_MAILX=mailx \
+    VAL_PREFIX=/usr \
+    VAL_LIBEXECDIR=/usr/lib/mailx \
+    OPT_AUTOCC=no
+
+  make DESTDIR="$PKG" install
+}
