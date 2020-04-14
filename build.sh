@@ -227,6 +227,13 @@ HOME_URL="https://github.com/prologic/ulinux"
 SUPPORT_URL="https://github.com/prologic/ulinux"
 BUG_REPORT_URL="https://github.com/prologic/ulinux/issues"
 EOF
+
+  cat > $rootfs/usr/bin/ulinux << EOF
+#!/bin/sh
+
+printf "uLinux (µLinux) v%s@%s\n" "${fullVersion}" "${latestRev}"
+EOF
+  chmod +x $rootfs/usr/bin/ulinux
 }
 
 build_ports() {
