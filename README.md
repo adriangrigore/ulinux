@@ -2,16 +2,18 @@
 
 ![Build](https://github.com/prologic/ulinux/workflows/Build/badge.svg)
 
-> µLinux (uLinux) is a micro (µ)Linux Cloud Native OS designed for high
-> performance, minimal overheads and decreased security footprint attack surface.
-> µLinux is container-ready and is small enough with a lot of fat removed and
-> stripped down you could _almost_ consider it a "Unikernel" of sorts.
+> uLinux (_µLinux_) is a micro (µ)Linux Cloud Native OS designed for high
+> performance, minimal overhead and a small footprint.
+>
+> uLinux is container-ready and small enough that it could be used as a sort of "UniKernel"
+> for your applications.
+> 
 > If you care about performance, footprint, security and minimalism like I do
 > you'll want to use µLinux for your workloads.
 
 > __NOTE:__: µLinux is _NOT_ a full blown Desktop OS nor will it ever likely be.
 >            It is also not ever likely to build your favorite GCC/GLIBC/Clang
->            software as it only ships with a very small C compiler and libc (musl).
+>            software as it only ships with a very small C compiler (tcc) and libc (musl).
 >            Consider using [Alpine](https://alpinelinux.org/) for a more feature
 >            rich system or any other "heavier" / "full featured" distro.
 
@@ -80,9 +82,9 @@ uLinux will boot on as little as __64MB__ of RAM! Yes that's right!
 Other notable attributes:
 
 - ~3MB Kernel
-- ~8MB Root FS (_compressed_)
-- ~12MB Hybrid ISO
-- ~24MB On-Disk Install
+- ~6MB Root FS (_compressed_)
+- ~10MB Hybrid ISO
+- ~20MB On-Disk Install
 
 The goal is to stick to these attributes as far as we can! The only way to
 grow your uLinux system once installed is through ports and packages.
@@ -152,9 +154,6 @@ Assuming `/dev/sda` is the device path to the disk you want to install to.
 **WARNING:** This will _automatically_ partition, format and install uLinux
              with no questions asked without hesitation. Please be sure you
              understand what you are doing.
-
-**NOTE:** There is currently a known bug that requires running `setup` twice.
-          See #20 for details.
 
 ### Building
 
