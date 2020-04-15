@@ -6,16 +6,16 @@
 # Maintainer:  Steffen Nurpmeso, steffen at sdaoden dot eu
 
 name=tcc
-version=20200408
-release=3
-source="https://github.com/mirror/tinycc/archive/mob.zip
-Makefile.patch bt-log-stdarg.patch ar"
+version=20200415
+gitver=8c6143d86f72366ae246252c1b693c843d4e2a43
+release=1
+source="https://github.com/mirror/tinycc/archive/$gitver.zip
+ar Makefile.patch"
 
 build() {
-  cd tinycc-* || exit 1
+  cd tinycc-$gitver || exit 1
 
   patch -p1 -i "$SRC"/Makefile.patch
-  patch -p1 -i "$SRC"/bt-log-stdarg.patch
 
   ./configure \
     --cc="${CC:-gcc}" \
