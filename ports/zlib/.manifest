@@ -1,8 +1,8 @@
+/var/db/pkg/zlib/version
 /usr/include/zconf.h
 /usr/include/zlib.h
-/usr/lib/libz.so
 /usr/lib/libz.a
-/var/db/pkg/zlib/version
+/usr/lib/libz.so
 /var/db/pkg/zlib/manifest
 /var/db/pkg/zlib
 /var/db/pkg
