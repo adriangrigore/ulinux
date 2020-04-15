@@ -479,6 +479,8 @@ build_kernel() {
       CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       bzImage
 
+    make headers_install INSTALL_HDR_PATH="$rootfs/usr"
+
     cp arch/x86/boot/bzImage ../kernel.gz
   )
 }
