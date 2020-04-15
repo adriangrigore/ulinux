@@ -1,0 +1,20 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: ...
+# URL:         ...
+# Maintainer:  ...
+
+name=gdbserver
+version=20190726
+gitver=5d973130b7e193d0c34e799e1272bec7d0e9917e
+release=1
+source="https://github.com/bet4it/$name/archive/$gitver.zip"
+
+build() {
+  cd $name-$gitver
+
+  make -j "$(nproc)" \
+    cc=tcc
+  install -D -m 755 $name "$PKG"/usr/bin/$name
+}
