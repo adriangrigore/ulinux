@@ -20,9 +20,10 @@ build() {
     --without-debug \
     --without-ada \
     --without-tests \
-    --disable-stripping
+    --disable-stripping \
+    --enable-widec
 
-  grep -r '\-stats\,\-lc' * | cut -f 1 -d ':' | xargs -I{} sed -i'' -e 's/\,\-stats\,\-lc//g' {} ;
+  grep -r '\-stats\,\-lc' ./* | cut -f 1 -d ':' | xargs -I{} sed -i'' -e 's/\,\-stats\,\-lc//g' {}
 
   make -j "$(nproc)" \
     DESTDIR="$PKG" install

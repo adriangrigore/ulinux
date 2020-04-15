@@ -1,0 +1,20 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: A Minimal Curses IRC Client
+# URL:         https://c9x.me/irc/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=irc
+version=0.0.2
+release=1
+source="https://github.com/prologic/$name/archive/$version.tar.gz"
+depends="ncurses"
+
+build() {
+  cd $name-$version || exit 1
+
+  make
+
+  install -D -m 755 $name "$PKG"/usr/bin/$name
+}
