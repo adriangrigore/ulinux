@@ -7,7 +7,7 @@
 
 name=ncurses
 version=6.2
-release=2
+release=3
 source="http://ftpmirror.gnu.org/gnu/$name/$name-$version.tar.gz"
 
 build() {
