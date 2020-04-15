@@ -1,4 +1,27 @@
 
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/prologic/ulinux/compare/1.0...1.0.1) (2020-04-15)
+
+### Bug Fixes
+
+* Fix ncurses port to enable widec
+* Fix bug with pkg build logic to preserve build directory if the build fails
+
+### Features
+
+* Add irc prot
+* Add the linux C headers to the system
+* Add ulinux script like crux in CRUX (crux.nu) to display version/build informaiton more quickly/easily
+* Add mailx and its dep getconf ports
+
+### Updates
+
+* Update README.md
+* Update repo with license, code_of_conduct and contributing
+* Update pkg to leave the build direcotyr on failed builds for inspection
+* Update pkg to preserve the build directory if the build fails
+
+
 <a name="1.0"></a>
 ## [1.0](https://github.com/prologic/ulinux/compare/0.0.11...1.0) (2020-04-14)
 
