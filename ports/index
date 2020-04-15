@@ -41,9 +41,15 @@ mailx/.checksum
 strace-static/Pkgfile
 strace-static/.checksum
 strace-static/.manifest
+sic/Pkgfile
+sic/.checksum
+sic/.manifest
 msmtp/Pkgfile
 msmtp/.checksum
 msmtp/.manifest
+gdbserver/Pkgfile
+gdbserver/.checksum
+gdbserver/.manifest
 git/Pkgfile
 git/.checksum
 git/.manifest
