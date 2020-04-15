@@ -44,6 +44,9 @@ msmtp/.manifest
 git/Pkgfile
 git/.checksum
 git/.manifest
+fasm/Pkgfile
+fasm/.checksum
+fasm/.manifest
 pkg/Pkgfile
 pkg/.checksum
 pkg/pkg.conf

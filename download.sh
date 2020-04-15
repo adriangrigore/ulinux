@@ -26,12 +26,6 @@ download_musl() {
   tar -xf musl.tar.gz
 }
 
-download_fasm() {
-  wget -q -O fasm.tgz \
-    https://flatassembler.net/fasm-$FASM_VERSION.tgz
-  tar -xf fasm.tgz
-}
-
 download_make() {
   wget -q -O make.tar.lz \
     http://ftpmirror.gnu.org/gnu/make/make-$MAKE_VERSION.tar.lz
@@ -87,7 +81,6 @@ download_iptables() {
 
 download_all() {
   download_musl
-  download_fasm
   download_make
   download_sinit
   download_busybox

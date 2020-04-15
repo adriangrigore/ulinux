@@ -34,31 +34,6 @@ build_musl() {
   )
 }
 
-build_fasm() {
-  (
-    cd fasm
-
-    FASM=fasm.x64
-
-    mkdir -p build
-
-    # compile fasm with itself
-    ./${FASM} ./source/Linux/fasm.asm ./build/fasm
-    chmod +x ./build/fasm
-
-    ./${FASM} ./source/Linux/x64/fasm.asm ./build/fasm.x64
-    chmod +x ./build/fasm.x64
-
-    install -Dm 755 ./build/fasm -t "$rootfs/usr/bin"
-    ln -s "fasm" "$rootfs/usr/bin/fasm32"
-    chmod 755 "$rootfs/usr/bin/fasm32"
-
-    install -Dm 755 ./build/fasm.x64 -t "$rootfs/usr/bin"
-    ln -s "fasm.x64" "$rootfs/usr/bin/fasm64"
-    chmod 755 "$rootfs/usr/bin/fasm64"
-  )
-}
-
 build_make() {
   (
     cd make-$MAKE_VERSION
@@ -513,7 +488,6 @@ build_clouddrive() {
 
 build_all() {
   build_musl
-  build_fasm
   build_make
   build_sinit
   build_busybox

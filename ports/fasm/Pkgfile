@@ -1,0 +1,29 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: an assembler for x86 processors.
+# URL:         https://flatassembler.net/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=fasm
+version=1.73.22
+release=1
+source="https://flatassembler.net/$name-$version.tgz"
+
+build() {
+  cd $name
+
+  FASM=fasm.x64
+
+  mkdir -p build
+
+  # compile fasm with itself
+  ./${FASM} ./source/Linux/fasm.asm ./build/fasm
+  chmod +x ./build/fasm
+
+  ./${FASM} ./source/Linux/x64/fasm.asm ./build/fasm.x64
+  chmod +x ./build/fasm.x64
+
+  install -D -m 755 ./build/fasm -t "$PKG/usr/bin"
+  install -D -m 755 ./build/fasm.x64 -t "$PKG/usr/bin"
+}
