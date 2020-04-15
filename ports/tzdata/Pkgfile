@@ -1,0 +1,23 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Sources for Time Zone and Daylight Saving Time Data
+# URL:         ftp://ftp.iana.org/tz/code/tz-link.htm
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=tzdata
+version=2019c
+release=1
+source="https://github.com/eggert/tz/archive/$version.tar.gz"
+
+build() {
+  cd tz-$version || exit 1
+
+  make -j "$(nproc)" \
+    KSHELL=/bin/sh \
+    CFLAGS="$CFLAGS"
+  make DESTDIR="$PKG" install
+
+  rm -rf "$PKG"/usr/share/man
+  rm -rf "$PKG"/etc
+}
