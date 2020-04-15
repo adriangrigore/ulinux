@@ -6,11 +6,15 @@ docker/.manifest
 ncurses/Pkgfile
 ncurses/.checksum
 ncurses/.manifest
+tzdata/Pkgfile
+tzdata/.checksum
+tzdata/.manifest
 geomyidae/Pkgfile
 geomyidae/.checksum
 geomyidae/.manifest
 irc/Pkgfile
 irc/.checksum
+irc/.manifest
 cgroupfs-mount/Pkgfile
 cgroupfs-mount/.checksum
 cgroupfs-mount/.manifest
