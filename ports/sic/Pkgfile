@@ -1,0 +1,24 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: a Simple IRC Client (modified)
+# URL:         https://github.com/prologic/sic
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=sic
+version=20200416
+gitver=c678e2efaf1cb0b7debf3309e986f44d616355a9
+release=1
+source="https://github.com/prologic/$name/archive/$gitver.zip"
+
+build() {
+  cd $name-$gitver || exit 1
+
+  MAKEFLAGS= make -j "$(nproc)" \
+    CC=tcc
+  make \
+    PREFIX=/usr \
+    DESTDIR="$PKG" \
+    install
+  rm -rf "$PKG"/usr/share
+}
