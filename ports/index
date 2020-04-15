@@ -18,6 +18,9 @@ irc/.manifest
 cgroupfs-mount/Pkgfile
 cgroupfs-mount/.checksum
 cgroupfs-mount/.manifest
+nasm/Pkgfile
+nasm/.checksum
+nasm/.manifest
 zlib/Pkgfile
 zlib/.checksum
 zlib/.manifest
