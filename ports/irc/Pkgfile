@@ -7,9 +7,9 @@
 
 name=irc
 version=0.0.2
-release=1
+release=2
 source="https://github.com/prologic/$name/archive/$version.tar.gz"
-depends="ncurses"
+depends="ncurses tzdata"
 
 build() {
   cd $name-$version || exit 1
