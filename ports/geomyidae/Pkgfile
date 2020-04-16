@@ -7,7 +7,7 @@
 
 name=geomyidae
 version=0.34
-release=1
+release=2
 source="ftp://ftp@bitreich.org/releases/$name/$name-v$version.tgz"
 
 build() {
@@ -18,4 +18,7 @@ build() {
     PREFIX=/usr DESTDIR="$PKG" \
     install
   rm -rf "$PKG/usr/share"
+
+  install -D -m 755 $name.svc "$PKG"/bin/svc.d/avail/$name
+  install -D -m 644 $name.conf "$PKG"/etc/default/$name
 }
