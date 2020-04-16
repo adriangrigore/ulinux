@@ -80,7 +80,6 @@ pkg_extract() {
         ;;
 
       *.zip)
-        log "warn: You may need to cd into zip directory."
         unzip -qd src "../$file_name" || die "couldn't extract $file_name"
         ;;
 
