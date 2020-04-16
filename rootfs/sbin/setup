@@ -1,6 +1,9 @@
 #!/bin/sh
+# shellcheck disable=SC1091
 
 set -e
+
+. /bin/rc.common
 
 : "${VERSION:=__VERSION__}"
 
@@ -12,41 +15,6 @@ part=
 SETUP_MBR=/usr/share/syslinux/mbr.bin
 SETUP_MEDIA=/dev/sr0
 SETUP_REBOOT=0
-
-warn() {
-  printf "WARN: %s\n" "$1" >&2
-}
-
-error() {
-  printf "ERROR: %s\n" "$1" >&2
-}
-
-log() {
-  printf "%s\n" "$1" >&2
-}
-
-ok() {
-  printf "%s\n" "OK"
-}
-
-err() {
-  printf "%s\n" "ERR"
-}
-
-run() {
-  logfile="$(mktemp -t "setup-run-XXXXXX")"
-  if "$@" 2> "$logfile"; then
-    ok
-  else
-    err
-    tail -n -5 "$logfile" || true
-  fi
-  rm -rf "$logfile"
-}
-
-progress() {
-  printf "%-30s" "$(printf "%s ... " "$1")"
-}
 
 mount_sources() {
   progress "Mounting sources"
@@ -132,8 +100,8 @@ unmount_sources() {
 }
 
 cleanup() {
-  umount -f "$rootfs" 2> /dev/null
-  umount -f "$sources" 2> /dev/null
+  umount -f "$rootfs" 2> /dev/null || true
+  umount -f "$sources" 2> /dev/null || true
   rm -rf "$sources"
   rm -rf "$rootfs"
 }
@@ -196,7 +164,7 @@ _main() {
   steps="$steps unmount_rootfs unmount_sources"
 
   for step in $steps; do
-    run "$step"
+    run "$step" || exit 1
   done
 
   echo "All Done!"

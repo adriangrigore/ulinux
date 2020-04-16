@@ -29,14 +29,17 @@ err() {
 }
 
 run() {
+  retval=0
   logfile="$(mktemp "run-XXXXXX")"
   if "$@" 2> "$logfile"; then
     ok
   else
+    retval=$?
     err
     tail -n -2 "$logfile" || true
   fi
   rm -rf "$logfile"
+  return $retval
 }
 
 progress() {
