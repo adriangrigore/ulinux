@@ -19,7 +19,8 @@ for p in /bin /sbin /usr/bin /usr/sbin /usr/local/bin /usr/local/sbin; do
 done
 [ -z "$BIN" ] && exit 1
 
-PID="$(pidof -o %PPID "$BIN")"
+PID="$(pidof -s -o %PPID "$BIN")"
+[ -z "$PID" ] && PID="$(pidof -s -o %PPID "$SERVICE")"
 
 case $1 in
   -s)
