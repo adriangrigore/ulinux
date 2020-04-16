@@ -17,39 +17,6 @@
 >            Consider using [Alpine](https://alpinelinux.org/) for a more feature
 >            rich system or any other "heavier" / "full featured" distro.
 
-Table of Contents
-=================
-
-* [ulinux](#ulinux)
-  * [Supported Platforms](#supported-platforms)
-  * [Features](#features)
-    * [Fast Boot](#fast-boot)
-    * [Very Lightweight\!](#very-lightweight)
-    * [Full Container Support](#full-container-support)
-    * [Toolchain](#toolchain)
-    * [CloudInit / CloudConfig](#cloudinit--cloudconfig)
-  * [Screenshots](#screenshots)
-  * [Getting Started](#getting-started)
-    * [Prebuilt Images](#prebuilt-images)
-    * [Installing](#installing)
-    * [Building](#building)
-    * [Customization](#customization)
-  * [CloudInit](#cloudinit)
-  * [Services](#services)
-    * [svc](#svc)
-    * [service](#service)
-  * [Packaging and Ports](#packaging-and-ports)
-    * [pkg](#pkg)
-    * [ports](#ports)
-    * [Other Utilities](#other-utilities)
-  * [Utilities](#utilities)
-    * [box](#box)
-    * [enter\-chroot](#enter-chroot)
-  * [Testing](#testing)
-* [License](#license)
-
-Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc.go)
-
 ## Supported Platforms
 
 - [X] [VirtualBox](https://www.virtualbox.org/)
