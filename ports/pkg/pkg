@@ -6,6 +6,23 @@
 # shellcheck disable=SC1091
 [ -f /etc/pkg.conf ] && . /etc/pkg.conf
 
+# Defaults
+PKG_PORTSDIR="${PKG_PORTSDIR:-/usr/ports}"
+PKG_PKGSDIR="${PKG_PKGSDIR:-$PWD}"
+
+is_abs() {
+  if [ -n "$1" ]; then
+    case "$1" in
+      /*)
+        true
+        ;;
+      *)
+        false
+        ;;
+    esac
+  fi
+}
+
 pkgfile_read() {
   [ -f Pkgfile ] || die "Pkgfile not found"
 
@@ -107,7 +124,7 @@ pkg_build() {
   cd "$og_pwd" > /dev/null
 
   cp .manifest "build/pkg/$db_dir/$name/manifest"
-  tar pcvf "${name}#$version-$release.tar.gz" \
+  tar pcvf "${PKG_PKGSDIR}/${name}#$version-$release.tar.gz" \
     -C build/pkg . > /dev/null || die "failed to create package"
 
   log "successfuly built $name"
@@ -116,24 +133,48 @@ pkg_build() {
 
 pkg_add() {
   if [ -z "$1" ] || [ "$1" = "." ]; then
-    set -- "$(ls ./*#*.tar.gz)"
+    # shellcheck disable=SC2012
+    if [ "$(ls -1 "$PKG_PKGSDIR"/*#*.tar.gz | wc -l)" -gt 1 ]; then
+      if ls "$PKG_PKGSDIR"/"$(basename "$PWD")"#*.tar.gz > /dev/null; then
+        set -- "$(ls "$PKG_PKGSDIR"/"$(basename "$PWD")"#*.tar.gz)"
+      else
+        die "cannot figure out which package to add"
+      fi
+    else
+      set -- "$(ls "$PKG_PKGSDIR"/*#*.tar.gz)"
+    fi
   fi
 
-  name=${1%_*.tar.gz*}
+  if ! is_abs "$1"; then
+    if [ -n "${1##*.tar.??}" ]; then
+      # shellcheck disable=SC2012
+      if [ "$(ls -1 "$PKG_PKGSDIR/$1"#*.tar.gz | wc -l)" -eq 1 ]; then
+        pkg="$(ls "$PKG_PKGSDIR/$1"#*.tar.gz)"
+      else
+        die "cannot figure out which package to add"
+      fi
+    else
+      pkg="${PKG_PKGSDIR}/$1"
+    fi
+  else
+    pkg="$1"
+  fi
+
+  name=${pkg%_*.tar.gz*}
   name=${name##-}
 
-  [ -f "$1" ] || die "file not found"
-  [ -z "${1##*.tar.??}" ] || die "add requires a tarball"
+  [ -f "$pkg" ] || die "file not found"
+  [ -z "${pkg##*.tar.??}" ] || die "add requires a tarball"
   [ -n "$PKG_ROOT" ] && mkdir -p "$PKG_ROOT"
 
   mkdir -p "$PKG_ROOT/$db_dir" || die "couldn't create required directories."
 
   # Test tar file before extraction.
-  tar tf "$1" > /dev/null || die "couldn't extract $name"
+  tar tf "$pkg" > /dev/null || die "couldn't extract $name"
 
   [ -f "$PKG_ROOT/$db_dir/$name/manifest" ] && pkg_delete "$name"
 
-  tar pxvf "$1" -C "$PKG_ROOT/" || die "couldn't extract $name"
+  tar pxvf "$pkg" -C "$PKG_ROOT/" || die "couldn't extract $name"
   log "successfuly installed $name to $PKG_ROOT/"
 
   [ -f post-install ] && {
