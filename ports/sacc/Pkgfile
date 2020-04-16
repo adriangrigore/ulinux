@@ -7,7 +7,7 @@
 
 name=sacc
 version=1.01
-release=2
+release=3
 source="https://gopher.mills.io/bitreich.org/9/releases/sacc/sacc-1.01.tgz"
 depends="ncurses"
 
@@ -15,6 +15,6 @@ build() {
   cd $name-$version || exit 1
 
   make -j "$(nproc)" \
-    PREFIX=/usr DESTDIR="$PKG" install
-  rm -rf "$PKG/usr/share"
+    LIBS=-lncursesw PREFIX=/usr DESTDIR="$PKG" install
+  rm -rf "${PKG:?}"/usr/share
 }
