@@ -176,7 +176,7 @@ pkg_add() {
 
   [ -f "$PKG_ROOT/$db_dir/$name/manifest" ] && pkg_delete "$name"
 
-  tar pxvf "$pkg" -C "$PKG_ROOT/" || die "couldn't extract $name"
+  tar pxvf "$pkg" -C "$PKG_ROOT/" >&2 || die "couldn't extract $name"
   log "successfuly installed $name to $PKG_ROOT/"
 
   if [ -f post-install ]; then
