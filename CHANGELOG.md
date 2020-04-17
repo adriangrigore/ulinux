@@ -1,4 +1,46 @@
 
+<a name="1.0.2"></a>
+## [1.0.2](https://github.com/prologic/ulinux/compare/1.0.1...1.0.2) (2020-04-17)
+
+### Bug Fixes
+
+* Fix release workflow (Fixes [#23](https://github.com/prologic/ulinux/issues/23))
+* Fix ncurses ports to add symlinks for -lcurses and -lncurses
+* Fix sacc port linking against ncursesw
+* Fix bug in bare service that fails to find pids of some binaries
+* Fix useless warning about zip sources in pkg
+* Fix checksum of ncurses port
+
+### Features
+
+* Add tmux and its dependency libevent ports
+* Add a sane default mdev config
+* Add var/cache to rootfs
+* Add support for adding and publishing packages to/from a central PKG_PKGSDIR path
+* Add search, depends sub-commands to pkg
+* Add nasm port
+* Add fasm port and move out of the base system build
+* Add sic port
+* Add gdbserver port
+* Add tzdata port
+
+### Updates
+
+* Update release/upload Make targets to perform SHA/GPG after the build but before the upload
+* Update tcc to 20200416
+* Update rootfs with default config for builtin httpd and empty /var/www and default directory listing
+* Update geomyidae with default config and service script
+* Update README and remove toc also disable/remove gh-pages as we're going to self-host with uLinux itself
+* Update ports tree
+* Update setup to reuse rc.common and fail fast if a step fails
+* Update setup tool to have some options including a reboot option (-r/--reboot)
+* Update tcc port to 20200415 and use gitver (SHA) to track source
+* Update ports tree index
+* Update manifest of zlib port
+* Update ports tree idnex
+* Update irc port to depend on tzdata
+
+
 <a name="1.0.1"></a>
 ## [1.0.1](https://github.com/prologic/ulinux/compare/1.0...1.0.1) (2020-04-15)
 
