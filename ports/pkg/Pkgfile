@@ -6,8 +6,8 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=pkg
-version=0.0.12
-release=2
+version=0.0.13
+release=1
 source="pkg pkg.common pkg.conf ports repogen prtcreate"
 
 build() {

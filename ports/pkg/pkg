@@ -179,10 +179,10 @@ pkg_add() {
   tar pxvf "$pkg" -C "$PKG_ROOT/" || die "couldn't extract $name"
   log "successfuly installed $name to $PKG_ROOT/"
 
-  [ -f post-install ] && {
+  if [ -f post-install ]; then
     log "running post install hook"
     sh post-install
-  }
+  fi
 }
 
 pkg_delete() {
