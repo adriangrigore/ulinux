@@ -174,7 +174,7 @@ EOF
     --mount \
     --mount-proc \
     --map-root-user \
-    chroot "$tmpc/root" /usr/bin/env -i $BOX_ENV /bin/sh -c "source /init; $*"
+    /usr/sbin/chroot "$tmpc/root" /usr/bin/env -i $BOX_ENV /bin/sh -c "source /init; $*"
 }
 
 if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then

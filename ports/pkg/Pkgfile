@@ -7,7 +7,7 @@
 
 name=pkg
 version=0.0.12
-release=1
+release=2
 source="pkg pkg.common pkg.conf ports repogen prtcreate"
 
 build() {
@@ -18,4 +18,6 @@ build() {
   install -D -m 755 ports "$PKG"/bin/ports
   install -D -m 755 repogen "$PKG"/bin/repogen
   install -D -m 755 prtcreate "$PKG"/bin/prtcreate
+
+  install -d "$PKG"/usr/ports
 }

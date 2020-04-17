@@ -6,8 +6,8 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=box
-version=1.0
-release=2
+version=1.0.1
+release=1
 source="$name"
 
 build() {
