@@ -1,4 +1,4 @@
-.PHONY: build clouddrive test toc release up-to-date clean
+.PHONY: build clouddrive test tests toc release up-to-date clean
 
 all: build
 
@@ -33,6 +33,9 @@ clouddrive:
 
 test:
 	@./test.sh
+
+tests:
+	@./tests/run.sh
 
 toc:
 	@gh-md-toc README.md
