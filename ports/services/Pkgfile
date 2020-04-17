@@ -1,0 +1,27 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Standard Services
+# URL:         https://ulinux.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=services
+version=1.0
+release=1
+configs="crond.conf dropbear.conf httpd.conf mdev.conf net.conf"
+services="crond.svc dropbear.svc httpd.svc hwclock.svc mdev.svc net.svc rngd.svc syslogd.svc"
+source="$configs $services"
+
+build() {
+  install -d "$PKG"/etc/default
+  for config in $configs; do
+    install -D -m 644 "$SRC/$config" "$PKG/etc/default/${config%.conf}"
+  done
+
+  install -d "$PKG"/bin/svc.d/avail
+  install -d "$PKG"/bin/svc.d/run
+  for service in $services; do
+    install -D -m 755 "$SRC/$service" "$PKG/bin/svc.d/avail/${service%.svc}"
+    ln -s "/bin/svc.d/avail/${service%.svc}" "$PKG/bin/svc.d/run/${service%.svc}"
+  done
+}

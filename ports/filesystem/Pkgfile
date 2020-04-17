@@ -6,8 +6,7 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=filesystem
-version="$(git describe --abbrev=0 --tags || echo "0.0.0")"
-gitver="$(git rev-parse --short HEAD || echo "HEAD")"
+version=1.0
 release=1
 source="issue motd shells group passwd shadow securetty fstab mime.types"
 

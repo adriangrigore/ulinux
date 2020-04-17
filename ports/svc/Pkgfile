@@ -8,24 +8,13 @@
 name=svc
 version=1.0
 release=1
-default_configs="crond.conf dropbear.conf httpd.conf mdev.conf net.conf"
-default_services="crond.svc dropbear.svc httpd.svc hwclock.svc mdev.svc net.svc rngd.svc syslogd.svc"
-source="$name service bare.sh $default_configs $default_services"
+source="$name service bare.sh"
 
 build() {
-  install -d "$PKG"/etc/default
-  for default_config in $default_configs; do
-    install -D -m 644 "$SRC/$default_config" "$PKG/etc/default/${default_config%.conf}"
-  done
+  install -D -m 755 "$SRC"/$name "$PKG"/bin/$name
+  install -D -m 755 "$SRC"/service "$PKG"/bin/service
 
   install -d "$PKG"/bin/svc.d/avail
   install -d "$PKG"/bin/svc.d/run
-  for default_service in $default_services; do
-    install -D -m 755 "$SRC/$default_service" "$PKG/bin/svc.d/avail/${default_service%.svc}"
-    ln -s "/bin/svc.d/avail/${default_service%.svc}" "$PKG/bin/svc.d/run/${default_service%.svc}"
-  done
-
-  install -D -m 755 "$SRC"/$name "$PKG"/bin/$name
-  install -D -m 755 "$SRC"/service "$PKG"/bin/service
   install -D -m 755 "$SRC"/bare.sh "$PKG"/bin/svc.d/bare.sh
 }

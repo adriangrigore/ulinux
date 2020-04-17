@@ -205,9 +205,13 @@ build_ports() {
     for port in $CORE_PORTS; do
       (
         cd "ports/$port" || exit 1
-        pkg build
-        PKG_ROOT="$rootfs" pkg add .
-      )
+        if ! pkg build; then
+          fail "Failed to build port $port"
+        fi
+        if ! PKG_ROOT="$rootfs" pkg add .; then
+          fail "Failed to install port $port"
+        fi
+      ) >&2
     done
   ) >&2
 }
