@@ -1,0 +1,25 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Terminal multiplexer like screen
+# URL:         http://tmux.github.io/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=tmux
+version=3.0a
+release=1
+source="https://github.com/tmux/tmux/releases/download/${version%-*}/$name-$version.tar.gz"
+depends="ncurses libevent"
+
+build() {
+  cd $name-$version || exit 1
+
+  ./configure \
+    --prefix=/usr
+
+  make -j "$(nproc)"
+
+  make DESTDIR="$PKG" install
+
+  rm -rf "$PKG"/usr/share
+}
