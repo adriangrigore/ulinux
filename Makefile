@@ -43,13 +43,17 @@ test:
 toc:
 	@gh-md-toc README.md
 
-release: clean up-to-date build
+release: clean up-to-date
 	@echo "Calculating SHA256SUMS ..."
 	@sha256sum *.gz *.iso > sha256sums.txt
 	@echo "Signing SHA256SUMS ..."
 	@gpg --detach-sign sha256sums.txt
 	@echo "Creating release ..."
 	@./tools/release.sh
+
+upload: clean up-to-date build
+	@echo "Uploading prebuilt images..."
+	@./tools/upload.sh
 
 up-to-date:
 	@git checkout master
