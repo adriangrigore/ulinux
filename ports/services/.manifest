@@ -25,6 +25,7 @@
 /var/db/pkg
 /var/db
 /var
+/etc/dropbear
 /etc/default
 /etc
 /bin/svc.d/run
