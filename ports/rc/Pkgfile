@@ -7,17 +7,20 @@
 
 name=rc
 version=1.0
-release=1
-source="rc.common  rc.conf  rc.init  rc.local  rc.modules  rc.shutdown  rc.svc"
+release=2
+source="rc.common rc.conf rc.init rc.local rc.modules rc.shutdown rc.svc
+telinit"
 depends="sinit"
 
 build() {
-  install -D -m 644 rc.common "$PKG"/bin/rc.common
-  install -D -m 755 rc.init "$PKG"/bin/rc.init
-  install -D -m 755 rc.local "$PKG"/bin/rc.local
-  install -D -m 755 rc.modules "$PKG"/bin/rc.modules
-  install -D -m 755 rc.shutdown "$PKG"/bin/rc.shutdown
-  install -D -m 755 rc.svc "$PKG"/bin/rc.svc
+  install -D -m 644 "$SRC"/rc.common "$PKG"/bin/rc.common
+  install -D -m 755 "$SRC"/rc.init "$PKG"/bin/rc.init
+  install -D -m 755 "$SRC"/rc.local "$PKG"/bin/rc.local
+  install -D -m 755 "$SRC"/rc.modules "$PKG"/bin/rc.modules
+  install -D -m 755 "$SRC"/rc.shutdown "$PKG"/bin/rc.shutdown
+  install -D -m 755 "$SRC"/rc.svc "$PKG"/bin/rc.svc
+
+  install -D -m 755 "$SRC"/telinit "$PKG"/sbin/telinit
 
   install -D -m 644 rc.conf "$PKG"/etc/rc.conf
 }

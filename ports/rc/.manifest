@@ -4,6 +4,7 @@
 /bin/rc.svc
 /bin/rc.modules
 /bin/rc.local
+/sbin/telinit
 /etc/rc.conf
 /var/db/pkg/rc/version
 /var/db/pkg/rc/manifest
@@ -11,5 +12,6 @@
 /var/db/pkg
 /var/db
 /var
+/sbin
 /etc
 /bin
