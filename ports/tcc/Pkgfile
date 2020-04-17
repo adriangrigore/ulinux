@@ -6,8 +6,8 @@
 # Maintainer:  Steffen Nurpmeso, steffen at sdaoden dot eu
 
 name=tcc
-version=20200415
-gitver=8c6143d86f72366ae246252c1b693c843d4e2a43
+version=20200416
+gitver=fb1fb8219ccf4813d63edf8c40fddc756e0c60cc
 release=1
 source="https://github.com/mirror/tinycc/archive/$gitver.zip
 ar Makefile.patch"
