@@ -1,0 +1,19 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Networking Services
+# URL:         https://ulinux.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=net
+version=1.0
+release=1
+source="$name.conf $name.svc default.script"
+
+build() {
+  install -D -m 755 "$SRC"/default.script "$PKG"/usr/share/udhcpc/default.script
+  install -D -m 755 "$SRC/$name.svc" "$PKG/bin/svc.d/avail/$name"
+  install -D -m 644 "$SRC/$name.conf" "$PKG/etc/default/$name"
+  install -d "$PKG"/bin/svc.d/run
+  ln -s "/bin/svc.d/avail/$name" "$PKG/bin/svc.d/run/$name"
+}

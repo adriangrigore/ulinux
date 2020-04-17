@@ -20,6 +20,7 @@ else
 fi
 
 build_musl() {
+  progress "Building musl"
   (
     cd musl-$MUSL_VERSION
 
@@ -30,11 +31,13 @@ build_musl() {
     make -j "$(nproc)"
     make DESTDIR="$rootfs" install
 
+    install -d "$rootfs"/usr/bin
     ln -s /usr/lib/libc.so "$rootfs/usr/bin/ldd"
-  )
+  ) >&2
 }
 
 build_make() {
+  progress "Building make"
   (
     cd make-$MAKE_VERSION
 
@@ -46,18 +49,20 @@ build_make() {
     # remove man/info pages
     rm -r "$rootfs"/usr/share/info
     rm -r "$rootfs"/usr/share/man
-  )
+  ) >&2
 }
 
 build_sinit() {
+  progress "Building sinit"
   (
     cd sinit-$SINIT_VERSION
     make
     install -D -m 755 sinit "$rootfs"/sbin/init
-  )
+  ) >&2
 }
 
 build_busybox() {
+  progress "Building busybox"
   (
     cd busybox-$BUSYBOX_VERSION
     make -j "$(nproc)" \
@@ -103,10 +108,11 @@ build_busybox() {
     make -j "$(nproc)" \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
       busybox install
-  )
+  ) >&2
 }
 
 build_dropbear() {
+  progress "Building dropbear"
   (
     cd dropbear-$DROPBEAR_VERSION
 
@@ -125,10 +131,11 @@ build_dropbear() {
     ln -sf /usr/bin/dbclient "$rootfs"/usr/bin/ssh
 
     chmod u+s "$rootfs"/usr/sbin/dropbear
-  )
+  ) >&2
 }
 
 build_syslinux() {
+  progress "Building syslinux"
   (
     cd syslinux-$SYSLINUX_VERSION
 
@@ -154,11 +161,12 @@ build_syslinux() {
     find "$rootfs"/usr/share/syslinux \
       -type f -name '*.0' -delete
     find "$rootfs"/usr/share/syslinux \
-      -type d -exec rmdir {} + 2> /dev/null
-  )
+      -type d -exec rmdir {} --ignore-fail-on-non-empty +
+  ) >&2
 }
 
 build_rngtools() {
+  progress "Building rngtools"
   (
     cd rng-tools-$RNGTOOLS_VERSION
     ./configure \
@@ -167,10 +175,11 @@ build_rngtools() {
       LIBS="-l argp"
     make
     make DESTDIR="$rootfs" install
-  )
+  ) >&2
 }
 
 build_iptables() {
+  progress "Building iptables"
   (
     cd iptables-$IPTABLES_VERSION
     ./configure \
@@ -181,58 +190,34 @@ build_iptables() {
     make -j "$(nproc)" \
       EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
     make DESTDIR="$rootfs" install
-  )
-}
-
-write_metadata() {
-  # Setup /etc/os-release with some nice contents
-  latestTag="$(git describe --abbrev=0 --tags || echo "v0.0.0")"
-  latestRev="$(git rev-parse --short HEAD)"
-  fullVersion="$(echo "${latestTag}" | cut -c1-)"
-  majorVersion="$(echo "${latestTag}" | cut -c1- | cut -d '.' -f 1,2)"
-  cat > "$rootfs"/etc/os-release << EOF
-NAME=µLinux
-VERSION=$fullVersion
-ID=ulinux
-ID_LIKE=tcl
-VERSION_ID=$fullVersion
-PRETTY_NAME="µLinux (micro Linux) $fullVersion (TCL $majorVersion); $latestRev"
-ANSI_COLOR="1;34"
-HOME_URL="https://github.com/prologic/ulinux"
-SUPPORT_URL="https://github.com/prologic/ulinux"
-BUG_REPORT_URL="https://github.com/prologic/ulinux/issues"
-EOF
-
-  cat > $rootfs/usr/bin/ulinux << EOF
-#!/bin/sh
-
-printf "uLinux (µLinux) v%s@%s\n" "${fullVersion}" "${latestRev}"
-EOF
-  chmod +x $rootfs/usr/bin/ulinux
+  ) >&2
 }
 
 build_ports() {
-  # Bootstrap pkg
-  install -D -m 755 ./ports/pkg/pkg /usr/local/bin/pkg
+  progress "Building ports"
+  (
+    # Bootstrap pkg
+    install -D -m 755 ./ports/pkg/pkg /usr/local/bin/pkg
 
-  # Copy ports tree into rootfs
-  cp -r ports/* "$rootfs/usr/ports"
+    # Copy ports tree into rootfs
+    cp -r ports/* "$rootfs/usr/ports"
 
-  for port in $CORE_PORTS; do
-    (
-      cd "ports/$port" || exit 1
-      pkg build
-      PKG_ROOT="$rootfs" pkg add .
-    )
-  done
+    for port in $CORE_PORTS; do
+      (
+        cd "ports/$port" || exit 1
+        pkg build
+        PKG_ROOT="$rootfs" pkg add .
+      )
+    done
+  ) >&2
 }
 
 build_rootfs() {
+  progress "Building rootfs"
   (
     cd rootfs
 
     # Cleanup rootfs
-    find . -type f -name '.empty' -size 0c -delete
     rm -rf "$rootfs"/usr/man
     rm -rf "$rootfs"/usr/share/man
     rm -rf "$rootfs"/usr/lib/pkgconfig
@@ -243,19 +228,11 @@ build_rootfs() {
 
     # Archive rootfs
     find . | cpio -R root:root -H newc -o | gzip -3 > ../rootfs.gz
-  )
-}
-
-sync_rootfs() {
-  (
-    mkdir rootfs.old
-    cd rootfs.old
-    zcat < $build/rootfs.gz | cpio -idm
-    rsync -aru . "$rootfs"
-  )
+  ) >&2
 }
 
 build_kernel() {
+  progress "Building kernel"
   (
     cd linux-$KERNEL_VERSION
     make -j "$(nproc)" \
@@ -457,18 +434,19 @@ build_kernel() {
     make headers_install INSTALL_HDR_PATH="$rootfs/usr"
 
     cp arch/x86/boot/bzImage ../kernel.gz
-  )
+  ) >&2
 }
 
 build_iso() {
-  test -d "$isoimage" || mkdir "$isoimage"
-  cp rootfs.gz "$isoimage"
-  cp kernel.gz "$isoimage"
-  cp syslinux-$SYSLINUX_VERSION/bios/core/isolinux.bin "$isoimage"
-  cp syslinux-$SYSLINUX_VERSION/bios/com32/elflink/ldlinux/ldlinux.c32 "$isoimage"
-  echo 'default kernel.gz initrd=rootfs.gz append quiet rdinit=/sbin/init' > "$isoimage/isolinux.cfg"
-
+  progress "Building iso"
   (
+    test -d "$isoimage" || mkdir "$isoimage"
+    cp rootfs.gz "$isoimage"
+    cp kernel.gz "$isoimage"
+    cp syslinux-$SYSLINUX_VERSION/bios/core/isolinux.bin "$isoimage"
+    cp syslinux-$SYSLINUX_VERSION/bios/com32/elflink/ldlinux/ldlinux.c32 "$isoimage"
+    echo 'default kernel.gz initrd=rootfs.gz append quiet rdinit=/sbin/init' > "$isoimage/isolinux.cfg"
+
     cd "$isoimage"
     xorriso \
       -as mkisofs \
@@ -479,34 +457,30 @@ build_iso() {
       -boot-load-size 4 \
       -boot-info-table \
       ./
-  )
+  ) >&2
 }
 
 build_clouddrive() {
-  xorrisofs -J -r -V cidata -o ./clouddrive.iso clouddrive/
+  progress "Building clouddrive"
+  (
+    xorrisofs -J -r -V cidata -o ./clouddrive.iso clouddrive/
+  ) >&2
 }
+
+steps="build_musl build_make build_sinit build_busybox build_dropbear"
+steps="$steps build_syslinux build_rngtools build_iptables build_kernel"
+steps="$steps build_ports build_rootfs build_iso build_clouddrive"
 
 build_all() {
-  build_musl
-  build_make
-  build_sinit
-  build_busybox
-  build_dropbear
-  build_syslinux
-  build_rngtools
-  build_iptables
-  build_kernel
-  write_metadata
-  build_ports
-  build_rootfs
-  build_iso
-  build_clouddrive
-}
+  for step in $steps; do
+    if ! run "$step"; then
+      if [ -t 1 ]; then
+        debug
+      else
+        fail "Build failed"
+      fi
+    fi
+  done
 
-repack() {
-  sync_rootfs
-  write_metadata
-  build_rootfs
-  build_iso
-  build_clouddrive
+  echo "🎉 All Done!"
 }

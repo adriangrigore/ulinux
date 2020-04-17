@@ -1,0 +1,16 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Sandbox Container Tool
+# URL:         https://ulinux.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=box
+version=1.0
+release=1
+source="$name"
+
+build() {
+  sed -i'' -e "s/VERSION/$version/" "$SRC"/$name
+  install -D -m 755 "$SRC"/$name "$PKG"/bin/$name
+}

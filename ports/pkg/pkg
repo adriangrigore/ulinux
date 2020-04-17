@@ -34,9 +34,11 @@ pkgfile_read() {
 
   PATH= type build > /dev/null || die "build() not found in Pkgfile."
 
-  for dep in $depends; do
-    pkg_list "$dep" > /dev/null || miss="$miss $dep"
-  done
+  if [ -n "$SKIP_DEPS" ]; then
+    for dep in $depends; do
+      pkg_list "$dep" > /dev/null || miss="$miss $dep"
+    done
+  fi
   [ -n "$miss" ] && die "missing dependencies:$miss"
 
   pkgfile=1
@@ -348,7 +350,7 @@ args() {
       ;;
 
     c*)
-      pkgfile_read
+      pkgfile_read SKIP_DEPS=1
       pkg_get
       pkg_checksum .checksum
       ;;

@@ -1,0 +1,15 @@
+/bin/rc.common
+/bin/rc.init
+/bin/rc.shutdown
+/bin/rc.svc
+/bin/rc.modules
+/bin/rc.local
+/etc/rc.conf
+/var/db/pkg/rc/version
+/var/db/pkg/rc/manifest
+/var/db/pkg/rc
+/var/db/pkg
+/var/db
+/var
+/etc
+/bin

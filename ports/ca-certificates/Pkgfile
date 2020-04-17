@@ -1,0 +1,21 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Bundle of CA Root Certificates from Mozilla
+# URL:         https://ulinux.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=ca-certificates
+version=20200101
+release=1
+source="cacert.pem"
+
+build() {
+  # see http://curl.haxx.se/docs/mk-ca-bundle.html how
+  # to create the bundle from Mozillas data:
+  # mk-ca-bundle.pl -p ALL:TRUSTED_DELEGATOR cacert.pem
+  # As of version 20180620 we are using again the bundle
+  # from curl without modifications.
+
+  install -D -m 644 "$SRC"/cacert.pem "$PKG"/etc/ssl/cert.pem
+}

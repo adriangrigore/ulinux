@@ -14,7 +14,7 @@ SYSLINUX_VERSION=6.03
 RNGTOOLS_VERSION=5
 IPTABLES_VERSION=1.8.2
 
-CORE_PORTS="pkg tcc"
+CORE_PORTS="filesystem rc svc cloudinit hwclock net pkg tcc ca-certificates"
 
 export KERNEL_VERSION
 export SINIT_VERSION

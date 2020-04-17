@@ -1,0 +1,77 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Root filesystem package
+# URL:         https://ulinux.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=filesystem
+version="$(git describe --abbrev=0 --tags || echo "0.0.0")"
+gitver="$(git rev-parse --short HEAD || echo "HEAD")"
+release=1
+source="issue motd shells group passwd shadow securetty fstab mime.types"
+
+build() {
+  # bin/  etc/  home/ lib/  mnt/  root/ sbin/ tmp/  usr/  var/
+  # Directory structure
+  install -d "$PKG"/bin
+  install -d "$PKG"/etc
+  install -d -m 750 "$PKG"/home
+  install -d "$PKG"/lib
+  install -d "$PKG"/mnt
+  install -d -m 750 "$PKG"/root
+  install -d "$PKG"/sbin
+  install -d -m 1777 "$PKG"/tmp
+  install -d "$PKG"/usr
+  install -d "$PKG"/usr/bin
+  install -d "$PKG"/usr/lib
+  install -d "$PKG"/usr/port
+  install -d "$PKG"/usr/sbin
+  install -d "$PKG"/usr/share
+  install -d "$PKG"/var
+  install -d "$PKG"/var/cache
+  install -d "$PKG"/var/lib
+  install -d "$PKG"/var/log
+  install -d "$PKG"/var/run
+  install -d "$PKG"/var/spool
+  install -d "$PKG"/var/spool/cron
+  install -d -m 1777 "$PKG"/var/spool/cron/crontabs
+  install -d "$PKG"/var/www
+  install -d "$PKG"/var/www/cgi-bin
+
+  # /etc
+  install -m 0644 issue "$PKG"/etc
+  install -m 0644 motd "$PKG"/etc
+  install -m 0644 shells "$PKG"/etc
+  install -m 0644 group "$PKG"/etc
+  install -m 0644 passwd "$PKG"/etc
+  install -m 0640 shadow "$PKG"/etc
+  install -m 0644 securetty "$PKG"/etc
+  install -m 0644 fstab "$PKG"/etc
+  install -m 0644 mime.types "$PKG"/etc
+
+  # Setup /etc/os-release with some nice contents
+  latestTag="$(git describe --abbrev=0 --tags || echo "v0.0.0")"
+  latestRev="$(git rev-parse --short HEAD)"
+  fullVersion="$(echo "${latestTag}" | cut -c1-)"
+  majorVersion="$(echo "${latestTag}" | cut -c1- | cut -d '.' -f 1,2)"
+  cat > "$PKG"/etc/os-release << EOF
+NAME=µLinux
+VERSION=$fullVersion
+ID=ulinux
+ID_LIKE=tcl
+VERSION_ID=$fullVersion
+PRETTY_NAME="µLinux (micro Linux) $fullVersion (TCL $majorVersion); $latestRev"
+ANSI_COLOR="1;34"
+HOME_URL="https://github.com/prologic/ulinux"
+SUPPORT_URL="https://github.com/prologic/ulinux"
+BUG_REPORT_URL="https://github.com/prologic/ulinux/issues"
+EOF
+
+  cat > "$PKG"/usr/bin/ulinux << EOF
+#!/bin/sh
+
+printf "uLinux (µLinux) v%s@%s\n" "${fullVersion}" "${latestRev}"
+EOF
+  chmod +x "$PKG"/usr/bin/ulinux
+}

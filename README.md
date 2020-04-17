@@ -158,12 +158,6 @@ You can customize the build by overriding the `customize_kernel()` and
 
 if any of the `customize_*` functions fail the build will fail.
 
-You can also repack the rootfs by running:
-
-```#!sh
-$ make repack
-```
-
 ## CloudInit
 
 uLinux is fully [cloud-init](https://cloudinit.readthedocs.io/en/latest/#)
@@ -188,7 +182,7 @@ as the `user-data.
 
 There is a sample CloudDrive config in [clouddrive](clouddrive) as the top-level
 of the repo which can be customized by editing the `user-data` script and
-running `make repack`.
+running `make clouddrive`.
 
 ## Services
 

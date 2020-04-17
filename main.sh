@@ -24,8 +24,8 @@ _main() {
     download)
       download_all
       ;;
-    repack)
-      repack
+    clouddrive)
+      build_clouddrive
       ;;
     *)
       download_all
