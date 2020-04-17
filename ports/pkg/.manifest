@@ -10,5 +10,7 @@
 /var/db/pkg
 /var/db
 /var
+/usr/ports
+/usr
 /etc
 /bin

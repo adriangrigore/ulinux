@@ -111,6 +111,11 @@ pkg_extract() {
 }
 
 pkg_build() {
+  if [ -d build ]; then
+    log "removing old build"
+    rm -rf build || die "couldn't remove old build"
+  fi
+
   mkdir -p build/src build/pkg || die "couldn't create required directories."
 
   cd src > /dev/null || die "can't access src dir."
