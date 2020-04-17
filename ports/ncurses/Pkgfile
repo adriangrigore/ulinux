@@ -7,8 +7,9 @@
 
 name=ncurses
 version=6.2
-release=3
+release=4
 source="http://ftpmirror.gnu.org/gnu/$name/$name-$version.tar.gz"
+depends="tcc"
 
 build() {
   cd $name-$version || exit 1
@@ -27,5 +28,10 @@ build() {
 
   make -j "$(nproc)" \
     DESTDIR="$PKG" install
+
+  ln -s libncursesw.so "$PKG"/usr/lib/libcurses.so
+  ln -s libncursesw.so "$PKG"/usr/lib/libncurses.so
+  ln -s libncursesw.a "$PKG"/usr/lib/libncurses.a
+
   rm -rf "$PKG"/usr/share/man
 }
