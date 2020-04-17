@@ -7,10 +7,10 @@
 
 name=box
 version=1.0
-release=1
+release=2
 source="$name"
 
 build() {
-  sed -i'' -e "s/VERSION/$version/" "$SRC"/$name
+  sed -i'' -e "s/__VERSION__/$version/" "$SRC"/$name
   install -D -m 755 "$SRC"/$name "$PKG"/bin/$name
 }

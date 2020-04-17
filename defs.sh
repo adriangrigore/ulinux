@@ -14,7 +14,7 @@ SYSLINUX_VERSION=6.03
 RNGTOOLS_VERSION=5
 IPTABLES_VERSION=1.8.2
 
-CORE_PORTS="filesystem rc svc cloudinit net services ca-certificates tcc pkg"
+CORE_PORTS="filesystem rc svc cloudinit net services ca-certificates tcc pkg box"
 
 export KERNEL_VERSION
 export SINIT_VERSION
