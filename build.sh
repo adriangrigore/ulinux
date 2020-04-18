@@ -35,15 +35,6 @@ build_make() {
   ) >&2
 }
 
-build_sinit() {
-  progress "Building sinit"
-  (
-    cd sinit-$SINIT_VERSION
-    make
-    install -D -m 755 sinit "$rootfs"/sbin/init
-  ) >&2
-}
-
 build_busybox() {
   progress "Building busybox"
   (
@@ -475,7 +466,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_make build_sinit build_busybox build_dropbear"
+steps="build_make build_busybox build_dropbear"
 steps="$steps build_syslinux build_rngtools build_iptables build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"

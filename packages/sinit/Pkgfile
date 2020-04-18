@@ -1,0 +1,17 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: a suckless init, initially based on Rich Felker's minimal init.
+# URL:         https://core.suckless.org/sinit/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=sinit
+version=1.0
+release=1
+source="https://dl.suckless.org/$name/$name-$version.tar.gz"
+
+build() {
+  cd $name-$version || exit 1
+  make -j "$(nproc)"
+  install -D -m 755 sinit "$PKG"/sbin/init
+}

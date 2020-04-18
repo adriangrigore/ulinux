@@ -29,17 +29,6 @@ download_make() {
   tar -xf make.tar.lz
 }
 
-download_sinit() {
-  progress "Downloading sinit"
-  if [ "$SINIT_VERSION" = "master" ]; then
-    git clone git://git.suckless.org/sinit sinit-$SINIT_VERSION
-  else
-    wget -q -O sinit.tar.gz \
-      https://dl.suckless.org/sinit/sinit-$SINIT_VERSION.tar.gz
-    tar -xf sinit.tar.gz
-  fi
-}
-
 download_busybox() {
   progress "Downloading busybox"
   if [ "$BUSYBOX_VERSION" = "snapshot" ]; then
@@ -81,7 +70,7 @@ download_iptables() {
   tar -xf iptables.tar.bz2
 }
 
-steps="download_make download_sinit download_busybox"
+steps="download_make download_busybox"
 steps="$steps download_dropbear download_syslinux download_rngtools"
 steps="$steps download_iptables download_kernel"
 
