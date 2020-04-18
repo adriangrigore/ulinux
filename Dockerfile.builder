@@ -17,5 +17,14 @@ RUN /bin/sh -c '. download.sh; download_all'
 
 COPY . /build
 
+RUN cd /build/ports/pkg && ./pkg build && ./pkg add && \
+	sed -i'' \
+	  -e 's|PKG_PORTSDIR=.*|PKG_PORTSDIR=/build/ports|' \
+	  -e '/export CC/d'			\
+	  -e '/export LD/d'			\
+	  -e '/export CFLAGS/d'		\
+	  -e '/export MAKEFLAGS/d'  \
+	  /etc/pkg.conf
+
 ENTRYPOINT ["./main.sh"]
 CMD ["build"]
