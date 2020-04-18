@@ -50,21 +50,6 @@ build_syslinux() {
   ) >&2
 }
 
-build_iptables() {
-  progress "Building iptables"
-  (
-    cd iptables-$IPTABLES_VERSION
-    ./configure \
-      --prefix=/usr \
-      --enable-libipq \
-      --disable-nftables
-
-    make -j "$(nproc)" \
-      EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
-    make DESTDIR="$rootfs" install
-  ) >&2
-}
-
 build_packages() {
   progress "Building packages"
   printf "\n"
@@ -364,7 +349,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_syslinux build_iptables build_kernel"
+steps="build_syslinux build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"
 

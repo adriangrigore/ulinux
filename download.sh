@@ -22,15 +22,8 @@ download_kernel() {
   tar -xf kernel.tar.xz
 }
 
-download_iptables() {
-  progress "Downloading iptables"
-  wget -q -O iptables.tar.bz2 \
-    https://netfilter.org/projects/iptables/files/iptables-$IPTABLES_VERSION.tar.bz2
-  tar -xf iptables.tar.bz2
-}
-
 steps="$steps download_syslinux"
-steps="$steps download_iptables download_kernel"
+steps="$steps download_kernel"
 
 download_all() {
   for step in $steps; do

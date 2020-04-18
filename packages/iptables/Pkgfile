@@ -1,0 +1,25 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: A Linux kernel packet filter control tool
+# URL:         http://www.iptables.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=iptables
+version=1.8.2
+release=1
+source="https://netfilter.org/projects/$name/files/$name-$version.tar.bz2"
+
+build() {
+  cd $name-$version || exit 1
+
+  ./configure \
+    --prefix=/usr \
+    --libexecdir=/usr/lib \
+    --enable-libipq \
+    --disable-nftables
+
+  make -j "$(nproc)" \
+    EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE"
+  make DESTDIR="$PKG" install
+}
