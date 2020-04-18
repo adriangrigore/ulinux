@@ -1,9 +1,9 @@
 #!/bin/sh
 
 # shellcheck disable=SC2034
-description="Test that we have 10 packages"
+description="Test that pkg is installed"
 
 run_test() {
-  result="$($SSH_CMD 'pkg list | wc -l')"
-  [ -n "$result" ] && [ "$result" -eq 10 ]
+  result="$($SSH_CMD 'pkg list | grep -o pkg')"
+  [ -n "$result" ] && [ "$result" = "pkg" ]
 }
