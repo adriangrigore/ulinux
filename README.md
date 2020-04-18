@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="docs/img/ulinux.logo.png" alt="uLinux" title="uLinux" />
-</p>
-
 # ulinux
 
 ![Build](https://github.com/prologic/ulinux/workflows/Build/badge.svg)
