@@ -50,19 +50,6 @@ build_syslinux() {
   ) >&2
 }
 
-build_rngtools() {
-  progress "Building rngtools"
-  (
-    cd rng-tools-$RNGTOOLS_VERSION
-    ./configure \
-      --prefix=/usr \
-      --sbindir=/usr/sbin \
-      LIBS="-l argp"
-    make
-    make DESTDIR="$rootfs" install
-  ) >&2
-}
-
 build_iptables() {
   progress "Building iptables"
   (
@@ -377,7 +364,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_syslinux build_rngtools build_iptables build_kernel"
+steps="build_syslinux build_iptables build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"
 

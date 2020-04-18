@@ -6,10 +6,10 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=services
-version=1.0.1
+version=1.0.2
 release=1
 configs="crond.conf httpd.conf mdev.conf net.conf"
-services="crond.svc httpd.svc hwclock.svc mdev.svc net.svc rngd.svc syslogd.svc"
+services="crond.svc httpd.svc hwclock.svc mdev.svc net.svc syslogd.svc"
 source="$configs $services"
 
 build() {

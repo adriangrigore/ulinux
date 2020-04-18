@@ -1,11 +1,9 @@
-/bin/svc.d/avail/rngd
 /bin/svc.d/avail/mdev
 /bin/svc.d/avail/net
 /bin/svc.d/avail/crond
 /bin/svc.d/avail/syslogd
 /bin/svc.d/avail/httpd
 /bin/svc.d/avail/hwclock
-/bin/svc.d/run/rngd
 /bin/svc.d/run/mdev
 /bin/svc.d/run/net
 /bin/svc.d/run/crond

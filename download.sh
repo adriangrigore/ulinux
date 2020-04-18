@@ -22,13 +22,6 @@ download_kernel() {
   tar -xf kernel.tar.xz
 }
 
-download_rngtools() {
-  progress "Downloading rngtools"
-  wget -q -O rngtools.tar.gz \
-    https://downloads.sourceforge.net/sourceforge/gkernel/rng-tools-$RNGTOOLS_VERSION.tar.gz
-  tar -xf rngtools.tar.gz
-}
-
 download_iptables() {
   progress "Downloading iptables"
   wget -q -O iptables.tar.bz2 \
@@ -36,7 +29,7 @@ download_iptables() {
   tar -xf iptables.tar.bz2
 }
 
-steps="$steps download_syslinux download_rngtools"
+steps="$steps download_syslinux"
 steps="$steps download_iptables download_kernel"
 
 download_all() {

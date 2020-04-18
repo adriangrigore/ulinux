@@ -1,0 +1,30 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: a random number generator daemon.
+# URL:         https://sourceforge.net/projects/gkernel/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=rngtools
+version=5
+release=1
+source="https://downloads.sourceforge.net/sourceforge/gkernel/rng-tools-$version.tar.gz
+rngd.svc"
+
+build() {
+  cd rng-tools-$version || exit 1
+
+  ./configure \
+    --prefix=/usr \
+    --sbindir=/usr/sbin \
+    LIBS="-l argp"
+
+  make -j "$(nproc)"
+  make DESTDIR="$PKG" install
+
+  install -D -m 750 "$SRC"/rngd.svc "$PKG"/bin/svc.d/avail/rngd
+  install -d "$PKG"/bin/svc.d/run
+  ln -s /bin/svc.d/avail/rngd "$PKG"/bin/svc.d/run/rngd
+
+  rm -rf "$PKG"/usr/share
+}

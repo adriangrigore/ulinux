@@ -1,0 +1,17 @@
+/usr/bin/rngtest
+/usr/sbin/rngd
+/bin/svc.d/avail/rngd
+/bin/svc.d/run/rngd
+/var/db/pkg/rngtools/version
+/var/db/pkg/rngtools/manifest
+/var/db/pkg/rngtools
+/var/db/pkg
+/var/db
+/var
+/usr/sbin
+/usr/bin
+/usr
+/bin/svc.d/run
+/bin/svc.d/avail
+/bin/svc.d
+/bin
