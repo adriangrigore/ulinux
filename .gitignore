@@ -7,10 +7,11 @@
 *.sig
 *.log
 *.swp
+*#*.tar.gz
+.DS_Store
 
-/.DS_Store
-/ports/*/*#*
-/ports/*/build
-/ports/*/*.zip
-/ports/*/*.tar*
-/ports/*/*.tgz
+/**/build
+
+/**/*.zip
+/**/*.tar*
+/**/*.tgz
