@@ -1,0 +1,8 @@
+/sbin/cloudinit
+/var/db/pkg/cloudinit/version
+/var/db/pkg/cloudinit/manifest
+/var/db/pkg/cloudinit
+/var/db/pkg
+/var/db
+/var
+/sbin
