@@ -19,23 +19,6 @@ else
   printf >&2 "WARNING: Cannot source customize.sh\n"
 fi
 
-build_musl() {
-  progress "Building musl"
-  (
-    cd musl-$MUSL_VERSION
-
-    ./configure \
-      --prefix=/usr \
-      --disable-static
-
-    make -j "$(nproc)"
-    make DESTDIR="$rootfs" install
-
-    install -d "$rootfs"/usr/bin
-    ln -s /usr/lib/libc.so "$rootfs/usr/bin/ldd"
-  ) >&2
-}
-
 build_make() {
   progress "Building make"
   (
@@ -492,7 +475,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_musl build_make build_sinit build_busybox build_dropbear"
+steps="build_make build_sinit build_busybox build_dropbear"
 steps="$steps build_syslinux build_rngtools build_iptables build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"

@@ -22,13 +22,6 @@ download_kernel() {
   tar -xf kernel.tar.xz
 }
 
-download_musl() {
-  progress "Downloading musl"
-  wget -q -O musl.tar.gz \
-    http://www.musl-libc.org/releases/musl-$MUSL_VERSION.tar.gz
-  tar -xf musl.tar.gz
-}
-
 download_make() {
   progress "Downloading make"
   wget -q -O make.tar.lz \
@@ -88,7 +81,7 @@ download_iptables() {
   tar -xf iptables.tar.bz2
 }
 
-steps="download_musl download_make download_sinit download_busybox"
+steps="download_make download_sinit download_busybox"
 steps="$steps download_dropbear download_syslinux download_rngtools"
 steps="$steps download_iptables download_kernel"
 

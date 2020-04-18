@@ -1,0 +1,25 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: an implementation of the C standard library built on top of the Linux system call API
+# URL:         https://musl.libc.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=musl
+version=1.2.0
+release=1
+source="http://www.musl-libc.org/releases/$name-$version.tar.gz"
+
+build() {
+  cd $name-$version || exit 1
+
+  ./configure \
+    --prefix=/usr \
+    --disable-static
+
+  make -j "$(nproc)"
+  make DESTDIR="$PKG" install
+
+  install -d "$PKG"/usr/bin
+  ln -s /usr/lib/libc.so "$PKG/usr/bin/ldd"
+}
