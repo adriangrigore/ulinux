@@ -19,56 +19,6 @@ else
   printf >&2 "WARNING: Cannot source customize.sh\n"
 fi
 
-build_busybox() {
-  progress "Building busybox"
-  (
-    cd busybox-$BUSYBOX_VERSION
-    make -j "$(nproc)" \
-      distclean defconfig
-    config y STATIC
-    config n INCLUDE_SUSv2
-    config "\"$rootfs\"" PREFIX
-    config y FEATURE_EDITING_VI
-    config y TUNE2FS
-    config n BOOTCHARTD
-    config n INIT
-    config y HALT
-    config y REBOOT
-    config y POWEROFF
-    config y FEATURE_CALL_TELINIT
-    config "/sbin/telinit" TELINIT_PATH
-    config n LINUXRC
-    config y FEATURE_GPT_LABEL
-    config n FEATURE_SKIP_ROOTFS
-    config y FEATURE_WGET_HTTPS
-    config n LPD
-    config n LPR
-    config n LPQ
-    config n RUNSV
-    config n RUNSVDIR
-    config n SV
-    config n SVC
-    config n SVLOGD
-    config n HUSH
-    config n CHAT
-    config n CONSPY
-    config n RUNLEVEL
-    config n PIPE_PROGRESS
-    config n RUN_PARTS
-    config n START_STOP_DAEMON
-    config n WHICH
-    config n MAN
-    config n RPM
-    config n DEB
-    config n DPKG
-    config n DPKG_DEB
-    yes "" | make oldconfig
-    make -j "$(nproc)" \
-      EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
-      busybox install
-  ) >&2
-}
-
 build_dropbear() {
   progress "Building dropbear"
   (
@@ -450,7 +400,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_busybox build_dropbear"
+steps="build_dropbear"
 steps="$steps build_syslinux build_rngtools build_iptables build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"

@@ -22,26 +22,6 @@ download_kernel() {
   tar -xf kernel.tar.xz
 }
 
-download_busybox() {
-  progress "Downloading busybox"
-  if [ "$BUSYBOX_VERSION" = "snapshot" ]; then
-    wget -q -O busybox.tar.bz2 \
-      https://busybox.net/downloads/snapshots/busybox-snapshot.tar.bz2
-    tar -xf busybox.tar.bz2
-    mv busybox busybox-$BUSYBOX_VERSION
-  elif fnmatch "2020[0-9]*" "$BUSYBOX_VERSION"; then
-    wget -q -O busybox.tar.bz2 \
-      https://busybox.net/downloads/snapshots/busybox-$BUSYBOX_VERSION.tar.bz2
-    tar -xf busybox.tar.bz2
-    mv busybox busybox-$BUSYBOX_VERSION
-  else
-    wget -q -O busybox.tar.bz2 \
-      http://busybox.net/downloads/busybox-$BUSYBOX_VERSION.tar.bz2
-    tar -xf busybox.tar.bz2
-  fi
-
-}
-
 download_dropbear() {
   progress "Downloading dropbear"
   wget -q -O dropbear.tar.bz2 \
@@ -63,7 +43,6 @@ download_iptables() {
   tar -xf iptables.tar.bz2
 }
 
-steps="download_busybox"
 steps="$steps download_dropbear download_syslinux download_rngtools"
 steps="$steps download_iptables download_kernel"
 

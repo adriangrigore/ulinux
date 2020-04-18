@@ -1,0 +1,24 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: The Swiss Army Knife of Embedded Linux
+# URL:         https://busybox.net/about.html
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=busybox
+version=20200412
+release=1
+source="https://busybox.net/downloads/snapshots/$name-$version.tar.bz2
+config"
+
+build() {
+  cd $name || exit 1
+
+  cp "$SRC"/config .config
+  sed -i "s|.*CONFIG_PREFIX.*|CONFIG_PREFIX=\"$PKG\"|" .config
+  yes "" | make oldconfig
+
+  make -j "$(nproc)" \
+    EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
+    busybox install
+}
