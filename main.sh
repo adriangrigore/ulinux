@@ -27,6 +27,9 @@ _main() {
     clouddrive)
       build_clouddrive
       ;;
+    sh*)
+      exec /bin/sh
+      ;;
     *)
       download_all
       build_all
