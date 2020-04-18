@@ -19,22 +19,6 @@ else
   printf >&2 "WARNING: Cannot source customize.sh\n"
 fi
 
-build_make() {
-  progress "Building make"
-  (
-    cd make-$MAKE_VERSION
-
-    ./configure --prefix=/usr --disable-nls
-
-    make
-    make DESTDIR="$rootfs" install
-
-    # remove man/info pages
-    rm -r "$rootfs"/usr/share/info
-    rm -r "$rootfs"/usr/share/man
-  ) >&2
-}
-
 build_busybox() {
   progress "Building busybox"
   (
@@ -466,7 +450,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_make build_busybox build_dropbear"
+steps="build_busybox build_dropbear"
 steps="$steps build_syslinux build_rngtools build_iptables build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"

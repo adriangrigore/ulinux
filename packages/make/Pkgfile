@@ -1,0 +1,26 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: Controls the generation of executables and other compile-related tasks
+# URL:         http://www.gnu.org/software/make/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name="make"
+version=4.3
+release=1
+source="http://ftpmirror.gnu.org/gnu/$name/$name-$version.tar.lz"
+
+build() {
+  cd $name-$version || exit
+
+  ./configure \
+    --prefix=/usr \
+    --disable-nls
+
+  make -j "$(nproc)"
+
+  make DESTDIR="$PKG" install
+
+  rm -rf "$PKG"/usr/share/info
+  rm -rf "$PKG"/usr/share/man
+}

@@ -22,13 +22,6 @@ download_kernel() {
   tar -xf kernel.tar.xz
 }
 
-download_make() {
-  progress "Downloading make"
-  wget -q -O make.tar.lz \
-    http://ftpmirror.gnu.org/gnu/make/make-$MAKE_VERSION.tar.lz
-  tar -xf make.tar.lz
-}
-
 download_busybox() {
   progress "Downloading busybox"
   if [ "$BUSYBOX_VERSION" = "snapshot" ]; then
@@ -70,7 +63,7 @@ download_iptables() {
   tar -xf iptables.tar.bz2
 }
 
-steps="download_make download_busybox"
+steps="download_busybox"
 steps="$steps download_dropbear download_syslinux download_rngtools"
 steps="$steps download_iptables download_kernel"
 
