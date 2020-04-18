@@ -473,7 +473,8 @@ build_clouddrive() {
 
 steps="build_musl build_make build_sinit build_busybox build_dropbear"
 steps="$steps build_syslinux build_rngtools build_iptables build_kernel"
-steps="$steps build_ports build_rootfs build_iso build_clouddrive"
+steps="$steps build_packages build_ports build_rootfs"
+steps="$steps build_iso build_clouddrive"
 
 build_all() {
   for step in $steps; do
