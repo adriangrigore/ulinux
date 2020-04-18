@@ -6,9 +6,10 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=filesystem
-version=1.0
+version=1.0.1
 release=1
-source="issue motd shells group passwd shadow securetty fstab mime.types"
+source="issue motd shells group passwd shadow securetty fstab mime.types
+mdev.conf"
 
 build() {
   # bin/  etc/  home/ lib/  mnt/  root/ sbin/ tmp/  usr/  var/
@@ -48,6 +49,7 @@ build() {
   install -m 0644 securetty "$PKG"/etc
   install -m 0644 fstab "$PKG"/etc
   install -m 0644 mime.types "$PKG"/etc
+  install -m 0644 mdev.conf "$PKG"/etc/mdev.conf
 
   # Setup /etc/os-release with some nice contents
   latestTag="$(git describe --abbrev=0 --tags || echo "v0.0.0")"

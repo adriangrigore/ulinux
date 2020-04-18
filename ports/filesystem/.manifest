@@ -1,4 +1,5 @@
 /usr/bin/ulinux
+/etc/mdev.conf
 /etc/securetty
 /etc/group
 /etc/shells
