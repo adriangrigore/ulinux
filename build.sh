@@ -19,29 +19,6 @@ else
   printf >&2 "WARNING: Cannot source customize.sh\n"
 fi
 
-build_dropbear() {
-  progress "Building dropbear"
-  (
-    cd dropbear-$DROPBEAR_VERSION
-
-    ./configure \
-      --prefix=/usr \
-      --mandir=/usr/man \
-      --disable-zlib \
-      --disable-wtmp
-
-    make -j "$(nproc)" \
-      EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
-      DESTDIR="$rootfs" \
-      PROGRAMS="dropbear dbclient dropbearkey scp" \
-      strip install
-
-    ln -sf /usr/bin/dbclient "$rootfs"/usr/bin/ssh
-
-    chmod u+s "$rootfs"/usr/sbin/dropbear
-  ) >&2
-}
-
 build_syslinux() {
   progress "Building syslinux"
   (
@@ -400,8 +377,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_dropbear"
-steps="$steps build_syslinux build_rngtools build_iptables build_kernel"
+steps="build_syslinux build_rngtools build_iptables build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"
 

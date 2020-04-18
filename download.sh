@@ -22,13 +22,6 @@ download_kernel() {
   tar -xf kernel.tar.xz
 }
 
-download_dropbear() {
-  progress "Downloading dropbear"
-  wget -q -O dropbear.tar.bz2 \
-    https://matt.ucc.asn.au/dropbear/dropbear-$DROPBEAR_VERSION.tar.bz2
-  tar -xf dropbear.tar.bz2
-}
-
 download_rngtools() {
   progress "Downloading rngtools"
   wget -q -O rngtools.tar.gz \
@@ -43,7 +36,7 @@ download_iptables() {
   tar -xf iptables.tar.bz2
 }
 
-steps="$steps download_dropbear download_syslinux download_rngtools"
+steps="$steps download_syslinux download_rngtools"
 steps="$steps download_iptables download_kernel"
 
 download_all() {

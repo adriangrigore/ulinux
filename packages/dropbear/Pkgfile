@@ -1,0 +1,37 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: a relatively small SSH server and client.
+# URL:         https://matt.ucc.asn.au/dropbear/dropbear.html
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=dropbear
+version=2019.78
+release=1
+source="https://matt.ucc.asn.au/$name/$name-$version.tar.bz2
+$name.svc $name.conf"
+
+build() {
+  cd $name-$version || exit
+
+  ./configure \
+    --prefix=/usr \
+    --disable-zlib
+
+  make -j "$(nproc)" \
+    EXTRA_CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
+    DESTDIR="$PKG" \
+    PROGRAMS="dropbear dbclient dropbearkey scp" \
+    strip install
+
+  install -D -m 750 "$SRC/$name.svc" "$PKG/bin/svc.d/avail/$name"
+  install -d "$PKG"/bin/svc.d/run
+  ln -s "/bin/svc.d/avail/$name" "$PKG/bin/svc.d/run/$name"
+  install -D -m 640 "$SRC/$name.conf" "$PKG/etc/default/$name"
+
+  ln -sf dbclient "$PKG"/usr/bin/ssh
+  install -d -m 750 "$PKG"/etc/dropbear
+  chmod u+s "$PKG"/usr/sbin/dropbear
+
+  rm -rf "${PKG:?}"/usr/share
+}

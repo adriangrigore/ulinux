@@ -3,7 +3,6 @@
 /bin/svc.d/avail/net
 /bin/svc.d/avail/crond
 /bin/svc.d/avail/syslogd
-/bin/svc.d/avail/dropbear
 /bin/svc.d/avail/httpd
 /bin/svc.d/avail/hwclock
 /bin/svc.d/run/rngd
@@ -11,13 +10,11 @@
 /bin/svc.d/run/net
 /bin/svc.d/run/crond
 /bin/svc.d/run/syslogd
-/bin/svc.d/run/dropbear
 /bin/svc.d/run/httpd
 /bin/svc.d/run/hwclock
 /etc/default/mdev
 /etc/default/net
 /etc/default/crond
-/etc/default/dropbear
 /etc/default/httpd
 /var/db/pkg/services/version
 /var/db/pkg/services/manifest
@@ -25,7 +22,6 @@
 /var/db/pkg
 /var/db
 /var
-/etc/dropbear
 /etc/default
 /etc
 /bin/svc.d/run
