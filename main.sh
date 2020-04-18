@@ -34,4 +34,13 @@ _main() {
   esac
 }
 
-_main "${@}" || fail "Build failed ..."
+if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
+  if ! _main "$@"; then
+    if [ -t 1 ]; then
+      error "Build failed ..."
+      debug
+    else
+      fail "Build failed ..."
+    fi
+  fi
+fi
