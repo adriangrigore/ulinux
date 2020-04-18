@@ -193,27 +193,48 @@ build_iptables() {
   ) >&2
 }
 
+build_packages() {
+  progress "Building packages"
+  printf "\n"
+
+  for package in $CORE_PACKAGES; do
+    progress "  Building package $package"
+    if (
+      cd "packages/$package" || exit 1
+      if ! pkg build; then
+        fail "Failed to build package $package"
+      fi
+      if ! PKG_ROOT="$rootfs" pkg add .; then
+        fail "Failed to install package $package"
+      fi
+    ) >&2; then
+      ok
+    else
+      err
+    fi
+  done
+}
+
 build_ports() {
   progress "Building ports"
-  (
-    # Bootstrap pkg
-    install -D -m 755 ./ports/pkg/pkg /usr/local/bin/pkg
+  printf "\n"
 
-    # Copy ports tree into rootfs
-    cp -r ports/* "$rootfs/usr/ports"
-
-    for port in $CORE_PORTS; do
-      (
-        cd "ports/$port" || exit 1
-        if ! pkg build; then
-          fail "Failed to build port $port"
-        fi
-        if ! PKG_ROOT="$rootfs" pkg add .; then
-          fail "Failed to install port $port"
-        fi
-      ) >&2
-    done
-  ) >&2
+  for port in $CORE_PORTS; do
+    progress "  Building port $port"
+    if (
+      cd "ports/$port" || exit 1
+      if ! pkg build; then
+        fail "Failed to build port $port"
+      fi
+      if ! PKG_ROOT="$rootfs" pkg add .; then
+        fail "Failed to install port $port"
+      fi
+    ) >&2; then
+      ok
+    else
+      err
+    fi
+  done
 }
 
 build_rootfs() {
