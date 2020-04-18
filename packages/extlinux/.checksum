@@ -1,0 +1,4 @@
+26d3986d2bea109d5dc0e4f8c4822a459276cf021125e8c9f23c3cca5d8c850e  syslinux-6.03.tar.xz
+632d30848f49d81352193fe90f765ab4676b73e44255a4dc5dedbde5de57a9c2  extlinux-Makefile.patch
+a669fc75b4c27331a92de83da653efff471e180a409a67db4cbd3ed5f8abec39  syslinux-Makefile.patch
+896114ea481e82f4b6851f2b7b562d69a753ddd7fe7943130e12af6e193f8aa5  syslinux-sysmacros.patch

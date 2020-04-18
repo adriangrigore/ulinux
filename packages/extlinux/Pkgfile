@@ -1,0 +1,40 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: EXT Boot Loader from The SysLinux Project
+# URL:         https://wiki.syslinux.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=extlinux
+version=6.03
+release=1
+source="http://kernel.org/pub/linux/utils/boot/$name/$name-$version.tar.xz
+extlinux-Makefile.patch syslinux-Makefile.patch syslinux-sysmacros.patch"
+
+build() {
+  cd $name-$version || exit
+
+  patch -p0 -i "$SRC"/syslinux-Makefile.patch
+  patch -p1 -i "$SRC"/syslinux-sysmacros.patch
+  patch -p1 -i "$SRC"/extlinux-Makefile.patch
+
+  make -j "$(nproc)" \
+    installer
+  make INSTALLROOT="$PKG" install
+
+  # Remove syslinux binary (we only need extlinux)
+  rm -rf "$PKG"/usr/bin/syslinux
+
+  # Remove c32 modules and bin(s) we don't need/want.
+  rm -rf "$PKG"/usr/share/syslinux/com32
+  rm -rf "$PKG"/usr/share/syslinux/diag
+  rm -rf "$PKG"/usr/share/syslinux/memdisk
+  find "$PKG"/usr/share/syslinux \
+    -type f -name '*.c32' -delete
+  find "$PKG"/usr/share/syslinux \
+    -type f -name '*.bin' ! -name 'mbr.bin' ! -name 'gptmbr.bin' -delete
+  find "$PKG"/usr/share/syslinux \
+    -type f -name '*.0' -delete
+  find "$PKG"/usr/share/syslinux \
+    -type d -exec rmdir {} --ignore-fail-on-non-empty +
+}
