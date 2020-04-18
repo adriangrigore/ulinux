@@ -18,6 +18,7 @@ extract_rootfs() {
 
 _main() {
   if [ ! -f rootfs.gz ]; then
+    printf 'Local rootfs.gz not found, Downloading latest released rootfs.gz ...'
     latest_version="$(get_latest_release prologic/ulinux)"
     wget -q -O rootfs.gz \
       "https://github.com/prologic/ulinux/releases/download/$latest_version/rootfs.gz"
