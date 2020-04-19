@@ -19,37 +19,6 @@ else
   printf >&2 "WARNING: Cannot source customize.sh\n"
 fi
 
-build_syslinux() {
-  progress "Building syslinux"
-  (
-    cd syslinux-$SYSLINUX_VERSION
-
-    patch -p0 -i ../patches/syslinux-$SYSLINUX_VERSION/syslinux-Makefile.patch
-    patch -p1 -i ../patches/syslinux-$SYSLINUX_VERSION/syslinux-sysmacros.patch
-    patch -p1 -i ../patches/syslinux-$SYSLINUX_VERSION/extlinux-Makefile.patch
-
-    make -j "$(nproc)" \
-      installer
-    make INSTALLROOT="$rootfs" install
-
-    # Remove syslinux binary (we only need extlinux)
-    rm -rf "${rootfs}"/usr/bin/syslinux
-
-    # Remove c32 modules and bin(s) we don't need/want.
-    rm -rf "$rootfs"/usr/share/syslinux/com32
-    rm -rf "$rootfs"/usr/share/syslinux/diag
-    rm -rf "$rootfs"/usr/share/syslinux/memdisk
-    find "$rootfs"/usr/share/syslinux \
-      -type f -name '*.c32' -delete
-    find "$rootfs"/usr/share/syslinux \
-      -type f -name '*.bin' ! -name 'mbr.bin' ! -name 'gptmbr.bin' -delete
-    find "$rootfs"/usr/share/syslinux \
-      -type f -name '*.0' -delete
-    find "$rootfs"/usr/share/syslinux \
-      -type d -exec rmdir {} --ignore-fail-on-non-empty +
-  ) >&2
-}
-
 build_packages() {
   progress "Building packages"
   printf "\n"
@@ -349,7 +318,7 @@ build_clouddrive() {
   ) >&2
 }
 
-steps="build_syslinux build_kernel"
+steps="build_kernel"
 steps="$steps build_packages build_ports build_rootfs"
 steps="$steps build_iso build_clouddrive"
 
