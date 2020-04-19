@@ -4,7 +4,7 @@ all: build
 
 build:
 	@echo "Building builder ..."
-	@docker build -f Dockerfile.builder -t ulinux/builder .
+	@docker build -q -f Dockerfile.builder -t ulinux/builder .
 	@echo "Building uLinux ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
 	@docker run --name ulinux_build ulinux/builder
@@ -16,16 +16,16 @@ build:
 	@echo "Creating Disk Image ..."
 	@qemu-img create -f qcow2 ulinux.img 1G
 	@echo "Building Docker Image ..."
-	@docker build -f Dockerfile -t prologic/ulinux .
+	@docker build -q -f Dockerfile -t prologic/ulinux .
 
 shell:
 	@echo "Building builder ..."
-	@docker build -f Dockerfile.builder -t ulinux/builder .
+	@docker build -q -f Dockerfile.builder -t ulinux/builder .
 	@docker run -i -t -v "$(PWD)":/build ulinux/builder shell
 
 clouddrive:
 	@echo "Building builder ..."
-	@docker build -f Dockerfile.builder -t ulinux/builder .
+	@docker build -q -f Dockerfile.builder -t ulinux/builder .
 	@echo "Building uLinux ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
 	@docker run -v "$(PWD)":/build --name ulinux_build ulinux/builder clouddrive
