@@ -2,11 +2,8 @@
 
 set -e
 
-# shellcheck source=functions.sh
-. functions.sh
-
-# shellcheck source=defs.sh
-. defs.sh
+. ./functions.sh
+. ./defs.sh
 
 download_syslinux() {
   progress "Downloading syslinux"
