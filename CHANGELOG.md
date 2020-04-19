@@ -1,4 +1,17 @@
 
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/prologic/ulinux/compare/1.2...1.2.1) (2020-04-20)
+
+### Bug Fixes
+
+* Fix generating next release tag
+* Fix release script to show progress properly and skip shippping a useless clouddrive iso
+
+### Updates
+
+* Update release tool to print TAG being released
+
+
 <a name="1.2"></a>
 ## [1.2](https://github.com/prologic/ulinux/compare/1.0.2...1.2) (2020-04-20)
 
