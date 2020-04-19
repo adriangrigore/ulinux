@@ -8,8 +8,7 @@ build:
 	@echo "Building uLinux ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
 	@docker run -e TAG -e REV --name ulinux_build ulinux/builder
-	@echo "Copying ISO Image(s), Kernel and RootFS ..."
-	@docker cp ulinux_build:/build/clouddrive.iso .
+	@echo "Copying ISO Image(s), and RootFS ..."
 	@docker cp ulinux_build:/build/ulinux.iso .
 	@docker cp ulinux_build:/build/rootfs.gz .
 	@docker rm -f ulinux_build

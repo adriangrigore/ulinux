@@ -107,12 +107,10 @@ build_iso() {
 }
 
 build_clouddrive() {
-  progress "Building clouddrive"
   xorrisofs -J -r -V cidata -o ./clouddrive.iso clouddrive/
 }
 
-steps="build_packages build_ports build_rootfs"
-steps="$steps build_iso build_clouddrive"
+steps="build_packages build_ports build_rootfs build_iso"
 
 build_all() {
   for step in $steps; do
