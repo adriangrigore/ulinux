@@ -35,7 +35,7 @@ generate_changelog() {
   git push
 }
 
-create_draf_release() {
+create_draft_release() {
   printf "Creating draft release for %s ...\n" "${TAG}"
 
   github-release release \
