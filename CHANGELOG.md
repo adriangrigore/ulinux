@@ -1,4 +1,66 @@
 
+<a name="1.2"></a>
+## [1.2](https://github.com/prologic/ulinux/compare/1.0.2...1.2) (2020-04-20)
+
+### Bug Fixes
+
+* Fix typo
+* Fix filesystem port to pickup uLinux TAG and REV from the enviornment
+* Fix size of logo to fit theme
+* Fix Jeykl theme layout
+* Fix test_pkg
+* Fix bug with creating temp dirs for run in buidls
+* Fix missing cloudinit manifest
+* Fix missing ca-certifactes manifest
+* Fix filesystem port with missing default mdev.conf
+* Fix ports/pkgs links on topnav
+* Fix pkg to remove old build directory if exists
+* Fix pkg to output verbose outputs of tar to stderr
+* Fix a bug in pkg add causing non-zero exit for no good reason
+* Fix some more bugs from the refactor and add more tests
+* Fix missing box package
+* Fix missing /etc/dropbear directory for core services
+* Fix missing telinit in rc port
+
+### Features
+
+* Add kernel as a core package
+* Add iptables as a core package
+* Add rng-tools as a core package
+* Add extlinux as a core package
+* Add dropbear as a core package
+* Add busybox as a core package
+* Add make as a core package
+* Add sinit as a core package
+* Add musl as a core package
+* Add uLinux logo
+* Add a shell Make target for debugging builds
+* Add support for building core packages and user ports with optional features such as WITH_SSL
+* Add more error handling around the main script
+* Add pkg to the Docker image buidler as part of the build bootstrap process
+* Add tests cycle to CI
+* Add a basic integration test suite
+* Add customization to the jekyl hacker layout
+
+### Updates
+
+* Update and refactor release process
+* Update docker build to be quiet
+* Update Makefile to be clear about what we're building
+* Update Jeykl config to show downloads
+* Update README and remove logo
+* Update Jekyl minimal theme and add logo config
+* Update tcc manifest
+* Update .gitignore
+* Update order of build steps
+* Update Docker Image build to identify when we're using a local rootfs.gz or downloading the altest released one
+* Update the pkg_build test to be more quiet
+* Update default ports tree in pkg.conf
+* Update more of the build and refactor servifes
+* Update build with a MAJOR refactor
+* Update site nav and disable download links
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/prologic/ulinux/compare/1.0.1...1.0.2) (2020-04-17)
 
