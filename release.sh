@@ -16,7 +16,7 @@ generate_next_tag() {
 }
 
 generate_changelog() {
-  progress "Generating chnagelog"
+  progress "Generating chnagelog for $TAG"
   (
     git-chglog --next-tag="${TAG}" --output CHANGELOG.md
     git ci -a -m "Release ${TAG}"
@@ -25,7 +25,7 @@ generate_changelog() {
 }
 
 create_draft_release() {
-  progress "Creating draft release"
+  progress "Creating draft release for $TAG"
   (
     github-release release \
       -u prologic \
@@ -38,7 +38,7 @@ create_draft_release() {
 }
 
 build_ulinux() {
-  progress "Building uLinux"
+  progress "Building uLinux for $TAG"
   (
     make clean
     make up-to-date
@@ -47,7 +47,7 @@ build_ulinux() {
 }
 
 prepare_assets() {
-  progress "Preparing assets"
+  progress "Preparing assets for $TAG"
   (
     sha256sum ./*.gz ./*.iso > sha256sums.txt
     gpg --detach-sign sha256sums.txt
@@ -55,7 +55,7 @@ prepare_assets() {
 }
 
 upload_assets() {
-  progress "Uploading assets"
+  progress "Uploading assets for $TAG"
   (
     for asset in *.gz *.iso *.txt *.sig; do
       github-release upload \
