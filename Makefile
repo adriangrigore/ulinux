@@ -5,7 +5,7 @@ all: build
 build:
 	@echo "Building builder ..."
 	@docker build -f Dockerfile.builder -t ulinux/builder .
-	@echo "Building image ..."
+	@echo "Building uLinux ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
 	@docker run --name ulinux_build ulinux/builder
 	@echo "Copying Kernel config ..."
@@ -29,7 +29,7 @@ shell:
 clouddrive:
 	@echo "Building builder ..."
 	@docker build -f Dockerfile.builder -t ulinux/builder .
-	@echo "Building image ..."
+	@echo "Building uLinux ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
 	@docker run -v "$(PWD)":/build --name ulinux_build ulinux/builder clouddrive
 	@echo "Copying CloudDrive Image ..."
