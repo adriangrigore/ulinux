@@ -1,0 +1,29 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: The Linux Kernel
+# URL:         https://www.kernel.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=kernel
+version=5.6.3
+release=1
+source="https://cdn.kernel.org/pub/linux/kernel/v${version%%.*}.x/linux-${version}.tar.xz
+KConfig"
+
+build() {
+  cd linux-$version || exit 1
+
+  cp "$SRC"/KConfig .config
+
+  make olddefconfig
+
+  make -j "$(nproc)" \
+    CFLAGS="-Os -s -fno-stack-protector -U_FORTIFY_SOURCE" \
+    bzImage
+
+  install -d -m 755 "$PKG"/usr
+  make headers_install INSTALL_HDR_PATH="$PKG/usr"
+
+  install -D -m 640 arch/x86/boot/bzImage "$PKG"/boot/vmlinuz
+}

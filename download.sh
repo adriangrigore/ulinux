@@ -15,15 +15,7 @@ download_syslinux() {
   tar -xf syslinux.tar.xz
 }
 
-download_kernel() {
-  progress "Downloading kernel"
-  wget -q -O kernel.tar.xz \
-    https://cdn.kernel.org/pub/linux/kernel/v"$(echo "$KERNEL_VERSION" | cut -f 1 -d '.')".x/linux-${KERNEL_VERSION}.tar.xz
-  tar -xf kernel.tar.xz
-}
-
-steps="$steps download_syslinux"
-steps="$steps download_kernel"
+steps="download_syslinux"
 
 download_all() {
   for step in $steps; do

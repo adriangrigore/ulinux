@@ -8,10 +8,9 @@ set -e
 TAG="${TAG:-$(git describe --abbrev=0 --tags || echo "v0.0.0")}"
 REV="${REV:-$(git rev-parse --short HEAD || echo "0000000")}"
 
-KERNEL_VERSION=5.6.3
 SYSLINUX_VERSION=6.03
 
-CORE_PACKAGES="musl sinit make busybox dropbear extlinux"
+CORE_PACKAGES="kernel musl sinit make busybox dropbear extlinux"
 CORE_PORTS="filesystem rc svc cloudinit net services ca-certificates tcc pkg box"
 
 [ -n "$WITH_SSL" ] && CORE_PACKAGES="$CORE_PACKAGES libressl"
@@ -20,7 +19,6 @@ CORE_PORTS="filesystem rc svc cloudinit net services ca-certificates tcc pkg box
 export TAG
 export REV
 
-export KERNEL_VERSION
 export SYSLINUX_VERSION
 
 export CORE_PACKAGES
