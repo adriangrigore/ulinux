@@ -1,4 +1,4 @@
-.PHONY: build shell clouddrive test tests toc release up-to-date clean
+.PHONY: build images shell clouddrive test tests toc release up-to-date clean
 
 all: build
 
@@ -17,6 +17,16 @@ build:
 	@echo "Building Docker Image ..."
 	@docker build -q -f Dockerfile -t prologic/ulinux .
 
+ulinux.iso:
+	@docker build -q -f Dockerfile.builder -t ulinux/builder .
+	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
+	@docker run -e TAG -e REV --name ulinux_build ulinux/builder
+	@docker cp ulinux_build:/build/ulinux.iso .
+	@docker rm -f ulinux_build
+
+images: ulinux.iso
+	@./images.sh
+
 shell:
 	@echo "Building builder ..."
 	@docker build -q -f Dockerfile.builder -t ulinux/builder .
@@ -32,16 +42,16 @@ clouddrive:
 	@docker cp ulinux_build:/build/clouddrive.iso .
 	@docker rm -f ulinux_build
 
-test:
+test: ulinux.iso
 	@./test.sh
 
-tests:
+tests: ulinux.iso
 	@./tests/run.sh
 
 toc:
 	@gh-md-toc README.md
 
-release:
+release: ulinux.iso images
 	@./release.sh
 
 up-to-date:
