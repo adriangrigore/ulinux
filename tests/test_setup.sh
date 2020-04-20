@@ -4,21 +4,21 @@
 description="Test that setup works"
 
 wait_vm() {
-  progress "  Waiting for VM"
+  progress "    Waiting for VM"
   until $SSH_CMD '/bin/true' > /dev/null 2>&1; do
     sleep 0.1
   done
 }
 
 install_ulinux() {
-  progress "  Installing uLinux"
+  progress "    Installing uLinux"
   (
     $SSH_CMD '/sbin/setup -r /dev/sda'
   ) >&2
 }
 
 verify_install() {
-  progress "  Verifying install"
+  progress "    Verifying install"
   $SSH_CMD 'df -a -T | grep -q -E '''''/dev/root[[:space:]]+ext2''''''
 }
 
