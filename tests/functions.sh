@@ -33,7 +33,7 @@ err() {
 
 run() {
   retval=0
-  logfile="$(mktemp "run-XXXXXX")"
+  logfile="$(mktemp -t "run-XXXXXX")"
   if "$@" 2> "$logfile"; then
     ok
   else
