@@ -53,13 +53,10 @@ test_ulinux() {
   ) >&2
 }
 
-build_images() {
-}
-
 prepare_assets() {
   progress "Preparing assets for $TAG"
   (
-    sha256sum ./*.gz ./*.iso > sha256sums.txt
+    sha256sum ./*.img ./*.gz ./*.iso > sha256sums.txt
     gpg --detach-sign sha256sums.txt
   ) >&2
 }

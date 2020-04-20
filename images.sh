@@ -64,7 +64,7 @@ build_generic_image() {
   progress "Building Generic Image"
   printf "\n"
 
-  DISK="ulinux-generic.img"
+  DISK="ulinux.img"
   DISKIF="ide"
   DISKDEV="/dev/sda"
   export DISK DISKIF DISKDEV
