@@ -16,25 +16,21 @@ else
   printf >&2 "WARNING: Cannot source customize.sh\n"
 fi
 
+pkg_build_add() {
+  (
+    cd "$1" || exit 1
+    pkg build
+    PKG_ROOT="$rootfs" pkg add .
+  ) >&2
+}
+
 build_packages() {
   progress "Building packages"
   printf "\n"
 
   for package in $CORE_PACKAGES; do
     progress "  Building package $package"
-    if (
-      cd "packages/$package" || exit 1
-      if ! pkg build; then
-        fail "Failed to build package $package"
-      fi
-      if ! PKG_ROOT="$rootfs" pkg add .; then
-        fail "Failed to install package $package"
-      fi
-    ) >&2; then
-      ok
-    else
-      err
-    fi
+    run pkg_build_add "packages/$package"
   done
 }
 
@@ -44,19 +40,7 @@ build_ports() {
 
   for port in $CORE_PORTS; do
     progress "  Building port $port"
-    if (
-      cd "ports/$port" || exit 1
-      if ! pkg build; then
-        fail "Failed to build port $port"
-      fi
-      if ! PKG_ROOT="$rootfs" pkg add .; then
-        fail "Failed to install port $port"
-      fi
-    ) >&2; then
-      ok
-    else
-      err
-    fi
+    run pkg_build_add "ports/$port"
   done
 }
 
