@@ -1,4 +1,23 @@
 
+<a name="1.2.4"></a>
+## [1.2.4](https://github.com/prologic/ulinux/compare/1.2.3...1.2.4) (2020-04-21)
+
+### Bug Fixes
+
+* Fix release script (again) to include prebuilt disk images
+* Fix release script to not duplicate steps in the Make release target
+* Fix release script
+
+### Features
+
+* Add tests to release
+* Add support to the build and release for building and publishing prebuilt disk iamges
+
+### Updates
+
+* Update release target to do a clean build
+
+
 <a name="1.2.3"></a>
 ## [1.2.3](https://github.com/prologic/ulinux/compare/1.2.2...1.2.3) (2020-04-20)
 
