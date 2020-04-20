@@ -1,4 +1,13 @@
 
+<a name="1.2.2"></a>
+## [1.2.2](https://github.com/prologic/ulinux/compare/1.2.1...1.2.2) (2020-04-20)
+
+### Bug Fixes
+
+* Fix missing setup port that got missed in the 1.2 refactor
+* Fix test.sh to optionally include the clouddrive iso
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/prologic/ulinux/compare/1.2...1.2.1) (2020-04-20)
 
