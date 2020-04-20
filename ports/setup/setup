@@ -1,0 +1,180 @@
+#!/bin/sh
+# shellcheck disable=SC1091
+
+set -e
+
+. /bin/rc.common
+
+: "${VERSION:=__VERSION__}"
+
+rootfs=
+sources=
+disk=
+part=
+
+SETUP_MBR=/usr/share/syslinux/mbr.bin
+SETUP_MEDIA=/dev/sr0
+SETUP_REBOOT=0
+
+mount_sources() {
+  progress "Mounting sources"
+  sources="$(mktemp -d -t "setup-sources-XXXXXX")"
+  mount "$SETUP_MEDIA" "${sources}"
+}
+
+create_rootfs() {
+  progress "Creating rootfs"
+  rootfs="$(mktemp -d -t setup-rootfs-XXXXXX)"
+}
+
+partition_disk() {
+  progress "Paritioning disk"
+
+  dd bs=512 count=1 conv=notrunc,fsync if=/dev/zero of="$disk"
+
+  (
+    echo n # Add a new partition
+    echo p # Primary partition
+    echo 1 # Partition number
+    echo   # First sector (Accept default: 1)
+    echo   # Last sector (Accept default: varies)
+    echo a # Toggle bootable flag
+    echo 1 # Partition number
+    echo w # Write changes
+  ) | fdisk "$disk" 1>&2
+}
+
+format_disk() {
+  progress "Formatting disk"
+  mkfs.ext2 "$part" 1>&2
+}
+
+mount_rootfs() {
+  progress "Mounting rootfs"
+  mount "$part" "$rootfs"
+}
+
+install_rootfs() {
+  progress "Installing rootfs"
+  (
+    cd "$rootfs" || exit 1
+    zcat < "$sources"/rootfs.gz | cpio -id
+  )
+}
+
+install_kernel() {
+  progress "Installing Kernel"
+  mkdir -p "$rootfs"/boot/syslinux
+  cp "$sources"/kernel.gz "$rootfs"/boot/vmlinuz
+}
+
+install_bootloader() {
+  progress "Installing Boot Loader"
+
+  cat > "$rootfs"/boot/syslinux/syslinux.cfg << EOF
+DEFAULT default
+
+LABEL default
+	KERNEL /boot/vmlinuz
+	APPEND quiet root=${part} rw
+EOF
+
+  extlinux -s -i "${rootfs}"/boot/syslinux 1>&2
+}
+
+install_mbr() {
+  progress "Installing MBR"
+  dd bs=440 count=1 conv=notrunc,fsync if="$SETUP_MBR" of="$disk"
+}
+
+unmount_rootfs() {
+  progress "Unmounting rootfs"
+  umount -f "$rootfs"
+  rm -rf "$rootfs"
+}
+
+unmount_sources() {
+  progress "Unmounting sources"
+  umount -f "$sources"
+  rm -rf "$sources"
+}
+
+cleanup() {
+  umount -f "$rootfs" 2> /dev/null || true
+  umount -f "$sources" 2> /dev/null || true
+  rm -rf "$sources"
+  rm -rf "$rootfs"
+}
+
+print_usage() {
+  cat << EOF
+Usage: $(basename "$0") [OPTS] [BLOCKDEVICE]
+
+Options:
+  -r/--reboot   -- Reboot after setup finishes
+  -h/--help     -- Display this help and exit
+  -V/--version  -- Display version and exit
+EOF
+}
+
+print_version() {
+  printf "%s v%s\n" "$(basename "$0")" "$VERSION"
+}
+
+_main() {
+  trap cleanup EXIT
+
+  while :; do
+    case $1 in
+      -r | --reboot)
+        SETUP_REBOOT=1
+        ;;
+      -V | --version)
+        print_version
+        exit 0
+        ;;
+      -h | --help)
+        print_usage
+        exit 0
+        ;;
+      --)
+        shift
+        break
+        ;;
+      -?*)
+        warn "invalid option $1"
+        ;;
+      *)
+        break
+        ;;
+    esac
+    shift
+  done
+
+  if [ $# -eq 0 ]; then
+    disk="/dev/sda"
+  else
+    disk="$1"
+  fi
+
+  part="${disk}1"
+
+  steps="mount_sources create_rootfs partition_disk format_disk mount_rootfs"
+  steps="$steps install_rootfs install_kernel install_bootloader install_mbr"
+  steps="$steps unmount_rootfs unmount_sources"
+
+  for step in $steps; do
+    run "$step" || exit 1
+  done
+
+  echo "All Done!"
+
+  if [ $SETUP_REBOOT = 1 ]; then
+    eject "$SETUP_MEDIA"
+    reboot
+  fi
+}
+
+if [ -n "$0" ] && [ x"$0" != x"-bash" ]; then
+  _main "$@"
+fi

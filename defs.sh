@@ -11,7 +11,7 @@ REV="${REV:-$(git rev-parse --short HEAD || echo "0000000")}"
 SYSLINUX_VERSION=6.03
 
 CORE_PACKAGES="kernel musl sinit make busybox dropbear extlinux"
-CORE_PORTS="filesystem rc svc cloudinit net services ca-certificates tcc pkg box"
+CORE_PORTS="filesystem rc svc cloudinit net services ca-certificates tcc pkg setup box"
 
 [ -n "$WITH_SSL" ] && CORE_PACKAGES="$CORE_PACKAGES libressl"
 [ -n "$WITH_IPTABLES" ] && CORE_PACKAGES="$CORE_PACKAGES iptables"

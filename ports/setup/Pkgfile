@@ -1,0 +1,15 @@
+#!/bin/sh
+# shellcheck disable=SC2034
+
+# Description: uLinux Setup Tools
+# URL:         https://ulinux.org/
+# Maintainer:  James Mills, prologic at shortcircuit dot net dot au
+
+name=setup
+version=1.0.2
+release=1
+source="$name"
+
+build() {
+  install -D -m 755 "$SRC/$name" "$PKG/sbin/$name"
+}
