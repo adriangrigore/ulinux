@@ -6,10 +6,10 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=filesystem
-version=1.0.2
+version=1.0.3
 release=1
 source="issue motd shells group passwd shadow securetty fstab mime.types
-mdev.conf"
+profile mdev.conf"
 
 # uLinux version/tag (passed in from the environment or defaulted to git)
 TAG="${TAG:-$(git describe --abbrev=0 --tags || echo "v0.0.0")}"
@@ -52,6 +52,7 @@ build() {
   install -m 0640 shadow "$PKG"/etc
   install -m 0644 securetty "$PKG"/etc
   install -m 0644 fstab "$PKG"/etc
+  install -m 0644 profile "$PKG"/etc/
   install -m 0644 mime.types "$PKG"/etc
   install -m 0644 mdev.conf "$PKG"/etc/mdev.conf
 

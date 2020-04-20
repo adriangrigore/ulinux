@@ -4,6 +4,7 @@
 /etc/group
 /etc/shells
 /etc/shadow
+/etc/profile
 /etc/mime.types
 /etc/issue
 /etc/fstab
