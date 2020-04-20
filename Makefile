@@ -51,7 +51,7 @@ tests: ulinux.iso
 toc:
 	@gh-md-toc README.md
 
-release: ulinux.iso images
+release: clean up-to-date build images
 	@./release.sh
 
 up-to-date:
