@@ -37,22 +37,6 @@ create_draft_release() {
   ) >&2
 }
 
-build_ulinux() {
-  progress "Building uLinux for $TAG"
-  (
-    make clean
-    make up-to-date
-    make build
-  ) >&2
-}
-
-test_ulinux() {
-  progress "Testing uLinux for $TAG"
-  (
-    make tests
-  ) >&2
-}
-
 prepare_assets() {
   progress "Preparing assets for $TAG"
   (
@@ -77,7 +61,7 @@ upload_assets() {
 }
 
 steps="generate_next_tag generate_changelog create_draft_release"
-steps="$steps build_ulinux test_ulinux build_images prepare_assets upload_assets"
+steps="$steps prepare_assets upload_assets"
 
 _main() {
   for step in $steps; do
