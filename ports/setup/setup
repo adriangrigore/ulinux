@@ -41,12 +41,12 @@ partition_disk() {
     echo a # Toggle bootable flag
     echo 1 # Partition number
     echo w # Write changes
-  ) | fdisk "$disk" 1>&2
+  ) | /sbin/fdisk "$disk" 1>&2
 }
 
 format_disk() {
   progress "Formatting disk"
-  mkfs.ext2 "$part" 1>&2
+  /sbin/mkfs.ext2 "$part" 1>&2
 }
 
 mount_rootfs() {
@@ -171,7 +171,7 @@ _main() {
 
   if [ $SETUP_REBOOT = 1 ]; then
     eject "$SETUP_MEDIA"
-    reboot
+    /sbin/reboot
   fi
 }
 
