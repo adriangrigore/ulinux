@@ -23,9 +23,9 @@
 /usr/share/syslinux/efi64/ldlinux.e64
 /usr/share/syslinux/gptmbr.bin
 /usr/share/syslinux/mbr.bin
-/var/db/pkg/syslinux/version
-/var/db/pkg/syslinux/manifest
-/var/db/pkg/syslinux
+/var/db/pkg/extlinux/version
+/var/db/pkg/extlinux/manifest
+/var/db/pkg/extlinux
 /var/db/pkg
 /var/db
 /var
