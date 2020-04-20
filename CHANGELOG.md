@@ -1,4 +1,20 @@
 
+<a name="1.2.3"></a>
+## [1.2.3](https://github.com/prologic/ulinux/compare/1.2.2...1.2.3) (2020-04-20)
+
+### Bug Fixes
+
+* Fix missing -t option to mktemp leaking temporayr directories during test runs
+* Fix setup tool to use absolute paths to some /sbin or /usr/sbin tools so setup works over ssh
+* Fix build to fail early on failure instead of silently continuting :/
+* Fix missing /etc/profile in filesystem port
+* Fix broken extlinux package
+
+### Features
+
+* Add test for setup to ensure we can install to disk
+
+
 <a name="1.2.2"></a>
 ## [1.2.2](https://github.com/prologic/ulinux/compare/1.2.1...1.2.2) (2020-04-20)
 
