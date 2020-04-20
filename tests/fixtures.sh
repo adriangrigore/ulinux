@@ -6,6 +6,11 @@ console=
 setup() {
   console="$(mktemp -t 'ulinux-tests-run-XXXXXX')"
 
+  progress "Creating empty disk"
+  rm -rf ulinux.img
+  qemu-img create -f qcow2 ulinux.img 1G > /dev/null
+  ok
+
   progress "Booting test uLinux VM"
   HEADLESS=1 ./test.sh > "$console" 2>&1 &
   vm=$!
