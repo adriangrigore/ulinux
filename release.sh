@@ -48,7 +48,7 @@ prepare_assets() {
 upload_assets() {
   progress "Uploading assets for $TAG"
   (
-    for asset in *.gz *.iso *.txt *.sig; do
+    for asset in ./*.img ./*.gz ./*.iso /*.txt ./*.sig; do
       github-release upload \
         -u prologic \
         -r ulinux \
