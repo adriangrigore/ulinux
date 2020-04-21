@@ -3,7 +3,9 @@
 if [ "$(uname -s)" = "Darwin" ]; then
   accel="hvf"
 else
-  accel="kvm"
+  if grep flags /proc/cpuinfo | head -n 1 | grep -q -E '(vmx|svm)'; then
+    accel="kvm"
+  fi
 fi
 
 QEMU_OPTS=
