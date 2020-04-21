@@ -15,7 +15,7 @@ create_vm() {
   progress "  Booting uLinux VM"
   HEADLESS=1 ./test.sh > "$console" 2>&1 &
   vm=$!
-  sleep 3
+  sleep 5
 }
 
 wait_vm() {
