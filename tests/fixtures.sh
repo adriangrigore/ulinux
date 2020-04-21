@@ -15,13 +15,13 @@ create_vm() {
   progress "  Booting uLinux VM"
   HEADLESS=1 ./test.sh > "$console" 2>&1 &
   vm=$!
-  sleep 5
+  sleep 15
 }
 
 wait_vm() {
   progress "  Waiting for VM"
   (
-    if ! timeout 15s wait_for_ssh.sh; then
+    if ! timeout 30s wait_for_ssh.sh; then
       cat "$console"
       fail "VM did not come up in time!"
     fi
