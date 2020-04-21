@@ -3,13 +3,6 @@
 # shellcheck disable=SC2034
 description="Test that setup works"
 
-wait_vm() {
-  progress "    Waiting for VM"
-  until $SSH_CMD '/bin/true' > /dev/null 2>&1; do
-    sleep 0.1
-  done
-}
-
 install_ulinux() {
   progress "    Installing uLinux"
   (
