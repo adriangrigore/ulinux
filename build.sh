@@ -24,13 +24,15 @@ pkg_build_add() {
   ) >&2
 }
 
-build_packages() {
-  progress "Building packages"
+build_pkgs() {
+  progress "Building pkgs"
   printf "\n"
 
-  for package in $CORE_PACKAGES; do
-    progress "  Building package $package"
-    run pkg_build_add "packages/$package"
+  for pkg in $CORE_PKGS; do
+    progress "  Building pkg $pkg"
+    if ! run pkg_build_add "pkgs/$pkg"; then
+      fail "  Building pkg $pkg failed"
+    fi
   done
 }
 
@@ -40,7 +42,9 @@ build_ports() {
 
   for port in $CORE_PORTS; do
     progress "  Building port $port"
-    run pkg_build_add "ports/$port"
+    if ! run pkg_build_add "ports/$port"; then
+      fail "  Building port $port failed"
+    fi
   done
 }
 
@@ -68,8 +72,8 @@ build_iso() {
   (
     test -d "$isoimage" || mkdir "$isoimage"
 
-    # Extract Kernel from the kernel package
-    tar xvf ./packages/kernel/kernel*#*.tar.gz ./boot/vmlinuz
+    # Extract Kernel from the kernel pkgs
+    tar xvf ./pkgs/kernel/kernel*#*.tar.gz ./boot/vmlinuz
     mv ./boot/vmlinuz "$isoimage"/kernel.gz
 
     cp rootfs.gz "$isoimage"
@@ -94,7 +98,7 @@ build_clouddrive() {
   xorrisofs -J -r -V cidata -o ./clouddrive.iso clouddrive/
 }
 
-steps="build_packages build_ports build_rootfs build_iso"
+steps="build_pkgs build_ports build_rootfs build_iso"
 
 build_all() {
   for step in $steps; do
