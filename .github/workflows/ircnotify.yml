@@ -10,6 +10,7 @@ jobs:
         uses: rectalogic/notify-irc@v1
         if: github.event_name == 'push'
         with:
+          notice: true
           channel: "#ulinux"
           nickname: ulinuxbot
           message: ${{ github.actor }} pushed ${{ github.event.ref }} ${{ github.event.compare }} ${{ join(github.event.commits.*.message) }}
@@ -17,6 +18,7 @@ jobs:
         uses: rectalogic/notify-irc@v1
         if: github.event_name == 'pull_request'
         with:
+          notice: true
           channel: "#ulinux"
           nickname: ulinuxbot
           message: ${{ github.actor }} opened PR ${{ github.event.html_url }}
@@ -24,6 +26,7 @@ jobs:
         uses: rectalogic/notify-irc@v1
         if: github.event_name == 'create' && github.event.ref_type == 'tag'
         with:
+          notice: true
           channel: "#ulinux"
           nickname: ulinuxbot
           message: ${{ github.actor }} tagged ${{ github.repository }} ${{ github.event.ref }}
