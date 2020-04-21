@@ -13,8 +13,7 @@ jobs:
           channel: "#ulinux"
           nickname: ulinuxbot
           message: |
-            ${{ github.actor }} pushed ${{ github.event.ref }} ${{ github.event.compare }}
-            ${{ join(github.event.commits.*.message) }}
+            ${{ github.actor }} pushed ${{ github.event.ref }} ${{ github.event.compare }} ${{ join(github.event.commits.*.message) }}
       - name: irc pull request
         uses: rectalogic/notify-irc@v1
         if: github.event_name == 'pull_request'
@@ -31,4 +30,3 @@ jobs:
           nickname: ulinuxbot
           message: |
             ${{ github.actor }} tagged ${{ github.repository }} ${{ github.event.ref }}
-
