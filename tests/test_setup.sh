@@ -12,6 +12,7 @@ install_ulinux() {
 
 verify_install() {
   progress "    Verifying install"
+  $SSH_CMD 'df -a -T'
   $SSH_CMD 'df -a -T | grep -q -E '''''/dev/root[[:space:]]+ext2''''''
 }
 
