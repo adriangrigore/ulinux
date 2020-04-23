@@ -23,6 +23,6 @@ jobs:
           make
       - name: Test
         env:
-          VM_WAIT_TIMEOUT: 60s
+          VM_WAIT_TIMEOUT: 300s
         run: |
           make tests
