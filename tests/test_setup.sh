@@ -12,13 +12,14 @@ install_ulinux() {
 
 verify_install() {
   progress "    Verifying install"
-  $SSH_CMD 'df -a -T'
-  $SSH_CMD 'df -a -T | grep -q -E '''''/dev/root[[:space:]]+ext2''''''
+  (
+    $SSH_CMD 'df -a -T | grep -q -E '''''/dev/root[[:space:]]+ext2''''''
+  ) >&2
 }
 
 run_test() {
   printf "\n"
-  for substep in install_ulinux wait_vm verify_install; do
+  for substep in install_ulinux wait_vm2 verify_install; do
     if ! run "$substep"; then
       fail "Test failed"
     fi

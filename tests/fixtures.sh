@@ -3,7 +3,7 @@
 vm=
 console=
 
-VM_WAIT_TIMEOUT="${VM_WAIT_TIMEOUT:-10s}"
+VM_WAIT_TIMEOUT="${VM_WAIT_TIMEOUT:-30s}"
 
 create_disk() {
   progress "  Creating disk"
@@ -22,6 +22,16 @@ create_vm() {
 
 wait_vm() {
   progress "  Waiting for VM"
+  (
+    if ! timeout "$VM_WAIT_TIMEOUT" wait_for_ssh.sh; then
+      cat "$console"
+      fail "VM did not come up in time!"
+    fi
+  ) >&2
+}
+
+wait_vm2() {
+  progress "    Waiting for VM"
   (
     if ! timeout "$VM_WAIT_TIMEOUT" wait_for_ssh.sh; then
       cat "$console"
