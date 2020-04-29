@@ -77,7 +77,7 @@ pkg_verify() {
 pkg_manifest() {
   cd "$og_pwd/build/pkg" > /dev/null
 
-  printf '%s\n' "$version" > "$db_dir/$name/version"
+  printf '%s\n' "$version-$release" > "$db_dir/$name/version"
 
   _() { find . -mindepth 1 "$@" | sed 's/^\.//'; }
   _ -not -type d > ../../.manifest
