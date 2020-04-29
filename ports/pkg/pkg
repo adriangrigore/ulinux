@@ -7,8 +7,9 @@
 [ -f /etc/pkg.conf ] && . /etc/pkg.conf
 
 # Defaults
-PKG_PORTSDIR="${PKG_PORTSDIR:-/usr/ports}"
-PKG_PKGSDIR="${PKG_PKGSDIR:-$PWD}"
+[ -z "$URL" ] && URL=https://ports.ulinux.org
+[ -z "$PKG_PORTSDIR" ] && PKG_PORTSDIR=/usr/ports
+[ -z "$PKG_PKGSDIR" ] && PKG_PKGSDIR="$PWD"
 
 is_abs() {
   if [ -n "$1" ]; then
@@ -135,7 +136,11 @@ pkg_build() {
     -C build/pkg . > /dev/null || die "failed to create package"
 
   log "successfuly built $name"
+  if [ "$PKG_PKGSDIR" = "$PWD" ]; then
   log "package is at ${name}#$version-$release.tar.gz"
+else
+  log "package is at ${PKG_PKGSDIR}/${name}#$version-$release.tar.gz"
+  fi
 }
 
 pkg_add() {
