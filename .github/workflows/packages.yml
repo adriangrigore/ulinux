@@ -22,6 +22,7 @@ jobs:
           echo "$PKG_SSH_FINGERPRINT" >> $HOME/.ssh/known_hosts
       - name: Build
         env:
+          PKG_SSH_PORT: ${{ secrets.PKG_SSH_PORT }}
           PKG_SSH_HOST: ${{ secrets.PKG_SSH_HOST }}
           PKG_SSH_PATH: ${{ secrets.PKG_SSH_PATH }}
         run: |
