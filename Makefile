@@ -30,7 +30,7 @@ images: ulinux.iso
 pkgs:
 	@echo "Building builder ..."
 	@docker build -q -f Dockerfile.builder -t ulinux/builder .
-	@docker run -i -t -v "$(PWD)/artifacts":/build/artifacts ulinux/builder packages
+	@docker run -v "$(PWD)/artifacts":/build/artifacts ulinux/builder packages
 	@if [ -n "$(PKG_SSH_HOST)" ] && [ -n "$(PKG_SSH_PATH)" ]; then \
 		echo "Publishing packages to $(PKG_SSH_HOST):$(PKG_SSH_PATH) ..."; \
 		scp -P "$(PKG_SSH_PORT)" ./artifacts/*#*.tar.gz "$(PKG_SSH_HOST):$(PKG_SSH_PATH)"; \
