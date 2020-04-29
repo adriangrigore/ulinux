@@ -33,7 +33,7 @@ pkgs:
 	@docker run -i -t -v "$(PWD)/artifacts":/build/artifacts ulinux/builder packages
 	@if [ -n "$(PKG_SSH_HOST)" ] && [ -n "$(PKG_SSH_PATH)" ]; then \
 		echo "Publishing packages to $(PKG_SSH_HOST):$(PKG_SSH_PATH) ..."; \
-		scp ./artifacts/*#*.tar.gz "$(PKG_SSH_HOST):$(PKG_SSH_PATH)"; \
+		scp -P "$(PKG_SSH_PORT)" ./artifacts/*#*.tar.gz "$(PKG_SSH_HOST):$(PKG_SSH_PATH)"; \
 	fi
 
 shell:
