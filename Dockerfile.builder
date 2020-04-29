@@ -27,5 +27,7 @@ RUN cd /build/ports/pkg && ./pkg build && ./pkg add && \
 	  -e '/export MAKEFLAGS/d'  \
 	  /etc/pkg.conf
 
+VOLUME /build/artifacts
+
 ENTRYPOINT ["./main.sh"]
 CMD ["build"]
