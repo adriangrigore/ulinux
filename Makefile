@@ -1,4 +1,4 @@
-.PHONY: build images shell clouddrive test tests toc release up-to-date clean
+.PHONY: build images pkgs shell clouddrive test tests toc release up-to-date clean
 
 all: build
 
@@ -26,6 +26,15 @@ ulinux.iso:
 
 images: ulinux.iso
 	@./images.sh
+
+pkgs:
+	@echo "Building builder ..."
+	@docker build -q -f Dockerfile.builder -t ulinux/builder .
+	@docker run -i -t -v "$(PWD)/artifacts":/build/artifacts ulinux/builder packages
+	@if [ -n "$(PKG_SSH_HOST)" ] && [ -n "$(PKG_SSH_PATH)" ]; then \
+		echo "Publishing packages to $(PKG_SSH_HOST):$(PKG_SSH_PATH) ..."; \
+		scp ./artifacts/*#*.tar.gz "$(PKG_SSH_HOST):$(PKG_SSH_PATH)"; \
+	fi
 
 shell:
 	@echo "Building builder ..."

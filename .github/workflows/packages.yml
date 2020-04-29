@@ -1,0 +1,28 @@
+---
+name: Packages
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build_publish:
+    name: Build / Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.2.0
+        with:
+          ssh-private-key: ${{ secrets.PKG_SSH_RSA }}
+      - name: Append Known Hosts
+        env:
+          PKG_SSH_FINGERPRINT: ${{ secrets.PKG_SSH_FINGERPRINT }}
+        run: |
+          echo "$PKG_SSH_FINGERPRINT" >> $HOME/.ssh/known_hosts
+      - name: Build
+        env:
+          PKG_SSH_HOST: ${{ secrets.PKG_SSH_HOST }}
+          PKG_SSH_PATH: ${{ secrets.PKG_SSH_PATH }}
+        run: |
+          make pkgs

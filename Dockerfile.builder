@@ -20,6 +20,7 @@ COPY . /build
 RUN cd /build/ports/pkg && ./pkg build && ./pkg add && \
 	sed -i'' \
 	  -e 's|PKG_PORTSDIR=.*|PKG_PORTSDIR=/build/ports|' \
+	  -e 's|PKG_PKGSDIR=.*|PKG_PKGSDIR=/build/artifacts|' \
 	  -e '/export CC/d'			\
 	  -e '/export LD/d'			\
 	  -e '/export CFLAGS/d'		\

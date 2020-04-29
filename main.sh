@@ -27,6 +27,9 @@ _main() {
     clouddrive)
       build_clouddrive
       ;;
+    packages)
+      build_pkgs
+      ;;
     sh*)
       exec /bin/sh
       ;;
