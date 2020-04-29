@@ -28,7 +28,7 @@ _main() {
       build_clouddrive
       ;;
     packages)
-      build_pkgs
+      CORE_PKGS="$(ls pkgs)" build_pkgs
       ;;
     sh*)
       exec /bin/sh
