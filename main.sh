@@ -29,6 +29,7 @@ _main() {
       ;;
     packages)
       CORE_PKGS="$(ls pkgs)" build_pkgs
+      CORE_PORTS="$(ls ports)" build_ports
       ;;
     sh*)
       exec /bin/sh
