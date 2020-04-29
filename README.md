@@ -5,6 +5,8 @@
 # ulinux
 
 ![Build](https://github.com/prologic/ulinux/workflows/Build/badge.svg)
+![Packages](https://github.com/prologic/ulinux/workflows/Packages/badge.svg)
+![Review](https://github.com/prologic/ulinux/workflows/Review/badge.svg)
 
 > uLinux (_µLinux_) is a micro (µ)Linux Cloud Native OS designed for high
 > performance, minimal overhead and a small footprint.
