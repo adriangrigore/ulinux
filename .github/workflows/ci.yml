@@ -21,6 +21,19 @@ jobs:
       - name: Build
         run: |
           make
+  test:
+    name: Test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Peepare
+        env:
+          DEBIAN_FRONTEND: "noninteractive"
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -y install qemu
       - name: Test
         env:
           VM_WAIT_TIMEOUT: 300s
