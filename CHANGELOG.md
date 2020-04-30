@@ -1,4 +1,41 @@
 
+<a name="1.3"></a>
+## [1.3](https://github.com/prologic/ulinux/compare/1.2.4...1.3) (2020-04-30)
+
+### Bug Fixes
+
+* Fix kernel extraction from package
+* Fix shell target and mounting artifacts volume
+* Fix wait_vm() to have configurable timeout
+* Fix test.sh to only enable -accel option if kvm is actually available (otherwise qemu barfs)
+* Fix make pkgs in CI
+* Fix test.sh to only enable KVM if actually available on Linux hosts
+* Fix irc notifs (again) to be single line?
+* Fix irc notif for commits to be single-line
+* Fix release asset names
+
+### Features
+
+* Add /build/artifacts as a volume for the builder image
+* Add release to pkg manifest version string
+* Add build_ports to packages target to build and publish all ports as well
+* Add GHA workflow badges for Review and Publish workflows
+* Add filter to build all packages
+* Add PKG_SSH_PORT secret to publish workflow
+* Add PKG_SSH_PORT support in pkgs target
+* Add pkg build and publish target and GHA workflow to keep core packages built and up-to-date
+* Add improved pkg handling of PKG_PKGSDIR
+* Add GHA Workflow for IRC Notifications to #ulinux on FreeNode
+
+### Updates
+
+* Update VM_WAIT_TIMEOUT to 60s
+* Update Build workflow to run tests in CI
+* Update test output a bit
+* Update kernel to 5.6.6
+* Update irc notif workflow to use notices instead
+
+
 <a name="1.2.4"></a>
 ## [1.2.4](https://github.com/prologic/ulinux/compare/1.2.3...1.2.4) (2020-04-21)
 
