@@ -73,7 +73,7 @@ build_iso() {
     test -d "$isoimage" || mkdir "$isoimage"
 
     # Extract Kernel from the kernel pkgs
-    tar xvf ./pkgs/kernel/kernel*#*.tar.gz ./boot/vmlinuz
+    tar xvf ./artifacts/kernel*#*.tar.gz ./boot/vmlinuz
     mv ./boot/vmlinuz "$isoimage"/kernel.gz
 
     cp rootfs.gz "$isoimage"
