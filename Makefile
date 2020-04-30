@@ -39,7 +39,7 @@ pkgs:
 shell:
 	@echo "Building builder ..."
 	@docker build -q -f Dockerfile.builder -t ulinux/builder .
-	@docker run -i -t -v "$(PWD)":/build ulinux/builder shell
+	@docker run -i -t -v "$(PWD)/artifacts":/build/artifacts ulinux/builder shell
 
 clouddrive:
 	@echo "Building builder ..."
