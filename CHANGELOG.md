@@ -1,6 +1,10 @@
 
-<a name="1.2.5"></a>
-## [1.2.5](https://github.com/prologic/ulinux/compare/1.2.4...1.2.5) (2020-05-01)
+<a name="1.3.1"></a>
+## [1.3.1](https://github.com/prologic/ulinux/compare/1.3...1.3.1) (0001-01-01)
+
+
+<a name="1.3"></a>
+## [1.3](https://github.com/prologic/ulinux/compare/1.2.4...1.3) (2020-05-01)
 
 ### Bug Fixes
 
