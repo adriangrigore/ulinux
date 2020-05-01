@@ -6,8 +6,8 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=rc
-version=1.0
-release=2
+version=1.0.1
+release=1
 source="rc.common rc.conf rc.init rc.local rc.modules rc.shutdown rc.svc
 telinit"
 depends="sinit"

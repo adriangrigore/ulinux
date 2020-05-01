@@ -30,7 +30,7 @@ err() {
 
 run() {
   retval=0
-  logfile="$(mktemp "run-XXXXXX")"
+  logfile="$(mktemp -t "run-XXXXXX")"
   if "$@" 2> "$logfile"; then
     ok
   else
@@ -38,7 +38,7 @@ run() {
     err
     tail -n -2 "$logfile" || true
   fi
-  rm -rf "$logfile"
+  rm -f "$logfile"
   return $retval
 }
 
