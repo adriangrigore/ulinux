@@ -1,9 +1,11 @@
 
-<a name="1.3"></a>
-## [1.3](https://github.com/prologic/ulinux/compare/1.2.4...1.3) (2020-04-30)
+<a name="1.2.5"></a>
+## [1.2.5](https://github.com/prologic/ulinux/compare/1.2.4...1.2.5) (2020-05-01)
 
 ### Bug Fixes
 
+* Fix bug in rc leaking run-XXXXXX temp files
+* Fix a shellcheck error
 * Fix kernel extraction from package
 * Fix shell target and mounting artifacts volume
 * Fix wait_vm() to have configurable timeout
