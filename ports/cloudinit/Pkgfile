@@ -9,11 +9,16 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=cloudinit
-version=1.0
+version=1.0.1
 release=1
 source="$name $name.svc"
 depends="svc"
 
 build() {
   install -D -m 755 "$SRC"/$name "$PKG"/sbin/$name
+
+  install -d "$PKG"/bin/svc.d/avail
+  install -d "$PKG"/bin/svc.d/run
+  install -D -m 755 "$SRC/$name.svc" "$PKG/bin/svc.d/avail/$name"
+  ln -s "/bin/svc.d/avail/$name" "$PKG/bin/svc.d/run/$name"
 }

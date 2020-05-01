@@ -1,3 +1,5 @@
+/bin/svc.d/avail/cloudinit
+/bin/svc.d/run/cloudinit
 /sbin/cloudinit
 /var/db/pkg/cloudinit/version
 /var/db/pkg/cloudinit/manifest
@@ -6,3 +8,7 @@
 /var/db
 /var
 /sbin
+/bin/svc.d/run
+/bin/svc.d/avail
+/bin/svc.d
+/bin
