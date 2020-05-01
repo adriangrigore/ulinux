@@ -77,7 +77,7 @@ build_generic_image() {
 }
 
 build_digitalocean_image() {
-  progress "Building DigitealOcean Image"
+  progress "Building DigitalOcean Image"
   printf "\n"
 
   DISK="ulinux-digitalocean.img"
