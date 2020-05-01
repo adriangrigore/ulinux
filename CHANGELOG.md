@@ -1,6 +1,10 @@
 
 <a name="1.3.1"></a>
-## [1.3.1](https://github.com/prologic/ulinux/compare/1.3...1.3.1) (0001-01-01)
+## [1.3.1](https://github.com/prologic/ulinux/compare/1.3...1.3.1) (2020-05-01)
+
+### Bug Fixes
+
+* Fix typo
 
 
 <a name="1.3"></a>
