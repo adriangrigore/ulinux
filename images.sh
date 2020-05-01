@@ -10,7 +10,7 @@ console=
 
 cleanup() {
   if ps -p "$vm" > /dev/null; then
-    kill $vm
+    kill "$vm"
   fi
   rm -rf "$console"
 }
