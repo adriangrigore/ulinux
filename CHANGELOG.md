@@ -1,4 +1,12 @@
 
+<a name="1.3.2"></a>
+## [1.3.2](https://github.com/prologic/ulinux/compare/1.3.1...1.3.2) (2020-05-01)
+
+### Bug Fixes
+
+* Fix bugs in the cloudinit and services ports
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/prologic/ulinux/compare/1.3...1.3.1) (2020-05-01)
 
