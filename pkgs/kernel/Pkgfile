@@ -6,7 +6,7 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=kernel
-version=5.6.10
+version=5.6.12
 release=1
 source="https://cdn.kernel.org/pub/linux/kernel/v${version%%.*}.x/linux-${version}.tar.xz
 KConfig"
