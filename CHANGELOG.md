@@ -1,4 +1,20 @@
 
+<a name="1.3.3"></a>
+## [1.3.3](https://github.com/prologic/ulinux/compare/1.3.2...1.3.3) (2020-11-08)
+
+### Bug Fixes
+
+* Fix Makefile patch for tcc
+* Fix pkg.conf URL to point to Github (for now)
+
+### Updates
+
+* Update README re using the right version of QEMU on macOS X
+* Update checksums of busybox and dropbear
+* Update tcc checksum
+* Update Docker image and Docker builder image to Alpine 3.12
+
+
 <a name="1.3.2"></a>
 ## [1.3.2](https://github.com/prologic/ulinux/compare/1.3.1...1.3.2) (2020-05-01)
 
