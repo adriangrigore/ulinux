@@ -370,6 +370,15 @@ Just run:
 $ make test
 ```
 
+This uses [QEMU](https://www.qemu.org/) and on macOS X we use the
+[nanos](https://github.com/nanovms/nanos) [Homrebrew](https://brew.sh/)
+formulae of QEMU that supports hardware accelaration:
+
+```#!console
+brew tap nanovms/homebrew-qemu
+brew install nanovms/homebrew-qemu/qemu
+```
+
 The OS comes pre-shipped with Dropbear (_SSH Daemon_) as well as a Busybox
 Userland. The test script (`test.sh`) also uses QEMU and sets up a User mode
 network which forwards port `2222` to the guest VM for SSH access.
