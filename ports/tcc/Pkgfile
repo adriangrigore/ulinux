@@ -7,7 +7,7 @@
 
 name=tcc
 version=20200416
-gitver=fb1fb8219ccf4813d63edf8c40fddc756e0c60cc
+gitver=8b69059f66c0ec402d9e81815978e7f70b7181d8
 release=1
 source="https://github.com/mirror/tinycc/archive/$gitver.zip
 ar Makefile.patch"

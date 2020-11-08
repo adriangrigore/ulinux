@@ -6,7 +6,7 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=busybox
-version=20200412
+version=20201108
 release=1
 source="https://busybox.net/downloads/snapshots/$name-$version.tar.bz2
 config"

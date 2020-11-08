@@ -8,7 +8,7 @@ set -e
 download_syslinux() {
   progress "Downloading syslinux"
   wget -q -O syslinux.tar.xz \
-    http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-$SYSLINUX_VERSION.tar.xz
+    https://mirrors.edge.kernel.org/pub/linux/utils/boot/syslinux/syslinux-$SYSLINUX_VERSION.tar.xz
   tar -xf syslinux.tar.xz
 }
 
