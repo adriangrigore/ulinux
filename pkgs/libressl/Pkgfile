@@ -6,7 +6,7 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=libressl
-version=3.0.2
+version=3.2.2
 release=1
 source="https://fossies.org/linux/misc/$name-$version.tar.gz"
 
