@@ -7,7 +7,7 @@
 
 name=filesystem
 version=1.0.3
-release=1
+release=2
 source="issue motd shells group passwd shadow securetty fstab mime.types
 profile mdev.conf"
 
@@ -20,7 +20,7 @@ build() {
   # Directory structure
   install -d "$PKG"/bin
   install -d "$PKG"/etc
-  install -d -m 750 "$PKG"/home
+  install -d -m 755 "$PKG"/home
   install -d "$PKG"/lib
   install -d "$PKG"/mnt
   install -d -m 750 "$PKG"/root
