@@ -84,6 +84,22 @@ uLinux currently supports building C and Assembly and ships with the following c
 
 There is no support for GCC/GLIBC.
 
+### Docker
+
+To use docker you must first install it using ports.
+
+```bash
+ports -u
+cd /usr/ports/cgroups-mount
+pkg build
+pkg add
+cd /usr/ports/docker
+pkg build
+pkg add
+svc -r dockerd
+docker ps
+```
+
 ### CloudInit / CloudConfig
 
 uLinux fully supports configuration via CloudInit/CloudConfig.
