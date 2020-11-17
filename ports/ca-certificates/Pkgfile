@@ -2,11 +2,11 @@
 # shellcheck disable=SC2034
 
 # Description: Bundle of CA Root Certificates from Mozilla
-# URL:         https://ulinux.org/
+# URL:         https://curl.haxx.se/ca/
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=ca-certificates
-version=20200101
+version=20201014
 release=1
 source="cacert.pem"
 
