@@ -7,7 +7,7 @@
 
 name=dropbear
 version=2020.81
-release=2
+release=3
 source="https://matt.ucc.asn.au/$name/$name-$version.tar.bz2
 $name.svc $name.conf"
 
