@@ -8,6 +8,7 @@
 /etc/mime.types
 /etc/issue
 /etc/fstab
+/etc/hosts
 /etc/os-release
 /etc/passwd
 /etc/motd

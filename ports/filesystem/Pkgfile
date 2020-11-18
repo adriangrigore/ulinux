@@ -6,9 +6,9 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=filesystem
-version=1.0.3
-release=2
-source="issue motd shells group passwd shadow securetty fstab mime.types
+version=1.0.4
+release=1
+source="issue hosts motd shells group passwd shadow securetty fstab mime.types
 profile mdev.conf"
 
 # uLinux version/tag (passed in from the environment or defaulted to git)
@@ -45,6 +45,7 @@ build() {
 
   # /etc
   install -m 0644 issue "$PKG"/etc
+  install -m 0644 hosts "$PKG"/etc
   install -m 0644 motd "$PKG"/etc
   install -m 0644 shells "$PKG"/etc
   install -m 0644 group "$PKG"/etc
