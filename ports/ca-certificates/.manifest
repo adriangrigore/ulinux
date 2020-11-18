@@ -1,4 +1,5 @@
 /etc/ssl/cert.pem
+/etc/ssl/ca-bundle.pem
 /var/db/pkg/ca-certificates/version
 /var/db/pkg/ca-certificates/manifest
 /var/db/pkg/ca-certificates

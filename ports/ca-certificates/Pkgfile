@@ -7,7 +7,7 @@
 
 name=ca-certificates
 version=20201014
-release=1
+release=2
 source="cacert.pem"
 
 build() {
@@ -18,4 +18,5 @@ build() {
   # from curl without modifications.
 
   install -D -m 644 "$SRC"/cacert.pem "$PKG"/etc/ssl/cert.pem
+  ln -sf /etc/ssl/cert.pem "$PKG"/etc/ssl/ca-bundle.pem
 }
