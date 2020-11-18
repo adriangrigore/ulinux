@@ -24,9 +24,9 @@ runservice() {
   cmd="$3"
 
   if [ "$(stat -L -t "$dir/$service" | cut -d ' ' -f 2)" -eq 0 ]; then
-    "./bare.sh" "$service" "$cmd" > /dev/null 2>&1 &
+    "./bare.sh" "$service" "$cmd" >> "/var/log/$service.log" 2>&1 &
   else
-    "$dir/$service" "$cmd" > /dev/null 2>&1 &
+    "$dir/$service" "$cmd" > "/var/log/$service.log" 2>&1 &
   fi
 }
 
