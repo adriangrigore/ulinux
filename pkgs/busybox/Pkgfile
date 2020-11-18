@@ -7,7 +7,7 @@
 
 name=busybox
 version=20201108
-release=2
+release=3
 source="https://busybox.net/downloads/snapshots/$name-$version.tar.bz2
 config"
 
@@ -23,5 +23,5 @@ build() {
     busybox install
 
   # set suid bit so su works
-  chmod u+s "$PKG/busybox"
+  chmod u+s "$PKG/bin/busybox"
 }
