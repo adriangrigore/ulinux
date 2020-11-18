@@ -9,7 +9,7 @@
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
 
 name=cloudinit
-version=1.0.2
+version=1.0.3
 release=1
 source="$name $name.svc"
 depends="svc"
