@@ -41,12 +41,12 @@ shell:
 	@docker build -q -f Dockerfile.builder -t ulinux/builder .
 	@docker run -i -t -v "$(PWD)":/build ulinux/builder shell
 
-clouddrive:
+clouddrive.iso:
 	@echo "Building builder ..."
 	@docker build -q -f Dockerfile.builder -t ulinux/builder .
 	@echo "Building uLinux ..."
 	@if docker ps -a | grep -q ulinux_build; then docker rm $$(docker ps -a | grep ulinux_build | cut -f 1 -d ' '); fi
-	@docker run -v "$(PWD)":/build --name ulinux_build ulinux/builder clouddrive
+	@docker run --name ulinux_build ulinux/builder clouddrive
 	@echo "Copying CloudDrive Image ..."
 	@docker cp ulinux_build:/build/clouddrive.iso .
 	@docker rm -f ulinux_build
@@ -54,7 +54,7 @@ clouddrive:
 test: ulinux.iso
 	@./test.sh
 
-tests: ulinux.iso
+tests: clouddrive.iso ulinux.iso
 	@./tests/run.sh
 
 toc:

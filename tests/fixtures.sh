@@ -15,7 +15,7 @@ create_disk() {
 
 create_vm() {
   progress "  Booting uLinux VM"
-  HEADLESS=1 ./test.sh > "$console" 2>&1 &
+  CLOUDDRIVE=1 HEADLESS=1 ./test.sh > "$console" 2>&1 &
   vm=$!
   sleep 5
 }

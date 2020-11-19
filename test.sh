@@ -15,7 +15,7 @@ fi
 
 [ -z "$DISK" ] && DISK="ulinux.img"
 [ -z "$DISKIF" ] && DISKIF="ide"
-[ -n "$DISK" ] && QEMU_OPTS="$QEMU_OPTS -drive file=$DISK,index=1,media=disk,if=$DISKIF,cache=writethrough"
+[ -n "$DISK" ] && QEMU_OPTS="$QEMU_OPTS -drive file=$DISK,index=2,media=disk,if=$DISKIF,cache=writethrough"
 
 QEMU_OPTS="$QEMU_OPTS
 -m 1024

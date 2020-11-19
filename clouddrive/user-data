@@ -1,3 +1,8 @@
 #!/bin/sh
 
-/bin/true
+mkdir -p /root/.ssh
+chmod 700 /root/.ssh
+cat > /root/.ssh/authorized_keys << EOF
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCmtY/jWeUhX05cAjF3kM15tUnw9/V4mxGpWT8loU6dMxNN/3VfKhov6f87Gi603sLuWAhv2I6a0phW6jt+8ASohUUFo99sUk4Zbano0hf3nHzuumd6a1ShKL29tSsj0iXJChAcMb36UPU9ICY29x3OIz9ualjjL5K4IxUhk8Hnt0lDluXftWfDdz93qF50eW3BQEgmNgItY57RVzLAcgOX600AgaW6x6vuki1U/BwyxGsncr3gZlvLg+1t+o638JQgnu+EOQR1ZkhIuJOW4aO8ktGXD7eICMwRQ9Ha8awvatFmlOYjEiER9mH5z3W8WKC1IYD99cA3z1LHkAg9knkdmZxj6L6vobo6iojY3AkrFcf1fNduYjcD1p7PulVuebjx8S5w6/dqG+eBSrIFvzOnLcIjFYye6swy+eGCea3R9xxmtPwVcIaJW4L2sxg8fVUTPhV7EZbKTxpiCHm6mJgfleTalzzQSZYzWVjk+zNxLbjy7vzLTRWhV3wPayS/Gss=
+EOF
+chmod 600 /root/.ssh/*

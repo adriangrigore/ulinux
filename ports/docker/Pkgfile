@@ -4,14 +4,13 @@
 # Description: An open platform for distributed applications for developers and sysadmins
 # URL:         https://www.docker.com/community-edition
 # Maintainer:  James Mills, prologic at shortcircuit dot net dot au
-#
-# Depends on: cgroupfs-mount
 
 name=docker
-version=19.03.5
+version=19.03.9
 release=1
 source="https://download.docker.com/linux/static/stable/x86_64/$name-$version.tgz
 dockerd.conf dockerd.svc"
+depends="cgroupfs-mount iptables"
 
 build() {
   install -D -m 755 docker/docker "$PKG/usr/bin/docker"

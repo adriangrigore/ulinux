@@ -1,6 +1,7 @@
 #!/bin/sh
 
-SSH_CMD="ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p 2222 root@localhost"
+SSH_KEY="$(dirname "${0}")/id_rsa"
+SSH_CMD="ssh -q -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i ${SSH_KEY} -p 2222 root@localhost"
 export SSH_CMD
 
 color() {
